@@ -25,7 +25,6 @@ ADD config/default /etc/apache2/sites-available/000-default.conf
 
 RUN /bin/ln -sf ../sites-available/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
-RUN /bin/chmod -R 777 /var/www
 RUN /bin/chown www-data:www-data -R /var/www
 
 EXPOSE 80
