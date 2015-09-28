@@ -21,7 +21,8 @@ RUN /usr/sbin/a2enmod socache_shmcb || true
 
 RUN service apache2 restart
 
-RUN service apache2 restart
+RUN /usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php
+RUN /bin/mv composer.phar /usr/local/bin/composer
 
 ADD bills/ /var/www/app/
 
