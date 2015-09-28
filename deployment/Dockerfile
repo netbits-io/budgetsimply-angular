@@ -25,6 +25,8 @@ RUN /usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php
 RUN /bin/mv composer.phar /usr/local/bin/composer
 
 ADD bills/ /var/www/app/
+WORKDIR /var/www/app
+RUN composer install
 
 ADD config/default /etc/apache2/sites-available/000-default.conf
 ADD config/default-ssl /etc/apache2/sites-available/default-ssl.conf
