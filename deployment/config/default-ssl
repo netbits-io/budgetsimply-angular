@@ -2,12 +2,12 @@
 <VirtualHost _default_:443>
         ServerAdmin webmaster@localhost
 
-        DocumentRoot /var/www/public
+        DocumentRoot /var/www/app
         <Directory />
                 Options FollowSymLinks
                 AllowOverride All 
         </Directory>
-        <Directory /var/www/public>
+        <Directory /var/www/app>
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
                 Order allow,deny
