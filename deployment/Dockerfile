@@ -19,14 +19,6 @@ RUN /usr/sbin/a2enmod rewrite
 
 RUN /usr/sbin/a2enmod socache_shmcb || true
 
-RUN service apache2 restart
-
-RUN /usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php
-RUN /bin/mv composer.phar /usr/local/bin/composer
-RUN composer create-project laravel/laravel /var/www/app --prefer-dist
-
-ADD bills/ /var/www/app/
-
 ADD config/default /etc/apache2/sites-available/000-default.conf
 ADD config/default-ssl /etc/apache2/sites-available/default-ssl.conf
 
@@ -34,6 +26,14 @@ RUN /bin/ln -sf ../sites-available/000-default.conf /etc/apache2/sites-enabled/0
 RUN /bin/ln -sf ../sites-available/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf
 RUN /bin/ln -sf ../mods-available/ssl.conf /etc/apache2/mods-enabled/
 RUN /bin/ln -sf ../mods-available/ssl.load /etc/apache2/mods-enabled/
+
+RUN service apache2 restart
+
+RUN /usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php
+RUN /bin/mv composer.phar /usr/local/bin/composer
+RUN composer create-project laravel/laravel /var/www/app --prefer-dist
+
+ADD bills/ /var/www/app/
 
 RUN /bin/chmod -R 777 /var/www
 RUN /bin/chown www-data:www-data -R /var/www
