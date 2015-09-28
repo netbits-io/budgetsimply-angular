@@ -1,5 +1,6 @@
 FROM ubuntu:14.04
-MAINTAINER Luis Elizondo "lelizondo@gmail.com"
+
+MAINTAINER Todor Ivanov "t.ivanov@netbits.io"
 
 RUN apt-get --fix-missing update
 RUN apt-get -y install apache2 php5 git curl php5-mcrypt php5-json php5-mysql libapache2-mod-php5
