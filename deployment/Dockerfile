@@ -34,6 +34,7 @@ RUN /bin/ln -sf ../sites-available/default-ssl.conf /etc/apache2/sites-enabled/d
 RUN /bin/ln -sf ../mods-available/ssl.conf /etc/apache2/mods-enabled/
 RUN /bin/ln -sf ../mods-available/ssl.load /etc/apache2/mods-enabled/
 
+RUN /bin/chmod -R 777 /var/www
 RUN /bin/chown www-data:www-data -R /var/www
 
 EXPOSE 80
