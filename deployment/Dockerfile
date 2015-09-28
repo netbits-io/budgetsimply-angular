@@ -26,7 +26,7 @@ RUN /bin/mv composer.phar /usr/local/bin/composer
 
 ADD bills/ /var/www/app/
 WORKDIR /var/www/app
-RUN composer install
+RUN composer install /var/www/app
 
 ADD config/default /etc/apache2/sites-available/000-default.conf
 ADD config/default-ssl /etc/apache2/sites-available/default-ssl.conf
