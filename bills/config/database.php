@@ -66,10 +66,10 @@ return [
 
         'pgsql' => [
             'driver'   => 'pgsql',
-            'host'     => env('DB_HOST', '95.87.217.208'),
-            'database' => env('DB_DATABASE', 'bills'),
-            'username' => env('DB_USERNAME', 'bills'),
-            'password' => env('DB_PASSWORD', 'bills123'),
+            'host'     =>  '95.87.217.208',
+            'database' =>  'bills',
+            'username' =>  'bills',
+            'password' =>  'bills123',
             'port'     => '5422',
             'charset'  => 'utf8',
             'prefix'   => '',
