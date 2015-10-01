@@ -32,6 +32,7 @@ RUN service apache2 restart
 
 RUN /usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php
 RUN /bin/mv composer.phar /usr/local/bin/composer
+RUN composer config --global github-oauth.github.com b1cad059764b70b2cbfe631e180506addce8545c
 RUN composer create-project laravel/laravel /var/www/app --prefer-dist
 
 ADD bills/ /var/www/app/
