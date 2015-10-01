@@ -70,6 +70,7 @@ return [
             'database' => env('DB_DATABASE', 'bills'),
             'username' => env('DB_USERNAME', 'bills'),
             'password' => env('DB_PASSWORD', 'bills123'),
+            'port'     => '5422',
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
