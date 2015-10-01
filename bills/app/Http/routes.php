@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('foo/bar', function () {
+Route::get('foo/bar', function () {
     return 'Hello World';
+});
+
+Route::get('bar/bar', function () {
+    return 'Hello World Bar';
 });
