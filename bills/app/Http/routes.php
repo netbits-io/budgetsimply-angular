@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('foo/bar', function () {
+    return 'Hello World';
+});
