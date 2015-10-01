@@ -38,8 +38,14 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5 Hi</div>
+                <div class="title">Laravel 5</div>
             </div>
+            <br>
+            <?php echo url('foo/bar');?>
+            <br>
+            <?php echo url('bar/bar');?>
+            <br>
+            {!! csrf_field() !!}
         </div>
     </body>
 </html>

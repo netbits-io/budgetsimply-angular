@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,10 +66,10 @@ return [
 
         'pgsql' => [
             'driver'   => 'pgsql',
-            'host'     => env('DB_HOST', 'localhost'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host'     => env('DB_HOST', '95.87.217.208'),
+            'database' => env('DB_DATABASE', 'bills'),
+            'username' => env('DB_USERNAME', 'bills'),
+            'password' => env('DB_PASSWORD', 'bills123'),
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
