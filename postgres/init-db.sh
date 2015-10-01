@@ -12,7 +12,7 @@ gosu postgres postgres --single -jE bills <<- EOSQL
     name varchar(255) DEFAULT NULL,
     password varchar(255) DEFAULT NULL,
     remember_token varchar(100) DEFAULT NULL,
-    updated_at timestmp DEFAULT NULL,
+    updated_at timestamp DEFAULT NULL,
     created_at timestamp DEFAULT NULL
    );
     ALTER SEQUENCE images_seq OWNED BY users.id;
