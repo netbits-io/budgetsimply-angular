@@ -30,9 +30,9 @@
     <body>
         <div class="white wrapper">
         <nav class="navbar navbar-inverse navbar-static-top navbar-top-custom">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-header">
-                    <!--<a class="navbar-brand" href="#">budgetSimply.io</a>-->
+                    <a class="navbar-brand" href="#">budgetSimply.io</a>
                 </div>
                 <div>
 
@@ -44,8 +44,8 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div style="margin-top:50px;" class="mainbox">
-                            <!--<h1>Know your money. Spend less.</h1>-->
-                            <!--<h3>budgetSimply.io is a minimalist expenses tracking and budgeting tool.</h3>-->
+                            <h1>Know your money. Spend less.</h1>
+                            <h3>budgetSimply.io is a minimalist expenses tracking and budgeting tool.</h3>
                         </div>
                     </div>
                     <div class="col-lg-6">
