@@ -88,7 +88,7 @@
 </head>
 <body>
     <div class="white wrapper">
-        <!--        <nav class="navbar navbar-inverse navbar-static-top navbar-top-custom">
+                <nav class="navbar navbar-inverse navbar-static-top navbar-top-custom">
                     <div class="container">
                         <div class="navbar-header">
                             <a class="navbar-brand" href="#">budgetSimply.io</a>
@@ -97,7 +97,7 @@
         
                         </div>
                     </div>
-                </nav>     -->
+                </nav>     
         <div class="container ">
 
             <br>
@@ -243,6 +243,6 @@
                     </p>
                 </div>
             </div>
-        </div>-->
+        </div>
 </body>
 </html>
