@@ -27,6 +27,8 @@ EXPOSE 80
  
 # Copy site into place.
 ADD webapp /var/www/site
+
+RUN chmod -R 777 /var/www/site
  
 # Update the default apache site with the config we created.
 ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
