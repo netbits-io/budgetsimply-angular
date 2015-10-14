@@ -230,7 +230,7 @@
         </div>
         <div class="push"></div>
     </div>
-    <!--    <div class="navbar navbar-inverse navbar-static-bottom">
+     <div class="navbar navbar-inverse navbar-static-bottom">
             <div class="container text-center">
                 <div class="row">
                     <p class="navbar-text col-md-12 col-sm-12 col-xs-12">
