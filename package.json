@@ -1,5 +1,5 @@
 {
-  "name": "node-auth",
+  "name": "bills",
   "main": "server.js",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
