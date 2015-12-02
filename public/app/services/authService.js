@@ -11,8 +11,6 @@ angular.module('authService', [])
             var authFactory = {};
             // log a user in
             authFactory.login = function (email, password) {
-
-                // return the promise object and its data
                 return $http.post('/api/auth/authenticate', {
                     email: email,
                     password: password
@@ -21,15 +19,32 @@ angular.module('authService', [])
                     return data;
                 });
             };
+            
+            authFactory.forgot = function (email) {
+                return $http.post('/api/auth/forgot', {
+                    email: email
+                }).success(function (data) {
+                    return data;
+                });
+            };
+            
+            authFactory.reset = function (token, password, passwordConfirm) {
+                return $http.post('/api/auth/reset', {
+                    token: token,
+                    password: password,
+                    passwordConfirm: passwordConfirm,
+                }).success(function (data) {
+                    return data;
+                });
+            };
+            
             authFactory.register = function (name, email, password, passwordConfirm) {
-                // return the promise object and its data
                 return $http.post('/api/auth/register', {
                     name: name,
                     email: email,
                     password: password,
                     passwordConfirm: passwordConfirm,
                 }).success(function (data) {
-                    console.log(data);
                     return data;
                 });
             };

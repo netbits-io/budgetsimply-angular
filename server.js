@@ -48,4 +48,3 @@ app.get('*', function(req, res) {
 
 // START THE SERVER
 app.listen(config.port);
-console.log('Magic happens on port ' + config.port);

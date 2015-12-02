@@ -9,7 +9,9 @@ var UserSchema   = new Schema({
 	password: { type: String, required: true, select: false },
         admin: Boolean,
         created_at: Date,
-        updated_at: Date
+        updated_at: Date,
+        resetPasswordToken: String,
+        resetPasswordExpires: Date
 });
 
 // hash the password before the user is saved

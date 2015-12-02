@@ -1,6 +1,6 @@
 angular.module('mainCtrl', [])
 
-        .controller('mainController', function ($rootScope, $location, Auth) {
+        .controller('mainController', function ($rootScope, $location, $routeParams, Auth) {
             var vm = this;
 
             vm.loggedIn = Auth.isLoggedIn();
@@ -66,6 +66,39 @@ angular.module('mainCtrl', [])
                         }
                     });
                     vm.regProcessing = false;
+                }
+            };
+            
+            vm.doForgot = function (isValid) {
+                if (isValid) {
+                    vm.fgtProcessing = true;
+                    // clear the error
+                    vm.fgtError = '';
+                    Auth.forgot(vm.forgotEmail).success(function (data) {
+                        vm.fgtProcessing = false;
+                        if (data.success) {
+                            vm.fgtSuccess = data.message;
+                        } else {
+                            vm.fgtError = data.message;
+                            vm.fgtProcessing = false;
+                        }
+                    });
+                }
+            };
+            vm.doReset = function (isValid) {
+                if (isValid) {
+                    vm.rstProcessing = true;
+                    // clear the error
+                    vm.regError = '';
+                    Auth.reset($routeParams.resetToken, vm.resetData.password, vm.resetData.passwordConfirm).success(function (data) {
+                        if (data.success) {
+                            vm.rstSuccess = "Pasword updated!";
+                        } else {
+                            vm.rstError = data.message;
+                            vm.rstProcessing = false;
+                        }
+                    });
+                    vm.rstProcessing = false;
                 }
             };
 

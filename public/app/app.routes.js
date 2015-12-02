@@ -8,6 +8,16 @@ angular.module('app.routes', ['ngRoute'])
    			controller  : 'mainController',
     			controllerAs: 'main'
 		})
+                .when('/forgot', {
+			templateUrl : 'app/views/pages/public/forgot.html',
+   			controller  : 'mainController',
+    			controllerAs: 'main'
+		})
+                .when('/reset/:resetToken', {
+			templateUrl : 'app/views/pages/public/reset.html',
+   			controller  : 'mainController',
+    			controllerAs: 'main'
+		})
                 .when('/register', {
 			templateUrl : 'app/views/pages/public/register.html',
    			controller  : 'mainController',
