@@ -12,7 +12,7 @@ var BudgetSchema   = new Schema({
 		date: date,
 		payed: {
 			payer:  String,
-			amoint:  double
+			amount:  double
 		}
 	}
 	
