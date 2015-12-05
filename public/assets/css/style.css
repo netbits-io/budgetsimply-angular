@@ -28,3 +28,10 @@ html, body {
 .mgn50t{
     margin-top:50px;
 }
+.fg-custom{
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+.border-top{
+    border-top: 1px solid#888; padding-top:15px;
+}

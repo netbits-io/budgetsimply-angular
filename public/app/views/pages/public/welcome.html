@@ -13,92 +13,98 @@
 		<div id="loginbox" class="mainbox col-md-10 col-md-offset-1">
 			<div class="panel panel-info" >
 				<div class="panel-body " >
-					<h2>Login</h2>
-					<div class="alert alert-danger" ng-if="main.lgnError">
-						{{main.lgnError}}
-					</div>
 					<form name="lgnFm" ng-submit="main.doLogin(lgnFm.$valid)" novalidate class="form-horizontal">
-						<div class="input-group mgn25b" ng-class="{ 'has-error' : lgnFm.email.$invalid && !lgnFm.email.$pristine }">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							<input type="email" name="email" class="form-control" ng-model="main.loginData.email" required value="" placeholder="email"> 
-							<span ng-show="lgnFm.email.$invalid && !lgnFm.email.$pristine">invalid email</span>                           
+						<div class="form-group fg-custom">
+							<h2>Login</h2>
+							<div class="alert alert-danger" ng-if="main.lgnError">{{main.lgnError}}</div>
 						</div>
-						<div class="input-group mgn10b" ng-class="{ 'has-error' : lgnFm.password.$invalid && !lgnFm.password.$pristine }">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							<input type="password" name="password" class="form-control" ng-model="main.loginData.password" required placeholder="password">
+						<div class="form-group fg-custom">
+							<div class="input-group" ng-class="{ 'has-error' : lgnFm.email.$invalid && !lgnFm.email.$pristine }">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								<input type="email" name="email" class="form-control" ng-model="main.loginData.email" required value="" placeholder="email">                            
+							</div>
+							<span ng-show="lgnFm.email.$invalid && !lgnFm.email.$pristine">invalid email</span>
+						</div>
+						<div class="form-group fg-custom">
+							<div class="input-group" ng-class="{ 'has-error' : lgnFm.password.$invalid && !lgnFm.password.$pristine }">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+								<input type="password" name="password" class="form-control" ng-model="main.loginData.password" required placeholder="password">
+							</div>
 							<span ng-show="lgnFm.password.$error.required && lgnFm.password.$dirty">required</span>
 						</div>
-						<div style="margin-bottom: 10px; margin-left: 10px" class="input-group">
-							<a href="#"  onClick="
-							$('#loginbox').hide();
-							$('#resetbox').show()">
-							Forgot Password?</a>
-						</div>
-						<div style="margin-top:10px" class="form-group">
-							<div class="col-sm-12 controls">   
-								<button type="submit" class="btn btn-success pull-right" ng-class="{ 'disabled' : lgnFm.$invalid || main.lgnProcessing}">
-									<span>Login</span>
-								</button>                                       
+						<div class="form-group fg-custom">
+							<div class="input-group">
+								<a href="#"  onClick="
+								$('#loginbox').hide();
+								$('#resetbox').show()">
+								Forgot Password?</a>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="col-md-12 control">
-								<div style="border-top: 1px solid#888; padding-top:15px;" >
-									Don't have an account?  
-									<a href="#" onClick="
-									$('#loginbox').hide();
-									$('#signupbox').show()">
-									Sign Up Here
-								</a>
-							</div>
+						<div class="form-group fg-custom">
+							<button type="submit" class="btn btn-success pull-right" ng-class="{ 'disabled' : lgnFm.$invalid || main.lgnProcessing}">
+								<span>Login</span>
+							</button>                                       
 						</div>
-					</div>    
-				</form>     
-			</div>                     
-		</div>  
-	</div>
+						<div class="form-group fg-custom">
+							<div class="border-top" >
+								Don't have an account?  
+								<a href="#" onClick="
+								$('#loginbox').hide();
+								$('#signupbox').show()">
+								Sign Up Here</a>
+							</div>
+						</div>    
+					</form>     
+				</div>                     
+			</div>  
+		</div>
 
-	<div id="signupbox" style="display:none" class="mainbox col-md-10 col-md-offset-1 ">
-		<div class="panel panel-info">                          
-			<div class="panel-body" >
-				<h2>Register</h2>
-				<div class="alert alert-danger" ng-if="main.regError">
-					{{main.regError}}
-				</div>
-				<div class="alert alert-success" ng-if="main.regSuccess">
-					{{main.regSuccess}}
-				</div>
-				<form  class="form-horizontal" name="regFm" ng-submit="main.doRegister(regFm.$valid)" novalidate>
-					<div ng-if="!main.regSuccess">
-					<div class="input-group mgn25b" ng-class="{ 'has-error' : regFm.email.$invalid && !regFm.email.$pristine }">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input class="form-control" type="email" name="email" ng-model="main.registerData.email" required placeholder="email"> 
-						<span ng-show="regFm.email.$invalid && !regFm.email.$pristine">invalid email</span>                           
-					</div>
-					<div class="input-group mgn25b" ng-class="{ 'has-error' : regFm.name.$invalid && !regFm.name.$pristine }">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input class="form-control" type="text" name="name" ng-model="main.registerData.name" required ng-minlength="8" placeholder="name"> 
-						<span ng-show="regFm.name.$error.required && regFm.name.$dirty">required</span>
-						<span ng-show="regFm.name.$error.minlength && regFm.name.$dirty">must be 8 characters</span>                           
-					</div>
-					<div class="input-group mgn25b" ng-class="{ 'has-error' : regFm.password.$invalid && !regFm.password.$pristine }">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-						<input class="form-control" type="password" name="password" ng-model="main.registerData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required required placeholder="password">
-						<span ng-show="regFm.password.$error.required && regFm.password.$dirty">required</span>
-						<span ng-show="!regFm.password.$error.required && (regFm.password.$error.minlength || regFm.password.$error.maxlength) && regFm.password.$dirty">Passwords must be between 8 and 20 characters.</span>
-						<span ng-show="!regFm.password.$error.required && !regFm.password.$error.minlength && !regFm.password.$error.maxlength && regFm.password.$error.pattern && regFm.password.$dirty">
-							Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
-					</div>
-					<div class="input-group mgn25b" ng-class="{ 'has-error' : regFm.passwordconfirm.$invalid && !regFm.passwordconfirm.$pristine }">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							<input class="form-control" type="password" name="passwordconfirm" ng-model="main.registerData.passwordconfirm"  password-match="main.registerData.password" required  required placeholder="confirm password">
-							<span ng-show="regFm.passwordconfirm.$error.required && regFm.passwordconfirm.$dirty">Please confirm your password.</span>
-							<span ng-show="!regFm.passwordconfirm.$error.required && regFm.passwordconfirm.$error.unique && regFm.passwordconfirm.$dirty">Passwords do not match.</span>
-					</div>
-					</div>
-						<div class="form-group">
-							<!-- Button -->                                        
-							<div class="col-md-12">
+		<div id="signupbox" style="display:none" class="mainbox col-md-10 col-md-offset-1 ">
+			<div class="panel panel-info">                          
+				<div class="panel-body" >
+					<form  class="form-horizontal" name="regFm" ng-submit="main.doRegister(regFm.$valid)" novalidate>
+						<div class="form-group fg-custom">
+							<h2>Register</h2>
+							<div class="alert alert-danger" ng-if="main.regError">{{main.regError}}</div>
+							<div class="alert alert-success" ng-if="main.regSuccess">{{main.regSuccess}}</div>
+						</div>
+						<div ng-if="!main.regSuccess">
+							<div class="form-group fg-custom">
+								<div class="input-group" ng-class="{ 'has-error' : regFm.email.$invalid && !regFm.email.$pristine }">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									<input class="form-control" type="email" name="email" ng-model="main.registerData.email" required placeholder="email"> 
+								</div>
+								<span ng-show="regFm.email.$invalid && !regFm.email.$pristine">invalid email</span>
+							</div>
+							<div class="form-group fg-custom">
+								<div class="input-group" ng-class="{ 'has-error' : regFm.name.$invalid && !regFm.name.$pristine }">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									<input class="form-control" type="text" name="name" ng-model="main.registerData.name" required ng-minlength="8" placeholder="name"> 
+								</div>
+								<span ng-show="regFm.name.$error.required && regFm.name.$dirty">required</span>
+								<span ng-show="regFm.name.$error.minlength && regFm.name.$dirty">must be 8 characters</span> 
+							</div>
+							<div class="form-group fg-custom">
+								<div class="input-group" ng-class="{ 'has-error' : regFm.password.$invalid && !regFm.password.$pristine }">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+									<input class="form-control" type="password" name="password" ng-model="main.registerData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required required placeholder="password">
+								</div>
+								<span ng-show="regFm.password.$error.required && regFm.password.$dirty">required</span>
+								<span ng-show="!regFm.password.$error.required && (regFm.password.$error.minlength || regFm.password.$error.maxlength) && regFm.password.$dirty">Passwords must be between 8 and 20 characters.</span>
+								<span ng-show="!regFm.password.$error.required && !regFm.password.$error.minlength && !regFm.password.$error.maxlength && regFm.password.$error.pattern && regFm.password.$dirty">
+									Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+							</div>
+							<div class="form-group fg-custom">
+								<div class="input-group" ng-class="{ 'has-error' : regFm.passwordconfirm.$invalid && !regFm.passwordconfirm.$pristine }">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+									<input class="form-control" type="password" name="passwordconfirm" ng-model="main.registerData.passwordconfirm"  password-match="main.registerData.password" required  required placeholder="confirm password">
+								</div>
+								<span ng-show="regFm.passwordconfirm.$error.required && regFm.passwordconfirm.$dirty">Please confirm your password.</span>
+								<span ng-show="!regFm.passwordconfirm.$error.required && regFm.passwordconfirm.$error.unique && regFm.passwordconfirm.$dirty">Passwords do not match.</span>
+							</div>
+						</div>
+						<div class="form-group fg-custom">
+							<div class="border-top" >
 								<a class="btn btn-warning" href="#" onclick="
 								$('#signupbox').hide();
 								$('#loginbox').show()">Back to Login</a>
@@ -115,27 +121,26 @@
 		<div id="resetbox" style="display:none" class="mainbox col-md-10 col-md-offset-1 ">
 			<div class="panel panel-info">                          
 				<div class="panel-body" >
-					<h2>Reset Password</h2>
-					<div class="alert alert-danger" ng-if="main.fgtError">
-						{{main.fgtError}}
-					</div>
-					<div class="alert alert-success" ng-if="main.fgtSuccess">
-						{{main.fgtSuccess}}
-					</div>
 					<form  class="form-horizontal" name="fgtFm" ng-submit="main.doForgot(fgtFm.$valid)" novalidate>
+						<div class="form-group fg-custom">
+							<h2>Reset Password</h2>
+							<div class="alert alert-danger" ng-if="main.fgtError">{{main.fgtError}}</div>
+							<div class="alert alert-success" ng-if="main.fgtSuccess">{{main.fgtSuccess}}</div>
+						</div>
 						<div ng-if="!main.fgtSuccess">
-						<div class="input-group mgn25b" ng-class="{ 'has-error' : fgtFm.email.$invalid && !fgtFm.email.$pristine }">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							<input class="form-control" type="email" name="email" ng-model="main.forgotEmail" required placeholder="email"> 
-							<span ng-show="fgtFm.email.$invalid && !fgtFm.email.$pristine">invalid email</span>                           
+							<div class="form-group fg-custom">
+								<div class="input-group" ng-class="{ 'has-error' : fgtFm.email.$invalid && !fgtFm.email.$pristine }">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									<input class="form-control" type="email" name="email" ng-model="main.forgotEmail" required placeholder="email"> 
+								</div>
+								<span ng-show="fgtFm.email.$invalid && !fgtFm.email.$pristine">invalid email</span>
+							</div>
 						</div>
-						</div>
-						<div class="form-group">
-							<!-- Button -->                                        
-							<div class="col-md-12">
+						<div class="form-group fg-custom">
+							<div class="border-top" >
 								<a class="btn btn-warning" href="#" onclick="
-								$('#resetbox').hide();
-								$('#loginbox').show()">Back to Login</a>
+									$('#resetbox').hide();
+									$('#loginbox').show()">Back to Login</a>
 								<button ng-if="!main.fgtSuccess" type="submit" class="btn btn-success pull-right" ng-class="{ 'disabled' : fgtFm.$invalid || main.fgtProcessing}">
 									<span>Reset</span>
 								</button>
@@ -144,7 +149,6 @@
 					</form>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>
