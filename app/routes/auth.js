@@ -57,8 +57,6 @@ module.exports = function (app, express) {
 
     // reset password route
     authRouter.post('/reset', function (req, res) {
-        console.log(req.body.token);
-        console.log(req.body.password);
         User.findOne({resetPasswordToken: req.body.token, resetPasswordExpires: {$gt: Date.now()}}, function (err, user) {
             if (!user) {
                 return  res.json({success: false, message: 'Password reset token is invalid or has expired.'});

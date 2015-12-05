@@ -88,11 +88,10 @@ angular.module('mainCtrl', [])
             vm.doReset = function (isValid) {
                 if (isValid) {
                     vm.rstProcessing = true;
-                    // clear the error
                     vm.regError = '';
                     Auth.reset($routeParams.resetToken, vm.resetData.password, vm.resetData.passwordConfirm).success(function (data) {
                         if (data.success) {
-                            vm.rstSuccess = "Pasword updated!";
+                            vm.rstSuccess = data.message;
                         } else {
                             vm.rstError = data.message;
                             vm.rstProcessing = false;

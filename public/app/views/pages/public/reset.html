@@ -1,31 +1,51 @@
-<div class="row col-md-6 col-md-offset-3">
-    <div class="jumbotron">
-        <h1>New Password</h1>
-        <br>
-        <div class="alert alert-success" ng-if="main.rstSuccess">
-            {{main.rstSuccess}}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="mainbox">
+            <h1>Know your money. Spend less.</h1>
+            <h3>budgetSimply.io is a minimalist expenses tracking and budgeting tool.</h3>
         </div>
-        <form name="resetForm" ng-submit="main.doReset(resetForm.$valid)" ng-if="!main.rstSuccess" novalidate>
-            <div class="alert alert-danger" ng-if="main.rstError">
-                {{main.rstError}}
+    </div>
+    <div class="col-lg-6">
+        <div id="signupbox"  class="mainbox col-md-10 col-md-offset-1 ">
+            <div class="panel panel-info">                          
+                <div class="panel-body" >
+                    <form  class="form-horizontal" name="rstFm" ng-submit="main.doReset(rstFm.$valid)" novalidate>
+                        <div class="form-group fg-custom">
+                            <h2>New Password</h2>
+                            <div class="alert alert-danger" ng-if="main.rstError">{{main.rstError}}</div>
+                            <div class="alert alert-success" ng-if="main.rstSuccess">{{main.rstSuccess}}</div>
+                        </div>
+                        <div ng-if="!main.rstSuccess">
+                            <div class="form-group fg-custom">
+                                <div class="input-group" ng-class="{ 'has-error' : rstFm.password.$invalid && !rstFm.password.$pristine }">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input class="form-control" type="password" name="password" ng-model="main.resetData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required required placeholder="password">
+                                </div>
+                                <span ng-show="rstFm.password.$error.required && rstFm.password.$dirty">required</span>
+                                <span ng-show="!rstFm.password.$error.required && (rstFm.password.$error.minlength || rstFm.password.$error.maxlength) && rstFm.password.$dirty">Passwords must be between 8 and 20 characters.</span>
+                                <span ng-show="!rstFm.password.$error.required && !rstFm.password.$error.minlength && !rstFm.password.$error.maxlength && rstFm.password.$error.pattern && rstFm.password.$dirty">
+                                    Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+                            </div>
+                            <div class="form-group fg-custom">
+                                <div class="input-group" ng-class="{ 'has-error' : rstFm.passwordconfirm.$invalid && !rstFm.passwordconfirm.$pristine }">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input class="form-control" type="password" name="passwordconfirm" ng-model="main.resetData.passwordconfirm"  password-match="main.resetData.password" required  required placeholder="confirm password">
+                                </div>
+                                <span ng-show="rstFm.passwordconfirm.$error.required && rstFm.passwordconfirm.$dirty">Please confirm your password.</span>
+                                <span ng-show="!rstFm.passwordconfirm.$error.required && rstFm.passwordconfirm.$error.unique && rstFm.passwordconfirm.$dirty">Passwords do not match.</span>
+                            </div>
+                        </div>
+                        <div class="form-group fg-custom">
+                            <div class="border-top" >
+                                <button ng-if="!main.regSuccess" type="submit" class="btn btn-success pull-right" ng-class="{ 'disabled' : rstFm.$invalid || main.regProcessing}">
+                                    <span>Reset</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group" ng-class="{ 'has-error' : resetForm.password.$invalid && !resetForm.password.$pristine }">
-                <label>Password</label>
-                <input class="form-control" type="password" name="password" ng-model="main.resetData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required  />
-                <span ng-show="resetForm.password.$error.required && resetForm.password.$dirty">required</span>
-                <span ng-show="!resetForm.password.$error.required && (resetForm.password.$error.minlength || resetForm.password.$error.maxlength) && resetForm.password.$dirty">Passwords must be between 8 and 20 characters.</span>
-                <span ng-show="!resetForm.password.$error.required && !resetForm.password.$error.minlength && !resetForm.password.$error.maxlength && resetForm.password.$error.pattern && resetForm.password.$dirty">Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
-            </div>
-            <div class="form-group" ng-class="{ 'has-error' : resetForm.passwordconfirm.$invalid && !resetForm.passwordconfirm.$pristine }">
-                <label for="passwordconfirm">Confirm Password</label>
-                <input class="form-control" type="password" name="passwordconfirm" ng-model="main.resetData.passwordconfirm"  password-match="main.resetData.password" required  />
-                <span ng-show="resetForm.passwordconfirm.$error.required && resetForm.passwordconfirm.$dirty">Please confirm your password.</span>
-                <span ng-show="!resetForm.passwordconfirm.$error.required && resetForm.passwordconfirm.$error.unique && resetForm.passwordconfirm.$dirty">Passwords do not match.</span>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-block btn-primary" ng-class="{ 'disabled' : resetForm.$invalid || main.regProcessing}">
-                <span>Reset</span>
-            </button>
-        </form>
+        </div>
     </div>
 </div>
