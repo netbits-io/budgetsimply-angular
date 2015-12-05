@@ -1,4 +1,6 @@
-
+body{
+     background-color: #222;
+}
 html, body {
     height: 100%;
 }
@@ -7,9 +9,6 @@ html, body {
     background-color: white;
 }
 .footer {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
     background-color: #222;
     border-top: 1px solid black;
 }
