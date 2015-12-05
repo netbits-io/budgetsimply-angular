@@ -96,10 +96,10 @@ module.exports = function (app, express) {
                             return res.json({success: false, message: err});
                         } else {
                             var smtpTransport = nodemailer.createTransport({
-                                service: 'gmail',
+                                service: config.mailservice,
                                 auth: {
-                                    user: 'budget.simply.io@gmail.com',
-                                    pass: 'budgetsimply123'
+                                    user: config.mailuser,
+                                    pass: config.mailpass
                                 }
                             });
                             smtpTransport.sendMail({

@@ -3,26 +3,26 @@ angular.module('app.routes', ['ngRoute'])
 .config(function($routeProvider, $locationProvider) {
 	$routeProvider
 		// login page
-		.when('/login', {
-			templateUrl : 'app/views/pages/public/login.html',
-   			controller  : 'mainController',
-    			controllerAs: 'main'
-		})
-                .when('/forgot', {
-			templateUrl : 'app/views/pages/public/forgot.html',
-   			controller  : 'mainController',
-    			controllerAs: 'main'
-		})
-                .when('/reset/:resetToken', {
+		// .when('/login', {
+		// 	templateUrl : 'app/views/pages/public/login.html',
+  //  			controller  : 'mainController',
+  //   			controllerAs: 'main'
+		// })
+  //       .when('/forgot', {
+		// 	templateUrl : 'app/views/pages/public/forgot.html',
+  //  			controller  : 'mainController',
+  //   			controllerAs: 'main'
+		// })
+        .when('/reset/:resetToken', {
 			templateUrl : 'app/views/pages/public/reset.html',
    			controller  : 'mainController',
     			controllerAs: 'main'
 		})
-                .when('/register', {
-			templateUrl : 'app/views/pages/public/register.html',
-   			controller  : 'mainController',
-    			controllerAs: 'main'
-		})
+  //       .when('/register', {
+		// 	templateUrl : 'app/views/pages/public/register.html',
+  //  			controller  : 'mainController',
+  //   			controllerAs: 'main'
+		// })
                 // loggedIn home
 		.when('/home', {
 			templateUrl: 'app/views/pages/private/home.html',

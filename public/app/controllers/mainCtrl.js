@@ -9,10 +9,10 @@ angular.module('mainCtrl', [])
                 vm.loggedIn = Auth.isLoggedIn();
                 if (!vm.loggedIn) {
                     if (next.templateUrl.indexOf("app/views/pages/private/") >= 0) {
-                        $location.path("/login");
+                        $location.path("/");
                     }
                     if (next.templateUrl.indexOf("app/views/pages/admin/") >= 0) {
-                        $location.path("/login");
+                        $location.path("/");
                     }
                 } else {
                     Auth.getUser().then(function (data) {

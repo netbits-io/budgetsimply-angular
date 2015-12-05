@@ -1,22 +1,20 @@
 
 <div class="row">
+
 	<div class="col-lg-6">
-		<div style="margin-top:50px;" class="mainbox">
+		<div class="mainbox">
 			<h1>Know your money. Spend less.</h1>
 			<h3>budgetSimply.io is a minimalist expenses tracking and budgeting tool.</h3>
 		</div>
 	</div>
+
 	<div class="col-lg-6">
 
-		<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-10 col-md-offset-1">
+		<div id="loginbox" class="mainbox col-md-10 col-md-offset-1">
 			<div class="panel panel-info" >
-				<div style="padding-top:30px" class="panel-body" >
-					<div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+				<div class="panel-body " >
 
 					<h2>Login</h2>
-					<div class="alert alert-success" ng-if="main.regSuccess">
-						{{main.regSuccess}}
-					</div>
 					<div class="alert alert-danger" ng-if="main.lgnError">
 						{{main.lgnError}}
 					</div>
@@ -35,7 +33,10 @@
 						</div>
 
 						<div style="margin-bottom: 10px; margin-left: 10px" class="input-group">
-							<a href="/forgot">Forgot Password?</a>
+							<a href="#"  onClick="
+							$('#loginbox').hide();
+							$('#resetbox').show()">
+							Forgot Password?</a>
 						</div>
 
 						<div style="margin-top:10px" class="form-group">
@@ -51,9 +52,10 @@
 
 						<div class="form-group">
 							<div class="col-md-12 control">
-								<div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-									Don't have an account! 
-									<a href="#" onClick="$('#loginbox').hide();
+								<div style="border-top: 1px solid#888; padding-top:15px;" >
+									Don't have an account?  
+									<a href="#" onClick="
+									$('#loginbox').hide();
 									$('#signupbox').show()">
 									Sign Up Here
 								</a>
@@ -65,12 +67,15 @@
 		</div>  
 	</div>
 
-	<div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-10 col-md-offset-1 ">
+	<div id="signupbox" style="display:none" class="mainbox col-md-10 col-md-offset-1 ">
 		<div class="panel panel-info">                          
 			<div class="panel-body" >
 				<h2>Register</h2>
 				<div class="alert alert-danger" ng-if="main.regError">
 					{{main.regError}}
+				</div>
+				<div class="alert alert-success" ng-if="main.regSuccess">
+					{{main.regSuccess}}
 				</div>
 				<form  class="form-horizontal" name="regFm" ng-submit="main.doRegister(regFm.$valid)" ng-if="!main.regSuccess" novalidate>
 
@@ -92,33 +97,42 @@
 						<input class="form-control" type="password" name="password" ng-model="main.registerData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required required placeholder="password">
 						<span ng-show="regFm.password.$error.required && regFm.password.$dirty">required</span>
 						<span ng-show="!regFm.password.$error.required && (regFm.password.$error.minlength || regFm.password.$error.maxlength) && regFm.password.$dirty">Passwords must be between 8 and 20 characters.</span>
-						<span ng-show="!regFm.password.$error.required && !regFm.password.$error.minlength && !regFm.password.$error.maxlength && regFm.password.$error.pattern && regFm.password.$dirty">Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+						<span ng-show="!regFm.password.$error.required && !regFm.password.$error.minlength && !regFm.password.$error.maxlength && regFm.password.$error.pattern && regFm.password.$dirty">
+							Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
 
-					</div>
-
-					<div class="input-group mgn25b" ng-class="{ 'has-error' : regFm.passwordconfirm.$invalid && !regFm.passwordconfirm.$pristine }">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-						<input class="form-control" type="password" name="passwordconfirm" ng-model="main.registerData.passwordconfirm"  password-match="main.registerData.password" required  required placeholder="confirm password">
-						<span ng-show="regFm.passwordconfirm.$error.required && regFm.passwordconfirm.$dirty">Please confirm your password.</span>
-						<span ng-show="!regFm.passwordconfirm.$error.required && regFm.passwordconfirm.$error.unique && regFm.passwordconfirm.$dirty">Passwords do not match.</span></div>
-
-						<div class="form-group">
-							<!-- Button -->                                        
-							<div class="col-md-offset-3 col-md-9">
-								<a class="btn btn-warning" id="signinlink" href="#" onclick="$('#signupbox').hide();
-								$('#loginbox').show()">Go Back</a>
-
-								<button type="submit" class="btn btn-success pull-right" ng-class="{ 'disabled' : regFm.$invalid || main.regProcessing}">
-									<span>Sign Up</span>
-								</button>
-
-
-							</div>
 						</div>
 
-					</form>
+						<div class="input-group mgn25b" ng-class="{ 'has-error' : regFm.passwordconfirm.$invalid && !regFm.passwordconfirm.$pristine }">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input class="form-control" type="password" name="passwordconfirm" ng-model="main.registerData.passwordconfirm"  password-match="main.registerData.password" required  required placeholder="confirm password">
+							<span ng-show="regFm.passwordconfirm.$error.required && regFm.passwordconfirm.$dirty">Please confirm your password.</span>
+							<span ng-show="!regFm.passwordconfirm.$error.required && regFm.passwordconfirm.$error.unique && regFm.passwordconfirm.$dirty">Passwords do not match.</span></div>
+
+							<div class="form-group">
+								<!-- Button -->                                        
+								<div class="col-md-12">
+									<a class="btn btn-warning" href="#" onclick="
+									$('#signupbox').hide();
+									$('#loginbox').show()">Go Back</a>
+
+									<button type="submit" class="btn btn-success pull-right" ng-class="{ 'disabled' : regFm.$invalid || main.regProcessing}">
+										<span>Sign Up</span>
+									</button>
+
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+			<div id="resetbox" style="display:none" class="mainbox col-md-10 col-md-offset-1 ">
+				<div class="panel panel-info">                          
+					<div class="panel-body" >
+						<h2>Reset password</h2>
+					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
-</div>

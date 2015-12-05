@@ -4,10 +4,8 @@ var config = require('../../config');
 
 module.exports = function (app, express) {
     var budgetRouter = express.Router();
-    
     budgetRouter.get('/', function (req, res) {
         res.json();
     });
-    
     return budgetRouter;
 };
