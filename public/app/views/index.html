@@ -1,77 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>NodeAuth</title>
-        
-        <base href="/">
+    <title>NodeAuth</title>
 
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-        
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <base href="/">
 
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-route.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-animate.js"></script>
-        
-        <!-- controllers -->
-        <script src="app/controllers/mainCtrl.js"></script>
-        <script src="app/controllers/userCtrl.js"></script>
-        <script src="app/controllers/homeCtrl.js"></script>
-        <script src="app/controllers/meCtrl.js"></script>
-        <!-- services -->
-        <script src="app/services/authService.js"></script>
-        <script src="app/services/userService.js"></script>
-        <!-- main Angular app files -->
-        <script src="app/app.routes.js"></script>
-        <script src="app/app.js"></script>
-    </head>
-    <body ng-app="userApp" ng-controller="mainController as main">
-            <div class="white wrapper">
-            <div class="navbar navbar-inverse navbar-static-top navbar-top-custom" >
-                <div class="container">
-                    <div class="navbar-header">
-                        <a href="/" class="navbar-brand">budgetSimply.io</a>
-                    </div>	
-                    <ul class="nav navbar-nav" ng-if="main.loggedIn">
-                        <li><a href="/home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav" ng-if="main.user.admin">
-                        <li><a href="/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- <li ng-if="!main.loggedIn"><a href="/register">Register</a></li> -->
-                        <!-- <li ng-if="!main.loggedIn"><a href="/login">Login</a></li> -->
-                        <li ng-if="main.loggedIn" class="navbar-text">Hello {{ main.user.email}}!</li>
-                        <li ng-if="main.loggedIn"><a href="/me">Account</a></li>
-                        <li ng-if="main.loggedIn"><a href="#" ng-click="main.doLogout()">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        <div class="push"></div>
-        <main class="container">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-animate.js"></script>
+
+    <!-- controllers -->
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/homeCtrl.js"></script>
+    <script src="app/controllers/meCtrl.js"></script>
+    <!-- services -->
+    <script src="app/services/authService.js"></script>
+    <script src="app/services/userService.js"></script>
+    <!-- main Angular app files -->
+    <script src="app/app.routes.js"></script>
+    <script src="app/app.js"></script>
+</head>
+<body ng-app="userApp" ng-controller="mainController as main">
+    <div class="navbar navbar-inverse navbar-static-top" >
+        <div class="container">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">budgetSimply.io</a>
+            </div>	
+            <ul class="nav navbar-nav" ng-if="main.loggedIn">
+                <li><a href="/home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav" ng-if="main.user.admin">
+                <li><a href="/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <!-- <li ng-if="!main.loggedIn"><a href="/register">Register</a></li> -->
+                <!-- <li ng-if="!main.loggedIn"><a href="/login">Login</a></li> -->
+                <li ng-if="main.loggedIn" class="navbar-text">Hello {{ main.user.email}}!</li>
+                <li ng-if="main.loggedIn"><a href="/me">Account</a></li>
+                <li ng-if="main.loggedIn"><a href="#" ng-click="main.doLogout()">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="white">
+        <div class="container">
             <!-- ANGULAR VIEWS -->
             <div ng-view></div>
-        </main>
-        <div class="push"></div>
         </div>
-        <div class="navbar navbar-inverse navbar-static-bottom">
-            <div class="container text-center">
-                <div class="row">
-                    <p class="navbar-text col-md-12 col-sm-12 col-xs-12">
-                        <a href="#" class="brand">Home</a> |  
-                        <a href="#" class="brand">User Manual</a> | 
-                        <a href="#" class="brand">Terms of Service</a> | 
-                        <a href="#" class="brand">Privacy Policy</a> | 
-                        <a href="#" class="brand">About Us</a>
-                        <span class="pull-right"><a href="http://www.netbits.io/">© 2015 netbits.io</a></span>
-                    </p>
-                </div>
+    </div>
+    <div class="footer">
+        <div class="container text-center">
+            <div class="row">
+                <p class="navbar-text col-md-12 col-sm-12 col-xs-12">
+                    <a href="#" class="brand">Home</a> |  
+                    <a href="#" class="brand">User Manual</a> | 
+                    <a href="#" class="brand">Terms of Service</a> | 
+                    <a href="#" class="brand">Privacy Policy</a> | 
+                    <a href="#" class="brand">About Us</a>
+                    <span class="pull-right"><a href="http://www.netbits.io/">© 2015 netbits.io</a></span>
+                </p>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>
