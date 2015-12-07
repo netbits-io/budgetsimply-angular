@@ -36,12 +36,12 @@
     <div class="white">
         <div class="navbar navbar-inverse navbar-static-top" >
             <div class="container">
-                <div class="navbar-header">
-                    <a href="/" class="navbar-brand">budgetSimply.io</a>
+                <div class="navbar-header" ng-if="main.loggedIn">
+                    <a href="/home" class="navbar-brand">budgetSimply.io</a>
                 </div>	
-                <ul class="nav navbar-nav" ng-if="main.loggedIn">
-                    <li><a href="/home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                </ul>
+                <div class="navbar-header" ng-if="!main.loggedIn">
+                    <a href="/" class="navbar-brand">budgetSimply.io</a>
+                </div>
                 <ul class="nav navbar-nav" ng-if="main.user.admin">
                     <li><a href="/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
                 </ul>
@@ -60,11 +60,11 @@
             <div class="container text-center">
                 <div class="row">
                     <p class="navbar-text col-md-12 col-sm-12 col-xs-12">
-                        <a href="#" class="brand">Home</a> |  
+                        <a href="/home" class="brand">Home</a> |  
                         <a href="#" class="brand">User Manual</a> | 
                         <a href="#" class="brand">Terms of Service</a> | 
                         <a href="#" class="brand">Privacy Policy</a> | 
-                        <a href="#" class="brand">About Us</a>
+                        <a href="#" class="brand">About</a>
                         <span class="pull-right"><a href="http://www.netbits.io/">© 2015 netbits.io</a></span>
                     </p>
                 </div>
