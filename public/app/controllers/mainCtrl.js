@@ -1,6 +1,6 @@
 angular.module('mainCtrl', [])
 
-        .controller('mainController', function ($rootScope, $location, $routeParams, Auth) {
+        .controller('mainController', function ($rootScope, $location, $routeParams, Auth, $uibModal) {
             var vm = this;
 
             vm.loggedIn = Auth.isLoggedIn();
@@ -108,4 +108,25 @@ angular.module('mainCtrl', [])
                 //vm.admin = false;
                 $location.path('/');
             };
+
+            vm.doTest = function () {
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/views/pages/private/editme.html',
+                    controller: 'meController',
+                    controllerAs: 'main',
+                    resolve: {}
+                });
+
+                modalInstance.result.then(
+                    function () {
+                        console.log('Modal ok at: ' + new Date());
+                    }, 
+                    function () {
+                        console.log('Modal dismissed at: ' + new Date());
+                    }
+                );
+            };
+
+
         });
