@@ -7,6 +7,7 @@ angular.module('app.routes', ['ngRoute'])
    			controller  : 'mainController',
     			controllerAs: 'main'
 		})
+		
         // loggedIn home
 		.when('/home', {
 			templateUrl: 'app/views/pages/private/home.html',
