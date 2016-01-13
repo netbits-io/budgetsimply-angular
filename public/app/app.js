@@ -1,16 +1,16 @@
-angular.module('userApp', ['ui.bootstrap', 'ngAnimate', 'app.routes', 'authService', 'mainCtrl', 'userCtrl', 'homeCtrl', 'meCtrl', 'userService'])
+angular.module('userApp', ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngAnimate', 'app.routes', 'authService', 'mainCtrl', 'userCtrl', 'homeCtrl', 'meCtrl', 'userService'])
         // application configuration to integrate token into requests
         .config(function ($httpProvider) {
             // attach our auth interceptor to the http requests
             $httpProvider.interceptors.push('AuthInterceptor');
         })
         .directive('passwordMatch', [function () {
-                return {
-                    restrict: 'A',
-                    scope: true,
-                    require: 'ngModel',
-                    link: function (scope, elem, attrs, control) {
-                        var checker = function () {
+            return {
+                restrict: 'A',
+                scope: true,
+                require: 'ngModel',
+                link: function (scope, elem, attrs, control) {
+                    var checker = function () {
                             //get the value of the first password
                             var e1 = scope.$eval(attrs.ngModel);
                             //get the value of the other password  
@@ -25,4 +25,5 @@ angular.module('userApp', ['ui.bootstrap', 'ngAnimate', 'app.routes', 'authServi
                     }
                 };
             }])
-;
+  
+        ;

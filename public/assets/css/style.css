@@ -27,10 +27,50 @@ html, body {
 .mgn50t{
     margin-top:50px;
 }
+.pad5lr{
+    padding-right: 5px;
+    padding-left: 5px;
+}
 .fg-custom{
     margin-left: 10px !important;
     margin-right: 10px !important;
 }
 .border-top{
     border-top: 1px solid#888; padding-top:15px;
+}
+.dropdown-menu .btn{
+    border: 0;
+}
+
+.datepicker.dropdown-menu button, .timepicker.dropdown-menu button {
+  outline: 0;
+  border: 0;
+}
+
+.tags{
+    box-shadow: 0 !important;
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.host{
+    position: relative;
+    margin-top: 0px !important;
+    margin-bottom: 5px;
+    height: 100%;
+}
+
 }
