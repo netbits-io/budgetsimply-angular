@@ -32,6 +32,7 @@ angular.module('homeCtrl', [])
   { text: 'just' },
   { text: 'some' }
   ];
+  
   $scope.loadTags = function() {
     return [
     { "text": "tag1" },
@@ -45,6 +46,19 @@ angular.module('homeCtrl', [])
     { "text": "tag9" },
     { "text": "tag10" }
     ];
+  };
+
+
+  $scope.budgets = [
+    'budget1',
+    'budget2',
+    'budget3',
+  ];
+  $scope.budget = $scope.budgets[0];
+
+  $scope.toggle = function(open) {
+    $scope.budget = $scope.budgets[open];
+    console.log('Dropdown is now: ', open);
   };
 
 })

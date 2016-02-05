@@ -72,5 +72,13 @@ html, body {
     margin-bottom: 5px;
     height: 100%;
 }
+.whiteButton{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+.w200{
+    width: 200px;
+}
 
 }

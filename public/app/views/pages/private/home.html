@@ -1,8 +1,22 @@
 <div class="page-header">
 	
-	<h1>This is your home screen!</h1>
+	<div>
+ 	<!-- Single button -->
+    <div class="btn-group" uib-dropdown>
+      <button id="single-button" type="button" class="btn btn-primary whiteButton w200" uib-dropdown-toggle ng-disabled="disabled">
+        {{budget}}<span class="caret"></span>
+      </button>
+      <ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
+        <li role="menuitem"><a href="#" ng-click="toggle(0)">budget1</a></li>
+        <li role="menuitem"><a href="#" ng-click="toggle(1)">budget2</a></li>
+        <li role="menuitem"><a href="#" ng-click="toggle(2)">budget3</a></li>
+      </ul>
+    </div>
 
-	<div class="row">
+
+	</div>	
+	<hr>
+	<div class="row hidden">
 		<div class='col-sm-3 pad5lr'>
      	<p class="input-group">
               <input type="text" readonly class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"  show-button-bar="false" show-weeks="false"/>
@@ -16,19 +30,15 @@
       			<auto-complete source="loadTags()"></auto-complete>
     		</tags-input>
 		</div>
-
 		<div class="col-sm-2 pad5lr">
 			<input type="text" class="form-control" /> 
 		</div>
-
 		<div class="col-sm-2 pad5lr">
 			<input type="text" class="form-control" /> 
 		</div>
-
 		<div class="col-sm-1 pad5lr">
 			<button type="button" class="btn btn-default">Go</button> 
 		</div>
-
 	</div>
 	
 	<table class="table table-striped">
@@ -37,7 +47,7 @@
 				<th>Date</th>
 				<th>Tags</th>
 				<th>Note</th>
-				<th>c@c.com</th>
+				<th class="text-right">c@c.com</th>
 			</tr>
 		</thead>
 
@@ -46,19 +56,19 @@
 				<td>12.01.2006</td>
 				<td>food</td>
 				<td>pazaruvane</td>
-				<td>12</td>
+				<td class="text-right">12</td>
 			</tr>
 			<tr>
 				<td>14.01.2006</td>
 				<td>food</td>
 				<td>pazaruvane</td>
-				<td>10</td>
+				<td class="text-right">10</td>
 			</tr>
 			<tr>
 				<td>12.01.2006</td>
 				<td>bills</td>
 				<td>voda</td>
-				<td>20</td>
+				<td class="text-right">20</td>
 			</tr>
 
 		</tbody>
