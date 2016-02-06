@@ -1,79 +1,93 @@
 <div class="page-header">
 	
-	<div>
- 	<!-- Single button -->
-    <div class="btn-group" uib-dropdown>
-      <button id="single-button" type="button" class="btn btn-primary whiteButton w200" uib-dropdown-toggle ng-disabled="disabled">
-        {{budget}}<span class="caret"></span>
-      </button>
-      <ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
-        <li role="menuitem"><a href="#" ng-click="toggle(0)">budget1</a></li>
-        <li role="menuitem"><a href="#" ng-click="toggle(1)">budget2</a></li>
-        <li role="menuitem"><a href="#" ng-click="toggle(2)">budget3</a></li>
-      </ul>
-    </div>
-
-
-	</div>	
-	<hr>
-	<div class="row hidden">
-		<div class='col-sm-3 pad5lr'>
-     	<p class="input-group">
-              <input type="text" readonly class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"  show-button-bar="false" show-weeks="false"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-        </div>
-		<div class="col-sm-4 pad5lr">
-			<tags-input ng-model="tags" >
-      			<auto-complete source="loadTags()"></auto-complete>
-    		</tags-input>
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="btn-group" uib-dropdown>
+				<button id="single-button" type="button" class="btn btn-default whiteButton " uib-dropdown-toggle ng-disabled="disabled">
+					<span class="glyphicon glyphicon-align-justify"></span>
+				</button>
+				<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
+					<li role="menuitem"><a href="#">share budget</a></li>
+					<li role="menuitem"><a href="#">edit budget</a></li>
+					<li role="menuitem"><hr></li>
+					<li role="menuitem"><a href="#">new budget</a></li>
+				</ul>
+			</div>
+			<div class="btn-group " uib-dropdown>
+				<button id="single-button" type="button" class="btn btn-default whiteButton w200" uib-dropdown-toggle ng-disabled="disabled">
+					{{budget}}<span class="caret"></span>
+				</button>
+				<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
+					<li role="menuitem"><a href="#" ng-click="toggle(0)">budget1</a></li>
+					<li role="menuitem"><a href="#" ng-click="toggle(1)">budget2</a></li>
+					<li role="menuitem"><a href="#" ng-click="toggle(2)">budget3</a></li>
+				</ul>
+			</div>
 		</div>
-		<div class="col-sm-2 pad5lr">
-			<input type="text" class="form-control" /> 
-		</div>
-		<div class="col-sm-2 pad5lr">
-			<input type="text" class="form-control" /> 
-		</div>
-		<div class="col-sm-1 pad5lr">
-			<button type="button" class="btn btn-default">Go</button> 
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-default whiteButton" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
+				</span>
+				<input type="text" class="form-control whiteButton" placeholder="February 2016">
+				<span class="input-group-btn">
+					<button class="btn btn-default whiteButton" type="button"><span class="glyphicon glyphicon glyphicon-sort"></span></button>
+					<button class="btn btn-default whiteButton" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
+				</span>
+			</div>
+		</div>	
+		<div class="col-sm-4 text-right">
+			<button class="btn btn-default whiteButton" ng-click="home.modalExpense()" type="button">Add Expense</button>
 		</div>
 	</div>
-	
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Date</th>
-				<th>Tags</th>
-				<th>Note</th>
-				<th class="text-right">c@c.com</th>
-			</tr>
-		</thead>
+	<hr>
 
-		<tbody>
-			<tr>
-				<td>12.01.2006</td>
-				<td>food</td>
-				<td>pazaruvane</td>
-				<td class="text-right">12</td>
-			</tr>
-			<tr>
-				<td>14.01.2006</td>
-				<td>food</td>
-				<td>pazaruvane</td>
-				<td class="text-right">10</td>
-			</tr>
-			<tr>
-				<td>12.01.2006</td>
-				<td>bills</td>
-				<td>voda</td>
-				<td class="text-right">20</td>
-			</tr>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Tags</th>
+			<th>Note</th>
+			<th class="text-right">c@c.com</th>
+			<th class="text-right">a@a.com</th>
+		</tr>
+	</thead>
 
-		</tbody>
+	<tbody>
+		<tr>
+			<td>12.01.2006</td>
+			<td>food</td>
+			<td>pazaruvane</td>
+			<td class="text-right">12</td>
+			<td class="text-right">12</td>
+		</tr>
+		<tr>
+			<td>14.01.2006</td>
+			<td>food</td>
+			<td>pazaruvane</td>
+			<td class="text-right">10</td>
+			<td class="text-right">12</td>
+		</tr>
+		<tr>
+			<td>12.01.2006</td>
+			<td>bills</td>
+			<td>voda</td>
+			<td class="text-right">20</td>
+			<td class="text-right">12</td>
+		</tr>
+		<tfoot>
+			<tr>
+			<td>TOTAL</td>
+			<td></td>
+			<td></td>
+			<td class="text-right">100</td>
+			<td class="text-right">122</td>
+		</tr>
+		</tfoot>
 
-	</table>
+	</tbody>
+
+</table>
 
 
 </div>

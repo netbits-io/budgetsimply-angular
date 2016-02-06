@@ -78,7 +78,10 @@ html, body {
     border: 1px solid black;
 }
 .w200{
-    width: 200px;
+    width: 300px;
+}
+.inlBlock{
+    display: inline !important;
 }
 
 }

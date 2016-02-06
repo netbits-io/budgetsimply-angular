@@ -110,14 +110,12 @@ angular.module('mainCtrl', [])
             };
 
             vm.doTest = function () {
-
                 var modalInstance = $uibModal.open({
                     templateUrl: 'app/views/pages/private/editme.html',
                     controller: 'meController',
                     controllerAs: 'main',
                     resolve: {}
                 });
-
                 modalInstance.result.then(
                     function () {
                         console.log('Modal ok at: ' + new Date());
