@@ -77,8 +77,11 @@ html, body {
     color: black;
     border: 1px solid black;
 }
-.w200{
-    width: 300px;
+.w100m44p{
+    width: calc(100% - 44px);
+}
+.w100p{
+    width: 100%;
 }
 .inlBlock{
     display: inline !important;

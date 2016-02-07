@@ -20,6 +20,23 @@ angular.module('homeCtrl', [])
                 );
             };
 
+  vm.modalBudget = function () {
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/views/pages/private/newbudget.html',
+                    controller: 'newbdgController',
+                    controllerAs: 'main',
+                    resolve: {}
+                });
+                modalInstance.result.then(
+                    function () {
+                        console.log('Modal ok at: ' + new Date());
+                    }, 
+                    function () {
+                        console.log('Modal dismissed at: ' + new Date());
+                    }
+                );
+            };
+
   $scope.budgets = [
     'budget1',
     'budget2',

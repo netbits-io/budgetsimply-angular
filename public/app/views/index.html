@@ -35,6 +35,7 @@
     <script src="app/controllers/homeCtrl.js"></script>
     <script src="app/controllers/meCtrl.js"></script>
     <script src="app/controllers/newexCtrl.js"></script>
+    <script src="app/controllers/newbdgCtrl.js"></script>
 
     <!-- services -->
     <script src="app/services/authService.js"></script>
@@ -54,8 +55,10 @@
                 <div class="navbar-header" ng-if="!main.loggedIn">
                     <a href="/" class="navbar-brand">budgetSimply.io</a>
                 </div>
-                <ul class="nav navbar-nav" ng-if="main.user.admin">
-                    <li><a href="/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+                <ul class="nav navbar-nav" >
+                    <li ng-if="main.loggedIn"><a href="/home"><span class="glyphicon glyphicon-list-alt"></span> Budgets</a></li>
+                    <li ng-if="main.loggedIn"><a href="/statistics"><span class="glyphicon glyphicon-scale"></span> Statistics</a></li>
+                    <li ng-if="main.user.admin"><a href="/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-if="main.loggedIn" class="navbar-text">Hello {{ main.user.email}}!</li>
