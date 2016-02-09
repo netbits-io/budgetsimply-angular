@@ -8,8 +8,8 @@ angular.module('budgetService', [])
 		return $http.get('/api/budgt/');
 	};
 
-	userFactory.create = function(budgetData) {
-		return $http.post('/api/budgt/', budgetData);
+	budgetFactory.create = function(name) {
+		return $http.post('/api/budgt/', {name: name});
 	};
 
 	return budgetFactory;

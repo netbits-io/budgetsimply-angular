@@ -1,10 +1,12 @@
 angular.module('newbdgCtrl', [])
 
-.controller('newbdgController', function ($scope, Auth, $uibModalInstance) {
+.controller('newbdgController', function ($scope, Auth, $uibModalInstance, Budget) {
     var vm = this;
 
     vm.ok = function () {
-        $uibModalInstance.close('ok');
+    	Budget.create(vm.name).success(function (data) {
+                     $uibModalInstance.close('ok');
+               });
     };
 
     vm.cancel = function () {

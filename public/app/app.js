@@ -1,5 +1,5 @@
 angular.module('userApp', ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngAnimate', 
-    'app.routes', 'authService', 'mainCtrl', 'userCtrl', 'homeCtrl', 'meCtrl', 'newexCtrl', 'newbdgCtrl', 'userService'])
+    'app.routes', 'authService', 'budgetService', 'mainCtrl', 'userCtrl', 'homeCtrl', 'meCtrl', 'newexCtrl', 'newbdgCtrl', 'userService'])
         // application configuration to integrate token into requests
         .config(function ($httpProvider) {
             // attach our auth interceptor to the http requests

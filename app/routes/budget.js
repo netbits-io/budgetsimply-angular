@@ -1,4 +1,4 @@
-var bodyParser = require('body-parser'); 	// get body-parser
+var bodyParser = require('body-parser');
 var Budget = require('../models/budget');
 var config = require('../../config');
 

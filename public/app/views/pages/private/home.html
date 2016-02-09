@@ -4,12 +4,10 @@
 		<div class="col-sm-5">
 			<div class="btn-group w100m44p" uib-dropdown>
 				<button type="button" class="btn btn-default whiteButton w100p" uib-dropdown-toggle>
-					{{budget}}<span class="caret"></span>
+					{{home.budget.name}}&nbsp;&nbsp;<span class="caret"></span>
 				</button>
 				<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
-					<li role="menuitem"><a ng-click="toggle(0)">budget1</a></li>
-					<li role="menuitem"><a ng-click="toggle(1)">budget2</a></li>
-					<li role="menuitem"><a ng-click="toggle(2)">budget3</a></li>
+					<li ng-repeat="bdgt in home.budgets" role="menuitem"><a ng-click="toggle(bdgt._id)">{{bdgt.name}}</a></li>
 				</ul>
 			</div>
 			<div class="btn-group" uib-dropdown>

@@ -1,7 +1,22 @@
 angular.module('homeCtrl', [])
 
-.controller('homeController', function($scope, $uibModal) {
-	var vm = this;
+.controller('homeController', function($scope, $uibModal, Budget) {
+   var vm = this;
+
+  Budget.all().success(function (data) {
+        vm.budgets = data;
+        vm.budget =  vm.budgets[0];
+        console.log(data);
+    });
+
+    $scope.toggle = function(id) {
+        vm.budget = vm.budgets.filter(function (bgt) {
+            return bgt._id === id;
+        })[0];
+
+        console.log('Dropdown is now: ', open);
+    };
+
 
   vm.modalExpense = function () {
                 var modalInstance = $uibModal.open({
@@ -37,19 +52,5 @@ angular.module('homeCtrl', [])
                 );
             };
 
-  $scope.budgets = [
-    'budget1',
-    'budget2',
-    'budget3',
-    ];
-  $scope.budget = $scope.budgets[0];
-
-  $scope.toggle = function(open) {
-        $scope.budget = $scope.budgets[open];
-        console.log('Dropdown is now: ', open);
-    };
-
-
-  
 })
 

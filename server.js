@@ -35,7 +35,7 @@ var authRoutes = require('./app/routes/auth')(app, express);
 var secureMdw = require('./app/routes/secure')(app, express);
 var userRoutes = require('./app/routes/user')(app, express);
 var adminRoutes = require('./app/routes/admin')(app, express);
-var budgtRoutes = require('./app/routes/budgt')(app, express);
+var budgtRoutes = require('./app/routes/budget')(app, express);
 
 app.use('/api/auth', authRoutes);
 app.use('/api', secureMdw);
