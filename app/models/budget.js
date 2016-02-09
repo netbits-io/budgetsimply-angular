@@ -3,24 +3,15 @@ var Schema       = mongoose.Schema;
 
 var BudgetSchema   = new Schema({
 	name: String,
-	owners {
-		email: String,
-	},
+	owner: String,
+	shares: [ String],
 	entries {
-		note: String,
-		category: String,
 		date: date,
-		payed: {
-			payer:  String,
-			amount:  double
-		}
+		tags: [{ text: String}],
+		note: String,
+		payed: [{ payer: String, amount: Number}],
 	}
 	
 });
-
-
-BudgetSchema.methods.addEntry = function(owner, note, category, date, amount) {
-
-};
 
 module.exports = mongoose.model('Budget', BudgetSchema);
