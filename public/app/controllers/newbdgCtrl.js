@@ -5,8 +5,8 @@ angular.module('newbdgCtrl', [])
 
     vm.ok = function () {
     	Budget.create(vm.name).success(function (data) {
-                     $uibModalInstance.close('ok');
-               });
+            $uibModalInstance.close('ok');
+        });
     };
 
     vm.cancel = function () {

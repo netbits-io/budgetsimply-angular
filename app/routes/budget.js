@@ -9,6 +9,8 @@ module.exports = function (app, express) {
             .post(function (req, res) {
                 var budget = new Budget();		
                 budget.name = req.body.name; 
+                budget.owner = req.decoded.email;
+                budget.shares.push(req.decoded.email);
   
                 budget.save(function (err) {
                     if (err) {
@@ -21,13 +23,30 @@ module.exports = function (app, express) {
                 });
 
             })
-
             .get(function (req, res) {
                 Budget.find({}, function (err, budgets) {
                     if (err)
                         res.send(err);
                     res.json(budgets);
                 });
+            });
+
+    budgetRouter.route('/:budget_id/expense')
+            .post(function(req,res){
+                Budget.findOne( {'_id' : req.params.budget_id }, function(err, budget){
+                    if(err) return res.json({success: false, err: err, message: 'Expense failed!'});
+                    if(budget){
+                        date = req.body.date;
+                        tags = req.body.tags;
+                        note = req.body.note;
+                        payed = {payer: req.decoded.email, amount: req.body.payed};
+                        budget.entries.push({date: date, tags: tags, note: note, payed: payed});
+                        budget.save( function(err){
+                            if(err) return res.json({success: false, err: err, message: 'Expense failed!'});
+                            return res.json({success: true, message: 'Expense added!'});
+                        });
+                    }
+                 });
             });
 
 

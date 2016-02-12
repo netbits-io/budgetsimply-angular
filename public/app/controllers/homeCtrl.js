@@ -23,7 +23,12 @@ angular.module('homeCtrl', [])
                     templateUrl: 'app/views/pages/private/newexpense.html',
                     controller: 'newexController',
                     controllerAs: 'main',
-                    resolve: {}
+                    resolve: {
+                        budget: function () {
+                            console.log(vm.budget);
+                            return vm.budget;
+                        }
+                    }
                 });
                 modalInstance.result.then(
                     function () {
@@ -40,7 +45,8 @@ angular.module('homeCtrl', [])
                     templateUrl: 'app/views/pages/private/newbudget.html',
                     controller: 'newbdgController',
                     controllerAs: 'main',
-                    resolve: {}
+                    resolve: {
+                    }
                 });
                 modalInstance.result.then(
                     function () {

@@ -1,10 +1,12 @@
 angular.module('newexCtrl', [])
 
-.controller('newexController', function ($scope, Auth, $uibModalInstance) {
+.controller('newexController', function ($scope, Auth, $uibModalInstance, Budget, budget) {
     var vm = this;
 
     vm.ok = function () {
-        $uibModalInstance.close('ok');
+            Budget.addExpense(budget._id, $scope.dt, $scope.tags, vm.note, vm.payed).success(function (data) {
+                $uibModalInstance.close('ok');
+            });
     };
 
     vm.cancel = function () {
@@ -37,18 +39,18 @@ angular.module('newexCtrl', [])
     };
 
     $scope.tags = [];
+
     $scope.allTags = [
-    { "text": "food" },
-    { "text": "workfood" },
-    { "text": "cats" },
-    { "text": "car" },
-    { "text": "petrol" },
-    { "text": "bills" },
-    { "text": "stuff" }
+        { "text": "food" },
+        { "text": "workfood" },
+        { "text": "cats" },
+        { "text": "car" },
+        { "text": "petrol" },
+        { "text": "bills" },
+        { "text": "stuff" }
     ];
 
     $scope.loadTags = function($query) {
-        console.log($query);
         return $scope.allTags.filter(function(item) {
             return item.text.toLowerCase().indexOf($query.toLowerCase()) != -1;
         });

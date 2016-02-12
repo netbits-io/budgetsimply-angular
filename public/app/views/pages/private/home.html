@@ -46,19 +46,24 @@
 				<th>Date</th>
 				<th>Tags</th>
 				<th>Note</th>
-				<th class="text-right">c@c.com</th>
-				<th class="text-right">a@a.com</th>
+
+				<th ng-repeat="share in home.budget.shares" class="text-right">{{share}}</th>
+
 				<th width="50"></th>
 			</tr>
 		</thead>
 
 		<tbody>
-			<tr>
-				<td>12.01.2006</td>
-				<td>food</td>
-				<td>pazaruvane</td>
-				<td class="text-right">12</td>
-				<td class="text-right">12</td>
+			<tr ng-repeat="entry in home.budget.entries">
+				<td>{{entry.date | date:'yyyy-MM-dd'}}</td>
+				<td>{{entry.note}}</td>
+				<td>
+					<span ng-repeat="tag in entry.tags">
+						{{tag.text}}
+					</span>		
+				</td>
+				<th ng-repeat="share in home.budget.shares" class="text-right">{{entry.payed |payedfor:share}}</th>
+
 				<td class="text-right">
 					<div class="btn-group" uib-dropdown>
 						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
@@ -71,49 +76,13 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<td>14.01.2006</td>
-				<td>food</td>
-				<td>pazaruvane</td>
-				<td class="text-right">10</td>
-				<td class="text-right">12</td>
-				<td class="text-right">
-					<div class="btn-group" uib-dropdown>
-						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
-							<span class="glyphicon glyphicon-align-justify"></span>
-						</button>
-						<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
-							<li role="menuitem"><a >edit</a></li>
-							<li role="menuitem"><a >remove</a></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>12.01.2006</td>
-				<td>bills</td>
-				<td>voda</td>
-				<td class="text-right">20</td>
-				<td class="text-right">12</td>
-				<td class="text-right">
-					<div class="btn-group" uib-dropdown>
-						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
-							<span class="glyphicon glyphicon-align-justify"></span>
-						</button>
-						<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
-							<li role="menuitem"><a >edit</a></li>
-							<li role="menuitem"><a >remove</a></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
+			
 			<tfoot>
 				<tr>
 					<td>TOTAL</td>
 					<td></td>
 					<td></td>
-					<td class="text-right">100</td>
-					<td class="text-right">122</td>
+					<th ng-repeat="share in home.budget.shares" class="text-right">{{share}}</th>
 					<td></td>
 				</tr>
 			</tfoot>
