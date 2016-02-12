@@ -1,20 +1,25 @@
 angular.module('homeCtrl', [])
 
 .controller('homeController', function($scope, $uibModal, Budget) {
-   var vm = this;
+    var vm = this;
+    vm.id = 0;
 
-  Budget.all().success(function (data) {
-        vm.budgets = data;
-        vm.budget =  vm.budgets[0];
-        console.log(data);
-    });
+    redraw = function () {
+        Budget.all().success(function (data) {
+            vm.budgets = data;
+            if(vm.id == 0 && vm.budgets[0]){
+                vm.id = vm.budgets[0]._id;
+            }
+            $scope.toggle(vm.id);
+        });
+    }
+    redraw();
 
     $scope.toggle = function(id) {
         vm.budget = vm.budgets.filter(function (bgt) {
             return bgt._id === id;
         })[0];
-
-        console.log('Dropdown is now: ', open);
+        vm.id = vm.budget._id;
     };
 
 
@@ -33,6 +38,7 @@ angular.module('homeCtrl', [])
                 modalInstance.result.then(
                     function () {
                         console.log('Modal ok at: ' + new Date());
+                        redraw();
                     }, 
                     function () {
                         console.log('Modal dismissed at: ' + new Date());
@@ -51,6 +57,7 @@ angular.module('homeCtrl', [])
                 modalInstance.result.then(
                     function () {
                         console.log('Modal ok at: ' + new Date());
+                        redraw();
                     }, 
                     function () {
                         console.log('Modal dismissed at: ' + new Date());
