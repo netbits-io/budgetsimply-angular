@@ -16,5 +16,9 @@ angular.module('budgetService', [])
 		return $http.post('/api/budgt/'+budgetId+'/expense', {date: date, tags: tags, note: note, payed: payed});
 	};
 
+	budgetFactory.deleteExpense = function(budgetId, eId) {
+		return $http.delete('/api/budgt/'+budgetId+'/expense/'+eId);
+	};
+
 	return budgetFactory;
 });

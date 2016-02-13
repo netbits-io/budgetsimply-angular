@@ -13,6 +13,7 @@ angular.module('homeCtrl', [])
             $scope.toggle(vm.id);
         });
     }
+
     redraw();
 
     $scope.toggle = function(id) {
@@ -20,6 +21,12 @@ angular.module('homeCtrl', [])
             return bgt._id === id;
         })[0];
         vm.id = vm.budget._id;
+    };
+
+    vm.deleteExpense = function (eId) {
+         Budget.deleteExpense(vm.budget._id, eId).success(function (data) {
+            redraw();
+        });
     };
 
 
@@ -30,7 +37,6 @@ angular.module('homeCtrl', [])
                     controllerAs: 'main',
                     resolve: {
                         budget: function () {
-                            console.log(vm.budget);
                             return vm.budget;
                         }
                     }

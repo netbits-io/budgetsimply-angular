@@ -28,11 +28,8 @@ angular.module('userApp', ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngA
             }])
         .filter('payedfor', function() {
             return function(payed, user) {
-                console.log(payed);
-                console.log(user);
                 var toReturn = 0;
                 payed.forEach (function (e){
-                    console.log(e);
                     if(e.payer == user){
                         toReturn = e.amount | 0;
                     }

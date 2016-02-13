@@ -49,6 +49,20 @@ module.exports = function (app, express) {
                  });
             });
 
+     budgetRouter.route('/:budget_id/expense/:expense_id')
+            .delete(function(req,res){
+                Budget.findOne( {'_id' : req.params.budget_id }, function(err, budget){
+                    if(err) return res.json({success: false, err: err, message: 'Expense failed!'});
+                    if(budget){
+                        budget.entries = budget.entries.filter(function(el){ return el._id != req.params.expense_id ; });
+                        budget.save( function(err){
+                            if(err) return res.json({success: false, err: err, message: 'Expense failed!'});
+                            return res.json({success: true, message: 'Expense added!'});
+                        });
+                    }
+                 });
+            });
+
 
     return budgetRouter;
 };
