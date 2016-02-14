@@ -3,6 +3,58 @@ angular.module('homeCtrl', [])
 .controller('homeController', function($scope, $uibModal, Budget) {
     var vm = this;
     vm.id = 0;
+    vm.month = 1;
+    vm.year = 2016;
+    vm.lPeriod = false;
+    vm.periodLabel = "";
+    vm.periodString = "";
+
+    pad = function(num, size) {
+        var s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
+    }
+
+    vm.perToggle = function () {
+        vm.lPeriod = !vm.lPeriod;
+        redrawPeriod();
+    };
+
+    vm.perPlus = function () {
+        if(vm.lPeriod){
+           vm.year++;
+        } else {
+            vm.month++;
+            if(vm.month > 12){
+                vm.year++;
+                vm.month = 1;
+            }
+        }
+        redrawPeriod();
+    };
+
+    vm.perMinus = function () {
+        if(vm.lPeriod){
+           vm.year--;
+        } else {
+            vm.month--;
+            if(vm.month < 1){
+                vm.year--;
+                vm.month = 12;
+            }
+        }
+        redrawPeriod();
+    };
+
+    redrawPeriod = function(){
+        if(vm.lPeriod){
+            vm.periodLabel = vm.year;
+            vm.periodString = vm.year;
+        } else {
+            vm.periodLabel = vm.month+" "+vm.year;
+            vm.periodString = vm.year+"-"+pad(vm.month,2);
+        }
+    }
 
     redraw = function () {
         Budget.all().success(function (data) {
@@ -11,6 +63,7 @@ angular.module('homeCtrl', [])
                 vm.id = vm.budgets[0]._id;
             }
             $scope.toggle(vm.id);
+            redrawPeriod();
         });
     }
 

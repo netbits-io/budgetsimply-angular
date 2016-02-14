@@ -18,14 +18,14 @@ angular.module('userApp', ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngA
                             var e2 = scope.$eval(attrs.passwordMatch);
                             return e1 == e2;
                         };
-                        scope.$watch(checker, function (n) {
+                    scope.$watch(checker, function (n) {
                             //set the form control to valid if both 
                             //passwords are the same, else invalid
-                            control.$setValidity("unique", n);
-                        });
-                    }
-                };
-            }])
+                        control.$setValidity("unique", n);
+                    });
+                }
+            };
+        }])
         .filter('payedfor', function() {
             return function(payed, user) {
                 var toReturn = 0;
@@ -38,5 +38,19 @@ angular.module('userApp', ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngA
             }             
 
         })
+        .filter('periodfor', function() {
+            return function(input, periodString) {
+                var filtered = [];
+                    angular.forEach(input, function(item) {
+                        date = JSON.stringify(item.date)
+                        console.log(date);
+                        console.log(periodString);
+                    if(date.indexOf(periodString) != -1) {
+                        filtered.push(item);
+                    }
+                });
+                return filtered;
+            };
+        });
   
         ;

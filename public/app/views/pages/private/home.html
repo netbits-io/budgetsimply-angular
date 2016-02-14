@@ -25,12 +25,12 @@
 		<div class="col-sm-5">
 			<div class="input-group">
 				<span class="input-group-btn">
-					<button class="btn btn-default whiteButton" type="button"><span class="glyphicon glyphicon-chevron-left"></span></button>
+					<button class="btn btn-default whiteButton" type="button" ng-click="home.perMinus()"><span class="glyphicon glyphicon-chevron-left"></span></button>
 				</span>
-				<input type="text" class="form-control whiteButton text-center" placeholder="February 2016">
+				<input type="text" class="form-control whiteButton text-center" ng-value="home.periodLabel">
 				<span class="input-group-btn">
-					<button class="btn btn-default whiteButton" type="button"><span class="glyphicon glyphicon glyphicon-sort"></span></button>
-					<button class="btn btn-default whiteButton" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
+					<button class="btn btn-default whiteButton" type="button" ng-click="home.perToggle()"><span class="glyphicon glyphicon glyphicon-sort"></span></button>
+					<button class="btn btn-default whiteButton" type="button" ng-click="home.perPlus()"><span class="glyphicon glyphicon-chevron-right"></span></button>
 				</span>
 			</div>
 		</div>	
@@ -54,7 +54,7 @@
 		</thead>
 
 		<tbody>
-			<tr ng-repeat="entry in home.budget.entries">
+			<tr ng-repeat="entry in home.budget.entries | periodfor:home.periodString">
 				<td>{{entry.date | date:'yyyy-MM-dd'}}</td>
 				<td>{{entry.note}}</td>
 				<td>
