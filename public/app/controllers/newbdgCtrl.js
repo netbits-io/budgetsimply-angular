@@ -1,4 +1,4 @@
-angular.module('newbdgCtrl', [])
+angular.module('newbdgCtrl', ['budgetService'])
 
 .controller('newbdgController', function ($scope, Auth, $uibModalInstance, Budget) {
     var vm = this;

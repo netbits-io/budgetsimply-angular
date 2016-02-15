@@ -5,9 +5,11 @@ angular.module('homeCtrl', [])
          "July", "August", "September", "October", "November", "December"];
     var vm = this;
     vm.id = 0;
-    vm.month = 1;
-    vm.year = 2016;
+
+    vm.month = 1+(new Date().getMonth());
+    vm.year = (new Date().getFullYear());
     vm.lPeriod = false;
+
     vm.periodLabel = "";
     vm.periodString = "";
 
@@ -98,11 +100,9 @@ angular.module('homeCtrl', [])
                 });
                 modalInstance.result.then(
                     function () {
-                        console.log('Modal ok at: ' + new Date());
                         redraw();
                     }, 
                     function () {
-                        console.log('Modal dismissed at: ' + new Date());
                     }
                 );
             };
@@ -117,11 +117,29 @@ angular.module('homeCtrl', [])
                 });
                 modalInstance.result.then(
                     function () {
-                        console.log('Modal ok at: ' + new Date());
                         redraw();
                     }, 
                     function () {
-                        console.log('Modal dismissed at: ' + new Date());
+                    }
+                );
+            };
+
+   vm.modalShareBudget = function () {
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/views/pages/private/sharebudget.html',
+                    controller: 'shareBController',
+                    controllerAs: 'main',
+                    resolve: {
+                        budget: function () {
+                            return vm.budget;
+                        }
+                    }
+                });
+                modalInstance.result.then(
+                    function () {
+                        redraw();
+                    }, 
+                    function () {
                     }
                 );
             };

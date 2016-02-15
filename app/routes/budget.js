@@ -49,6 +49,21 @@ module.exports = function (app, express) {
                  });
             });
 
+    budgetRouter.route('/:budget_id/share')
+            .post(function(req,res){
+                Budget.findOne( {'_id' : req.params.budget_id }, function(err, budget){
+                    if(err) return res.json({success: false, err: err, message: 'Budget share failed!'});
+                    if(budget){
+                        user = req.body.userId;
+                        budget.shares.push(user);
+                        budget.save( function(err){
+                            if(err) return res.json({success: false, err: err, message: 'Budget share failed!'});
+                            return res.json({success: true, message: 'Budget shared!'});
+                        });
+                    }
+                 });
+            });
+
      budgetRouter.route('/:budget_id/expense/:expense_id')
             .delete(function(req,res){
                 Budget.findOne( {'_id' : req.params.budget_id }, function(err, budget){

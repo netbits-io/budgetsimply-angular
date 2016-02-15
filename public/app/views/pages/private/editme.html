@@ -1,53 +1,42 @@
  <div class="modal-content"> 
     <div class="modal-body">
-
         <h2>Edit My Account</h2>
         <br>
-
         <div class="alert alert-success" ng-if="main.meSuccess">
             {{main.meSuccess}}
         </div>
-
         <form name="meForm" ng-submit="main.saveMe(meForm.$valid)" ng-if="!main.edtSuccess" novalidate>
-
             <div class="alert alert-danger" ng-if="main.meError">
                 {{main.meError}}
             </div>
-
             <div class="form-group" ng-class="{ 'has-error' : registerForm.email.$invalid && !registerForm.email.$pristine }">
                 <label>Email</label>
                 <input class="form-control" type="email" name="email" ng-model="main.meData.email" required disabled/>
                 <span ng-show="meForm.email.$invalid && !meForm.email.$pristine">invalid email</span>
             </div>
-
             <div class="form-group" ng-class="{ 'has-error' : meForm.name.$invalid && !meForm.name.$pristine }">
                 <label>Name</label>
                 <input class="form-control" type="text" name="name" ng-model="main.meData.name" required ng-minlength="8" />
                 <span ng-show="meForm.name.$error.required && meForm.name.$dirty">required</span>
                 <span ng-show="meForm.name.$error.minlength && meForm.name.$dirty">must be 8 characters</span>
             </div>
-
             <div class="form-group" ng-class="{ 'has-error' : meForm.password.$invalid && !meForm.password.$pristine }">
                 <label>New Password</label>
                 <input class="form-control" type="password" name="password" ng-model="main.meData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"  />
                 <span ng-show="(meForm.password.$error.minlength || meForm.password.$error.maxlength) && meForm.password.$dirty">Passwords must be between 8 and 20 characters.</span>
                 <span ng-show="!meForm.password.$error.minlength && !meForm.password.$error.maxlength && meForm.password.$error.pattern && meForm.password.$dirty">Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
             </div>
-
             <div class="form-group" ng-class="{ 'has-error' : meForm.passwordconfirm.$invalid && !meForm.passwordconfirm.$pristine }">
                 <label for="passwordconfirm">Confirm Password</label>
                 <input class="form-control" type="password" name="passwordconfirm" ng-model="main.meData.passwordconfirm"  password-match="main.meData.password"  />
                 <span ng-show="meForm.passwordconfirm.$error.unique && meForm.passwordconfirm.$dirty">Passwords do not match.</span>
             </div>
-            
             <hr>
-            
             <div class="form-group" ng-class="{ 'has-error' : meForm.currentpassword.$invalid && !meForm.currentpassword.$pristine }">
                 <label>Current Password</label>
                 <input class="form-control" type="password" name="currentpassword" ng-model="main.meData.currentpassword" required/>
                 <span ng-show="meForm.currentpassword.$error.required && meForm.currentpassword.$dirty">required</span>
             </div>
-            
             <br>
             <button type="submit" class="btn btn-block btn-primary" ng-class="{ 'disabled' : meForm.$invalid || main.edtProcessing}">
                 <span>Update Account</span>

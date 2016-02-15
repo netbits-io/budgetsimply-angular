@@ -1,4 +1,4 @@
-angular.module('newexCtrl', [])
+angular.module('newexCtrl', ['budgetService'])
 
 .controller('newexController', function ($scope, Auth, $uibModalInstance, Budget, budget) {
     var vm = this;
