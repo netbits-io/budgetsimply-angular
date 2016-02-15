@@ -1,6 +1,8 @@
 angular.module('homeCtrl', [])
 
 .controller('homeController', function($scope, $uibModal, Budget) {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+         "July", "August", "September", "October", "November", "December"];
     var vm = this;
     vm.id = 0;
     vm.month = 1;
@@ -51,7 +53,7 @@ angular.module('homeCtrl', [])
             vm.periodLabel = vm.year;
             vm.periodString = vm.year;
         } else {
-            vm.periodLabel = vm.month+" "+vm.year;
+            vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
             vm.periodString = vm.year+"-"+pad(vm.month,2);
         }
     }
