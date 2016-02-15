@@ -24,7 +24,7 @@ module.exports = function (app, express) {
 
             })
             .get(function (req, res) {
-                Budget.find({}, function (err, budgets) {
+                Budget.find({shares: req.decoded.email}, function (err, budgets) {
                     if (err)
                         res.send(err);
                     res.json(budgets);
