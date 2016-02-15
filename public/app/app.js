@@ -43,14 +43,24 @@ angular.module('userApp', ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngA
                 var filtered = [];
                     angular.forEach(input, function(item) {
                         date = JSON.stringify(item.date)
-                        console.log(date);
-                        console.log(periodString);
                     if(date.indexOf(periodString) != -1) {
                         filtered.push(item);
                     }
                 });
                 return filtered;
             };
-        });
-  
+        })
+        .filter('calctotal', function() {
+            return function(input, payer) {
+                var total = 0;
+                angular.forEach(input, function(item) {
+                    item.payed.filter(function (el) {
+                        if(el.payer === payer){
+                            total += el.amount;
+                        }
+                    });
+                });
+                return total;
+            };
+        })
         ;

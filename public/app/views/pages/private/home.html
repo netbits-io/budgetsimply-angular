@@ -82,7 +82,7 @@
 					<td>TOTAL</td>
 					<td></td>
 					<td></td>
-					<th ng-repeat="share in home.budget.shares" class="text-right"> </th>
+					<th ng-repeat="share in home.budget.shares" class="text-right"> {{home.budget.entries | periodfor:home.periodString | calctotal:share }}</th>
 					<td></td>
 				</tr>
 			</tfoot>
