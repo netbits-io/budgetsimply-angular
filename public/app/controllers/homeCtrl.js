@@ -3,8 +3,8 @@ angular.module('homeCtrl', [])
 .controller('homeController', function($scope, $uibModal, Budget) {
     var monthNames = ["January", "February", "March", "April", "May", "June",
          "July", "August", "September", "October", "November", "December"];
+    
     var vm = this;
-    vm.id = 0;
 
     vm.month = 1+(new Date().getMonth());
     vm.year = (new Date().getFullYear());
@@ -62,23 +62,19 @@ angular.module('homeCtrl', [])
 
     redraw = function () {
         Budget.all().success(function (data) {
-            vm.budgets = data;
-            if(vm.id == 0 && vm.budgets[0]){
-                vm.id = vm.budgets[0]._id;
-            }
-            $scope.toggle(vm.id);
+            vm.expenses = data;
             redrawPeriod();
         });
     }
 
     redraw();
 
-    $scope.toggle = function(id) {
-        vm.budget = vm.budgets.filter(function (bgt) {
-            return bgt._id === id;
-        })[0];
-        vm.id = vm.budget._id;
-    };
+    // $scope.toggle = function(id) {
+    //     vm.budget = vm.budgets.filter(function (bgt) {
+    //         return bgt._id === id;
+    //     })[0];
+    //     vm.id = vm.budget._id;
+    // };
 
     vm.deleteExpense = function (eId) {
          Budget.deleteExpense(vm.budget._id, eId).success(function (data) {
@@ -107,42 +103,42 @@ angular.module('homeCtrl', [])
                 );
             };
 
-  vm.modalBudget = function () {
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'app/views/pages/private/newbudget.html',
-                    controller: 'newbdgController',
-                    controllerAs: 'main',
-                    resolve: {
-                    }
-                });
-                modalInstance.result.then(
-                    function () {
-                        redraw();
-                    }, 
-                    function () {
-                    }
-                );
-            };
+  // vm.modalBudget = function () {
+  //               var modalInstance = $uibModal.open({
+  //                   templateUrl: 'app/views/pages/private/newbudget.html',
+  //                   controller: 'newbdgController',
+  //                   controllerAs: 'main',
+  //                   resolve: {
+  //                   }
+  //               });
+  //               modalInstance.result.then(
+  //                   function () {
+  //                       redraw();
+  //                   }, 
+  //                   function () {
+  //                   }
+  //               );
+  //           };
 
-   vm.modalShareBudget = function () {
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'app/views/pages/private/sharebudget.html',
-                    controller: 'shareBController',
-                    controllerAs: 'main',
-                    resolve: {
-                        budget: function () {
-                            return vm.budget;
-                        }
-                    }
-                });
-                modalInstance.result.then(
-                    function () {
-                        redraw();
-                    }, 
-                    function () {
-                    }
-                );
-            };
+   // vm.modalShareBudget = function () {
+   //              var modalInstance = $uibModal.open({
+   //                  templateUrl: 'app/views/pages/private/sharebudget.html',
+   //                  controller: 'shareBController',
+   //                  controllerAs: 'main',
+   //                  resolve: {
+   //                      budget: function () {
+   //                          return vm.budget;
+   //                      }
+   //                  }
+   //              });
+   //              modalInstance.result.then(
+   //                  function () {
+   //                      redraw();
+   //                  }, 
+   //                  function () {
+   //                  }
+   //              );
+   //          };
 
 })
 

@@ -54,14 +54,11 @@ angular.module('userApp',
             };
         })
         .filter('calctotal', function() {
-            return function(input, payer) {
+            return function(input) {
                 var total = 0;
                 angular.forEach(input, function(item) {
-                    item.payed.filter(function (el) {
-                        if(el.payer === payer){
-                            total += el.amount;
-                        }
-                    });
+                    if(! isNaN (item.amount-0) && item.amount != null)
+                        total += item.amount;
                 });
                 return total;
             };

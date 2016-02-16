@@ -36,12 +36,14 @@ var secureMdw = require('./app/routes/secure')(app, express);
 var userRoutes = require('./app/routes/user')(app, express);
 var adminRoutes = require('./app/routes/admin')(app, express);
 var budgtRoutes = require('./app/routes/budget')(app, express);
+var expenseRoutes = require('./app/routes/expense')(app, express);
 
 app.use('/api/auth', authRoutes);
 app.use('/api', secureMdw);
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/budgt', budgtRoutes);
+app.use('/api/expense', expenseRoutes);
 
 // MAIN CATCHALL ROUTE --------------- 
 app.get('*', function(req, res) {

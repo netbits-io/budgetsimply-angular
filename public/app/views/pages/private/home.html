@@ -1,7 +1,7 @@
 <div class="page-header">
 	
 	<div class="row">
-		<div class="col-sm-5">
+<!-- 		<div class="col-sm-5">
 			<div class="btn-group w100m44p" uib-dropdown>
 				<button type="button" class="btn btn-default whiteButton w100p" uib-dropdown-toggle>
 					{{home.budget.name}}&nbsp;&nbsp;<span class="caret"></span>
@@ -21,8 +21,8 @@
 					<li role="menuitem"><a ng-click="home.modalBudget()">new budget</a></li>
 				</ul>
 			</div>
-		</div>
-		<div class="col-sm-5">
+		</div> -->
+		<div class="col-sm-4">
 			<div class="input-group">
 				<span class="input-group-btn">
 					<button class="btn btn-default whiteButton" type="button" ng-click="home.perMinus()"><span class="glyphicon glyphicon-chevron-left"></span></button>
@@ -34,6 +34,8 @@
 				</span>
 			</div>
 		</div>	
+		<div class="col-sm-6">
+		</div>
 		<div class="col-sm-2 text-right">
 			<button class="btn btn-default whiteButton" ng-click="home.modalExpense()" type="button">Add Expense</button>
 		</div>
@@ -45,12 +47,12 @@
 				<th>Date</th>
 				<th>Tags</th>
 				<th>Note</th>
-				<th ng-repeat="share in home.budget.shares" class="text-right">{{share}}</th>
+				<th class="text-right">Amount</th>
 				<th width="50"></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="entry in home.budget.entries | periodfor:home.periodString">
+			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString">
 				<td>{{entry.date | date:'yyyy-MM-dd'}}</td>
 				<td>
 					<span ng-repeat="tag in entry.tags">
@@ -58,7 +60,7 @@
 					</span>		
 				</td>
 				<td>{{entry.note}}</td>
-				<th ng-repeat="share in home.budget.shares" class="text-right">{{entry.payed |payedfor:share}}</th>
+				<th class="text-right">{{entry.amount}}</th>
 				<td class="text-right">
 					<div class="btn-group" uib-dropdown>
 						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
@@ -76,7 +78,7 @@
 					<td>TOTAL</td>
 					<td></td>
 					<td></td>
-					<th ng-repeat="share in home.budget.shares" class="text-right"> {{home.budget.entries | periodfor:home.periodString | calctotal:share }}</th>
+					<th class="text-right"> {{home.expenses | periodfor:home.periodString | calctotal }}</th>
 					<td></td>
 				</tr>
 			</tfoot>

@@ -5,19 +5,12 @@ angular.module('budgetService', [])
 	var budgetFactory = {};
 
 	budgetFactory.all = function() {
-		return $http.get('/api/budgt/');
+		return $http.get('/api/expense/');
 	};
 
-	budgetFactory.create = function(name) {
-		return $http.post('/api/budgt/', {name: name});
-	};
-
-	budgetFactory.addExpense = function(budgetId, date, tags, note, payed) {
-		return $http.post('/api/budgt/'+budgetId+'/expense', {date: date, tags: tags, note: note, payed: payed});
-	};
-
-		budgetFactory.share = function(budgetId, userId) {
-		return $http.post('/api/budgt/'+budgetId+'/share', {userId: userId});
+	budgetFactory.addExpense = function(date, tags, note, payed) {
+		postData = {date: date, tags: tags, note: note, amount: payed, shares: []}
+		return $http.post('/api/expense/', postData);
 	};
 
 	budgetFactory.deleteExpense = function(budgetId, eId) {

@@ -1,10 +1,10 @@
 angular.module('newexCtrl', ['budgetService'])
 
-.controller('newexController', function ($scope, Auth, $uibModalInstance, Budget, budget) {
+.controller('newexController', function ($scope, Auth, $uibModalInstance, Budget) {
     var vm = this;
 
     vm.ok = function () {
-            Budget.addExpense(budget._id, $scope.dt, $scope.tags, vm.note, vm.payed).success(function (data) {
+            Budget.addExpense($scope.dt, $scope.tags, vm.note, vm.payed).success(function (data) {
                 $uibModalInstance.close('ok');
             });
     };
