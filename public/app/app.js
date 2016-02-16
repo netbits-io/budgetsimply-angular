@@ -1,8 +1,8 @@
 angular.module('userApp', 
         ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngAnimate', 
          'app.routes', 'authService', 'budgetService', 'mainCtrl', 
-         'userCtrl', 'homeCtrl', 'meCtrl', 'newexCtrl', 'newbdgCtrl', 
-         'userService', 'shareBCtrl'])
+         'userCtrl', 'homeCtrl', 'meCtrl', 'newexCtrl', 
+         'userService'])
         // application configuration to integrate token into requests
         .config(function ($httpProvider) {
             // attach our auth interceptor to the http requests
@@ -30,16 +30,26 @@ angular.module('userApp',
             };
         }])
         .filter('payedfor', function() {
-            return function(payed, user) {
+            return function(expense, user) {
                 var toReturn = 0;
-                payed.forEach (function (e){
-                    if(e.payer == user){
-                        toReturn = e.amount | 0;
-                    }
-                });
+                if(expense.owner == user){
+                    notMy = 0;
+                    expense.shares.forEach (function (e){
+                        if(e.user != user){
+                           notMy += e.amount | 0;
+                        }
+                    });
+                    toReturn = expense.amount+" -"+notMy;
+                } else {
+                    expense.shares.forEach (function (e){
+                        if(e.user == user){
+                            toReturn = e.amount | 0;
+                            toReturn = "+"+toReturn;
+                        }
+                    });
+                }
                 return toReturn;
             }             
-
         })
         .filter('periodfor', function() {
             return function(input, periodString) {
@@ -63,4 +73,18 @@ angular.module('userApp',
                 return total;
             };
         })
+        .filter('calctotalfor', function() {
+            return function(input, payer) {
+                var total = 0;
+                angular.forEach(input, function(item) {
+                    item.shares.filter(function (el) {
+                        if(el.user === payer){
+                            total += el.amount;
+                        }
+                    });
+                });
+                return total;
+            };
+        })
         ;
+

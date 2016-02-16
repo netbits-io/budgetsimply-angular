@@ -7,14 +7,24 @@
   </div>
   <div class="modal-body">
     <form>
-      <div class="form-group">
-        <label>At Date</label>
-        <p class="input-group">
-          <input type="text" readonly class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"  show-button-bar="false" show-weeks="false"/>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
-        </p>
+      <div class="row">
+        <div class="col-xs-7">
+          <div class="form-group">
+            <label>At Date</label>
+            <p class="input-group">
+              <input type="text" readonly class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"  show-button-bar="false" show-weeks="false"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="col-xs-5">
+          <div class="form-group">
+            <label>Amount</label>
+            <input type="number" ng-model="main.payed" class="form-control" /> 
+          </div>
+        </div>
       </div>
       <div class="form-group">
         <label>Tags</label>
@@ -22,19 +32,36 @@
         <auto-complete min-length="0" debounce-delay="0" select-first-match="true" source="loadTags($query)"></auto-complete>
       </tags-input>
     </div>
-    <div class="form-group">
+    <div class="form-group hidden">
       <label>Note</label>
       <input type="text" ng-model="main.note" class="form-control" /> 
     </div>
-    <div class="form-group">
-      <label>Amount</label>
-      <input type="number" ng-model="main.payed" class="form-control" /> 
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <button type="button" class="btn btn-default" ng-click="main.sharePlus()">Share Expense with another User</button>
+      </div>
     </div>
-  </form>
+    <br>
+    <div ng-repeat="item in main.shares">
+      <div class="row">
+       <div class="col-xs-8">
+        <div class="form-group">
+          <label>Share User Email</label>
+          <input class="form-control" ng-model="item.user" type="text"/>
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <div class="form-group">
+          <label>Amount</label>
+          <input class="form-control" ng-model="item.amount" type="number"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-default" ng-click="main.cancel()">Cancel</button>
   <button type="button" class="btn btn-default" ng-click="main.ok()">Save</button>
 </div>
-
 </div>

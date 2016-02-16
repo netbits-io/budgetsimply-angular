@@ -22,7 +22,7 @@
 				</ul>
 			</div>
 		</div> -->
-		<div class="col-sm-4">
+		<div class="col-sm-5">
 			<div class="input-group">
 				<span class="input-group-btn">
 					<button class="btn btn-default whiteButton" type="button" ng-click="home.perMinus()"><span class="glyphicon glyphicon-chevron-left"></span></button>
@@ -34,7 +34,7 @@
 				</span>
 			</div>
 		</div>	
-		<div class="col-sm-6">
+		<div class="col-sm-5">
 		</div>
 		<div class="col-sm-2 text-right">
 			<button class="btn btn-default whiteButton" ng-click="home.modalExpense()" type="button">Add Expense</button>
@@ -60,7 +60,7 @@
 					</span>		
 				</td>
 				<td>{{entry.note}}</td>
-				<th class="text-right">{{entry.amount}}</th>
+				<th class="text-right">{{entry | payedfor:main.user.email}}</th>
 				<td class="text-right">
 					<div class="btn-group" uib-dropdown>
 						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
@@ -78,11 +78,12 @@
 					<td>TOTAL</td>
 					<td></td>
 					<td></td>
-					<th class="text-right"> {{home.expenses | periodfor:home.periodString | calctotal }}</th>
+					<th class="text-right"> {{home.expenses | periodfor:home.periodString | calctotalfor:main.user.email }}</th>
 					<td></td>
 				</tr>
 			</tfoot>
 		</tbody>
 	</table>
+
 </div>
 

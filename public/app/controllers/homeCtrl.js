@@ -69,13 +69,6 @@ angular.module('homeCtrl', [])
 
     redraw();
 
-    // $scope.toggle = function(id) {
-    //     vm.budget = vm.budgets.filter(function (bgt) {
-    //         return bgt._id === id;
-    //     })[0];
-    //     vm.id = vm.budget._id;
-    // };
-
     vm.deleteExpense = function (eId) {
          Budget.deleteExpense(vm.budget._id, eId).success(function (data) {
             redraw();
@@ -102,43 +95,6 @@ angular.module('homeCtrl', [])
                     }
                 );
             };
-
-  // vm.modalBudget = function () {
-  //               var modalInstance = $uibModal.open({
-  //                   templateUrl: 'app/views/pages/private/newbudget.html',
-  //                   controller: 'newbdgController',
-  //                   controllerAs: 'main',
-  //                   resolve: {
-  //                   }
-  //               });
-  //               modalInstance.result.then(
-  //                   function () {
-  //                       redraw();
-  //                   }, 
-  //                   function () {
-  //                   }
-  //               );
-  //           };
-
-   // vm.modalShareBudget = function () {
-   //              var modalInstance = $uibModal.open({
-   //                  templateUrl: 'app/views/pages/private/sharebudget.html',
-   //                  controller: 'shareBController',
-   //                  controllerAs: 'main',
-   //                  resolve: {
-   //                      budget: function () {
-   //                          return vm.budget;
-   //                      }
-   //                  }
-   //              });
-   //              modalInstance.result.then(
-   //                  function () {
-   //                      redraw();
-   //                  }, 
-   //                  function () {
-   //                  }
-   //              );
-   //          };
 
 })
 

@@ -23,9 +23,9 @@ module.exports = function (app, express) {
 
             })
             .get(function (req, res) {
-                Expense.find({owner: req.decoded.email}, function (err, budgets) {
+                Expense.find({owner: req.decoded.email}, function (err, expenses) {
                     if (err) res.json({success: false, message: err.code});
-                    res.json(budgets);
+                    res.json(expenses);
                 });
             });
 
@@ -33,7 +33,7 @@ module.exports = function (app, express) {
             .get(function (req, res) {
                 Expense.find({'shares.user' : req.decoded.email}, function (err, expenses) {
                     if (err) res.json({success: false, message: err.code});
-                    res.json(expense);
+                    res.json(expenses);
                 });
             });
 

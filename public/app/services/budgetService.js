@@ -5,11 +5,11 @@ angular.module('budgetService', [])
 	var budgetFactory = {};
 
 	budgetFactory.all = function() {
-		return $http.get('/api/expense/');
+		return $http.get('/api/expense/shares');
 	};
 
-	budgetFactory.addExpense = function(date, tags, note, payed) {
-		postData = {date: date, tags: tags, note: note, amount: payed, shares: []}
+	budgetFactory.addExpense = function(date, tags, note, payed, shares) {
+		postData = {date: date, tags: tags, note: note, amount: payed, shares: shares}
 		return $http.post('/api/expense/', postData);
 	};
 
