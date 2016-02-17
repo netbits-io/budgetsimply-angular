@@ -2,7 +2,7 @@ angular.module('sharedCtrl', [])
 
 .controller('sharedController', function($scope, $uibModal, Budget, Auth) {
     var monthNames = ["January", "February", "March", "April", "May", "June",
-         "July", "August", "September", "October", "November", "December"];
+    "July", "August", "September", "October", "November", "December"];
     
     var vm = this;
 
@@ -38,65 +38,63 @@ angular.module('sharedCtrl', [])
     vm.perPlus = function () {
         if(vm.lPeriod){
            vm.year++;
-        } else {
-            vm.month++;
-            if(vm.month > 12){
-                vm.year++;
-                vm.month = 1;
-            }
-        }
-        redrawPeriod();
-    };
-
-    vm.perMinus = function () {
-        if(vm.lPeriod){
-           vm.year--;
-        } else {
-            vm.month--;
-            if(vm.month < 1){
-                vm.year--;
-                vm.month = 12;
-            }
-        }
-        redrawPeriod();
-    };
-
-    redrawPeriod = function(){
-        if(vm.lPeriod){
-            vm.periodLabel = vm.year;
-            vm.periodString = vm.year;
-        } else {
-            vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
-            vm.periodString = vm.year+"-"+pad(vm.month,2);
+       } else {
+        vm.month++;
+        if(vm.month > 12){
+            vm.year++;
+            vm.month = 1;
         }
     }
+    redrawPeriod();
+};
 
-    redraw = function () {
-        Budget.all().success(function (data) {
-            vm.expenses = data;
+vm.perMinus = function () {
+    if(vm.lPeriod){
+       vm.year--;
+   } else {
+    vm.month--;
+    if(vm.month < 1){
+        vm.year--;
+        vm.month = 12;
+    }
+}
+redrawPeriod();
+};
 
-            sharedlst = new Set();
-            vm.expenses.filter(function (expense) {
-                if(expense.owner === vm.mymail){
-                        expense.shares.filter(function (el) {
-                            sharedlst.add(el.user);
-                        });
-                    } else {
-                        sharedlst.add(expense.owner);
-                    }
-            });
-            sharedlst.delete(vm.mymail);
-            if(sharedlst.size > 0){
-                vm.sharedwithlist = Array.from(sharedlst);
-                vm.sharedwith = vm.sharedwithlist[0];
+redrawPeriod = function(){
+    if(vm.lPeriod){
+        vm.periodLabel = vm.year;
+        vm.periodString = vm.year;
+    } else {
+        vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
+        vm.periodString = vm.year+"-"+pad(vm.month,2);
+    }
+}
+
+redraw = function () {
+    Budget.all().success(function (data) {
+        vm.expenses = data;
+
+        sharedlst = new Set();
+        vm.expenses.filter(function (expense) {
+            if(expense.owner === vm.mymail){
+                expense.shares.filter(function (el) {
+                    sharedlst.add(el.user);
+                });
+            } else {
+                sharedlst.add(expense.owner);
             }
-            redrawPeriod();
         });
-    }
+        sharedlst.delete(vm.mymail);
+        if(sharedlst.size > 0){
+            vm.sharedwithlist = Array.from(sharedlst);
+            vm.sharedwith = vm.sharedwithlist[0];
+        }
+        redrawPeriod();
+    });
+}
 
-    redraw();
-
-
+redraw();
 
 })
 

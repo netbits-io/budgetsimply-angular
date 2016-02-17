@@ -1,22 +1,22 @@
 angular.module('mainCtrl', [])
 
-        .controller('mainController', function ($rootScope, $location, $routeParams, Auth, $uibModal) {
-            var vm = this;
+.controller('mainController', function ($rootScope, $location, $routeParams, Auth, $uibModal) {
+    var vm = this;
 
-            vm.loggedIn = Auth.isLoggedIn();
+    vm.loggedIn = Auth.isLoggedIn();
 
-            checkOnEveryRequest = function (event, next, current) {
-                vm.loggedIn = Auth.isLoggedIn();
-                if (!vm.loggedIn) {
-                    if (next.templateUrl.indexOf("app/views/pages/private/") >= 0) {
-                        $location.path("/");
-                    }
-                    if (next.templateUrl.indexOf("app/views/pages/admin/") >= 0) {
-                        $location.path("/");
-                    }
-                } else {
-                    Auth.getUser().then(function (data) {
-                        vm.user = data.data;
+    checkOnEveryRequest = function (event, next, current) {
+        vm.loggedIn = Auth.isLoggedIn();
+        if (!vm.loggedIn) {
+            if (next.templateUrl.indexOf("app/views/pages/private/") >= 0) {
+                $location.path("/");
+            }
+            if (next.templateUrl.indexOf("app/views/pages/admin/") >= 0) {
+                $location.path("/");
+            }
+        } else {
+            Auth.getUser().then(function (data) {
+                vm.user = data.data;
                         //console.log(vm.user);
                         if (!vm.user.admin) {
                             if (next.templateUrl.indexOf("app/views/pages/admin/") >= 0) {
@@ -29,8 +29,8 @@ angular.module('mainCtrl', [])
                             $location.path("/home");
                         }
                     })
-                }
-            };
+        }
+    };
 
             // check to see if a user is logged in on every request
             $rootScope.$on('$routeChangeStart', checkOnEveryRequest);
@@ -123,7 +123,7 @@ angular.module('mainCtrl', [])
                     function () {
                         console.log('Modal dismissed at: ' + new Date());
                     }
-                );
+                    );
             };
 
 

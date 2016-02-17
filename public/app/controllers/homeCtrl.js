@@ -1,104 +1,105 @@
 angular.module('homeCtrl', [])
 
 .controller('homeController', function($scope, $uibModal, Budget, Auth) {
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-         "July", "August", "September", "October", "November", "December"];
-    
-    var vm = this;
 
-    vm.month = 1+(new Date().getMonth());
-    vm.year = (new Date().getFullYear());
-    vm.lPeriod = false;
+  var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
 
-    vm.periodLabel = "";
-    vm.periodString = "";
+  var vm = this;
 
-    Auth.getUser().then(function (data) {
-        vm.mymail = data.data.email;
-    });
+  vm.month = 1+(new Date().getMonth());
+  vm.year = (new Date().getFullYear());
+  vm.lPeriod = false;
 
-    pad = function(num, size) {
-        var s = num+"";
-        while (s.length < size) s = "0" + s;
-        return s;
+  vm.periodLabel = "";
+  vm.periodString = "";
+
+  Auth.getUser().then(function (data) {
+    vm.mymail = data.data.email;
+  });
+
+  pad = function(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+  }
+
+  vm.perToggle = function () {
+    vm.lPeriod = !vm.lPeriod;
+    redrawPeriod();
+  };
+
+  vm.perPlus = function () {
+    if(vm.lPeriod){
+     vm.year++;
+   } else {
+    vm.month++;
+    if(vm.month > 12){
+      vm.year++;
+      vm.month = 1;
     }
+  }
+  redrawPeriod();
+};
 
-    vm.perToggle = function () {
-        vm.lPeriod = !vm.lPeriod;
-        redrawPeriod();
-    };
+vm.perMinus = function () {
+  if(vm.lPeriod){
+   vm.year--;
+ } else {
+  vm.month--;
+  if(vm.month < 1){
+    vm.year--;
+    vm.month = 12;
+  }
+}
+redrawPeriod();
+};
 
-    vm.perPlus = function () {
-        if(vm.lPeriod){
-           vm.year++;
-        } else {
-            vm.month++;
-            if(vm.month > 12){
-                vm.year++;
-                vm.month = 1;
-            }
-        }
-        redrawPeriod();
-    };
+redrawPeriod = function(){
+  if(vm.lPeriod){
+    vm.periodLabel = vm.year;
+    vm.periodString = vm.year;
+  } else {
+    vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
+    vm.periodString = vm.year+"-"+pad(vm.month,2);
+  }
+}
 
-    vm.perMinus = function () {
-        if(vm.lPeriod){
-           vm.year--;
-        } else {
-            vm.month--;
-            if(vm.month < 1){
-                vm.year--;
-                vm.month = 12;
-            }
-        }
-        redrawPeriod();
-    };
+redraw = function () {
+  Budget.all().success(function (data) {
+    vm.expenses = data;
+    redrawPeriod();
+  });
+}
 
-    redrawPeriod = function(){
-        if(vm.lPeriod){
-            vm.periodLabel = vm.year;
-            vm.periodString = vm.year;
-        } else {
-            vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
-            vm.periodString = vm.year+"-"+pad(vm.month,2);
-        }
+redraw();
+
+vm.deleteExpense = function (eId) {
+ Budget.deleteExpense(vm.budget._id, eId).success(function (data) {
+  redraw();
+});
+};
+
+
+vm.modalExpense = function () {
+  var modalInstance = $uibModal.open({
+    templateUrl: 'app/views/pages/private/newexpense.html',
+    controller: 'newexController',
+    controllerAs: 'main',
+    resolve: {
+      budget: function () {
+        return vm.budget;
+      }
     }
-
-    redraw = function () {
-        Budget.all().success(function (data) {
-            vm.expenses = data;
-            redrawPeriod();
-        });
+  });
+  modalInstance.result.then(
+    function () {
+      redraw();
+    }, 
+    function () {
     }
-
-    redraw();
-
-    vm.deleteExpense = function (eId) {
-         Budget.deleteExpense(vm.budget._id, eId).success(function (data) {
-            redraw();
-        });
-    };
-
-
-  vm.modalExpense = function () {
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'app/views/pages/private/newexpense.html',
-                    controller: 'newexController',
-                    controllerAs: 'main',
-                    resolve: {
-                        budget: function () {
-                            return vm.budget;
-                        }
-                    }
-                });
-                modalInstance.result.then(
-                    function () {
-                        redraw();
-                    }, 
-                    function () {
-                    }
-                );
-            };
+    );
+};
 
 })
 

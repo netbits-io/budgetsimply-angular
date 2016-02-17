@@ -1,7 +1,7 @@
 angular.module('userCtrl', ['userService'])
 
-        .controller('userController', function (User) {
-            var vm = this;
+.controller('userController', function (User) {
+    var vm = this;
             // set a processing variable to show loading things
             vm.processing = true;
             // grab all the users at page load
@@ -48,8 +48,8 @@ angular.module('userCtrl', ['userService'])
             // get the user data for the user you want to edit
             // $routeParams is the way we grab data from the URL
             User.get($routeParams.user_id).success(function (data) {
-                        vm.userData = data;
-                    });
+                vm.userData = data;
+            });
             // function to save the user
             vm.saveUser = function () {
                 vm.processing = true;

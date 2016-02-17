@@ -6,7 +6,7 @@ angular.module('authService', [])
 // inject $q to return promise objects
 // inject AuthToken to manage tokens
 // ===================================================
-        .factory('Auth', function ($http, $q, AuthToken) {
+.factory('Auth', function ($http, $q, AuthToken) {
             // create auth factory object
             var authFactory = {};
             // log a user in
@@ -78,8 +78,8 @@ angular.module('authService', [])
 // factory for handling tokens
 // inject $window to store token client-side
 // ===================================================
-        .factory('AuthToken', function ($window) {
-            var authTokenFactory = {};
+.factory('AuthToken', function ($window) {
+    var authTokenFactory = {};
             // get the token out of local storage
             authTokenFactory.getToken = function () {
                 return $window.localStorage.getItem('token');
@@ -99,8 +99,8 @@ angular.module('authService', [])
 // ===================================================
 // application configuration to integrate token into requests
 // ===================================================
-        .factory('AuthInterceptor', function ($q, $location, AuthToken) {
-            var interceptorFactory = {};
+.factory('AuthInterceptor', function ($q, $location, AuthToken) {
+    var interceptorFactory = {};
             // this will happen on all HTTP requests
             interceptorFactory.request = function (config) {
                 // grab the token
