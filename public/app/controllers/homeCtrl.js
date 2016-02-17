@@ -1,6 +1,6 @@
 angular.module('homeCtrl', [])
 
-.controller('homeController', function($scope, $uibModal, Budget) {
+.controller('homeController', function($scope, $uibModal, Budget, Auth) {
     var monthNames = ["January", "February", "March", "April", "May", "June",
          "July", "August", "September", "October", "November", "December"];
     
@@ -12,6 +12,10 @@ angular.module('homeCtrl', [])
 
     vm.periodLabel = "";
     vm.periodString = "";
+
+    Auth.getUser().then(function (data) {
+        vm.mymail = data.data.email;
+    });
 
     pad = function(num, size) {
         var s = num+"";

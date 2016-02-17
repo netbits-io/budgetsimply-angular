@@ -32,27 +32,27 @@
 			<tr>
 				<th>Date</th>
 				<th>Tags</th>
-				<th class="text-right">{{main.user.email}}</th>
+				<th class="text-right">{{shared.mymail}}</th>
 				<th class="text-right">{{shared.sharedwith}}</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="entry in shared.expenses | periodfor:shared.periodString | onlyshared:main.user.email:shared.sharedwith">
+			<tr ng-repeat="entry in shared.expenses | periodfor:shared.periodString | onlyshared:shared.mymail:shared.sharedwith">
 				<td>{{entry.date | date:'yyyy-MM-dd'}}</td>
 				<td>
 					<span ng-repeat="tag in entry.tags">
 						{{tag.text}}
 					</span>		
 				</td>
-				<th class="text-right">{{entry | payedforshared:main.user.email:shared.sharedwith }}</th>
-				<th class="text-right">{{entry | payedforshared:shared.sharedwith:main.user.email }}</th>
+				<th class="text-right">{{entry | payedforshared:shared.mymail:shared.sharedwith }}</th>
+				<th class="text-right">{{entry | payedforshared:shared.sharedwith:shared.mymail }}</th>
 			</tr>
 			<tfoot>
 				<tr>
 					<td>TOTAL</td>
 					<td></td>
-					<th class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:main.user.email:shared.sharedwith | calctotalforshared:main.user.email:shared.sharedwith }}</th>
-					<th class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:main.user.email:shared.sharedwith | calctotalforshared:shared.sharedwith:main.user.email }}</th>
+					<th class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:shared.mymail:shared.sharedwith | calctotalforshared:shared.mymail:shared.sharedwith }}</th>
+					<th class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:shared.mymail:shared.sharedwith | calctotalforshared:shared.sharedwith:shared.mymail }}</th>
 				</tr>
 			</tfoot>
 		</tbody>

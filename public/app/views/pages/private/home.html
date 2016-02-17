@@ -60,9 +60,9 @@
 					</span>		
 				</td>
 				<td>{{entry.note}}</td>
-				<th class="text-right">{{entry | payedfor:main.user.email}}</th>
+				<th class="text-right">{{entry | payedfor:home.mymail}}</th>
 				<td class="text-right">
-					<div class="btn-group" uib-dropdown>
+					<div class="btn-group" uib-dropdown ng-show="entry.owner === home.mymail">
 						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
 							<span class="glyphicon glyphicon-align-justify"></span>
 						</button>
@@ -78,7 +78,7 @@
 					<td>TOTAL</td>
 					<td></td>
 					<td></td>
-					<th class="text-right"> {{home.expenses | periodfor:home.periodString | calctotalfor:main.user.email }}</th>
+					<th class="text-right"> {{home.expenses | periodfor:home.periodString | calctotalfor:home.mymail }}</th>
 					<td></td>
 				</tr>
 			</tfoot>
