@@ -86,8 +86,8 @@ angular.module('sharedCtrl', [])
                     }
             });
             sharedlst.delete(vm.mymail);
-            vm.sharedwithlist = [v for (v of sharedlst)];
             if(sharedlst.size > 0){
+                vm.sharedwithlist = Array.from(sharedlst);
                 vm.sharedwith = vm.sharedwithlist[0];
             }
             redrawPeriod();
