@@ -2,7 +2,7 @@ angular.module('userApp',
         ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngAnimate', 
          'app.routes', 'authService', 'budgetService', 'mainCtrl', 
          'userCtrl', 'homeCtrl', 'meCtrl', 'newexCtrl', 
-         'userService'])
+         'userService', 'sharedCtrl'])
         // application configuration to integrate token into requests
         .config(function ($httpProvider) {
             // attach our auth interceptor to the http requests
@@ -39,15 +39,35 @@ angular.module('userApp',
                            notMy += e.amount | 0;
                         }
                     });
-                    toReturn = expense.amount+" -"+notMy;
+                    if(notMy != 0){
+                         toReturn = expense.amount+" -"+notMy;
+                    } else {
+                        toReturn = expense.amount;  
+                    }
+
                 } else {
                     expense.shares.forEach (function (e){
                         if(e.user == user){
                             toReturn = e.amount | 0;
-                            toReturn = "+"+toReturn;
                         }
                     });
+                    toReturn = "+"+toReturn;
                 }
+                return toReturn;
+            }             
+        })
+        .filter('payedforshared', function() {
+            return function(expense, user, userfor) {
+                toReturn = '';
+                if(expense.owner == user){
+                    var payedForOther = 0;
+                    expense.shares.forEach (function (e){
+                        if(e.user == userfor){
+                           payedForOther += e.amount | 0;
+                        }
+                    });
+                    toReturn = payedForOther;
+                } 
                 return toReturn;
             }             
         })
@@ -84,6 +104,38 @@ angular.module('userApp',
                     });
                 });
                 return total;
+            };
+        })
+        .filter('calctotalforshared', function() {
+            return function(input, user, userfor) {
+                var total = 0;
+                angular.forEach(input, function(item) {
+                    if(item.owner == user){
+                        item.shares.filter(function (el) {
+                            if(el.user === userfor){
+                                total += el.amount;
+                            }
+                        });
+                    }
+                });
+                return total;
+            };
+        })
+         .filter('onlyshared', function() {
+            return function(input, user, userfor) {
+                var filtered = [];
+                angular.forEach(input, function(item) {
+                    if(item.owner === user){
+                        item.shares.filter(function (el) {
+                            if(el.user === userfor){
+                                filtered.push(item);
+                            }
+                        });
+                    } else if(item.owner === userfor){
+                        filtered.push(item);
+                    }
+                });
+                return filtered;
             };
         })
         ;

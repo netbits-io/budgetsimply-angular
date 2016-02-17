@@ -14,6 +14,11 @@ angular.module('app.routes', ['ngRoute'])
 			controller: 'homeController',
 			controllerAs: 'home'
 		})
+		.when('/shared', {
+			templateUrl: 'app/views/pages/private/shared.html',
+			controller: 'sharedController',
+			controllerAs: 'shared'
+		})
         // loggedIn home
 		.when('/me', {
 			templateUrl: 'app/views/pages/private/editme.html',
