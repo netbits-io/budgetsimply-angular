@@ -28,6 +28,16 @@ module.exports = function (app, express) {
                     res.json(expenses);
                 });
             });
+    expenseRouter.route('/:exp_id')
+            .delete(function (req, res) {
+                Expense.remove({
+                    _id: req.params.exp_id,
+                    owner: req.decoded.email
+                }, function (err, user) {
+                    if (err) res.json({success: false, message: err.code});
+                    res.json({success: true, message: 'Successfully deleted'});
+                });
+            });
 
     expenseRouter.route('/shares')
             .get(function (req, res) {

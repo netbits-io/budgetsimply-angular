@@ -14,6 +14,7 @@
 			</div>
 		</div>	
 		<div class="col-sm-5">
+			<input type="text" class="form-control whiteButton " ng-model="home.filterText">
 		</div>
 		<div class="col-sm-2 text-right">
 			<button class="btn btn-default whiteButton" ng-click="home.modalExpense()" type="button">Add Expense</button>
@@ -31,7 +32,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString">
+			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString | tagsfilter:home.filterText">
 				<td>{{entry.date | date:'yyyy-MM-dd'}}</td>
 				<td>
 					<span ng-repeat="tag in entry.tags">
@@ -57,7 +58,7 @@
 					<td>TOTAL</td>
 					<td></td>
 					<td></td>
-					<th class="text-right"> {{home.expenses | periodfor:home.periodString | calctotalfor:home.mymail }}</th>
+					<th class="text-right"> {{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.mymail }}</th>
 					<td></td>
 				</tr>
 			</tfoot>

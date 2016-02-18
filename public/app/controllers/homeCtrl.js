@@ -75,9 +75,9 @@ redraw = function () {
 redraw();
 
 vm.deleteExpense = function (eId) {
- Budget.deleteExpense(vm.budget._id, eId).success(function (data) {
-  redraw();
-});
+  Budget.deleteExpense(eId).success(function (data) {
+    redraw();
+  });
 };
 
 

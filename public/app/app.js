@@ -106,6 +106,40 @@ angular.module('userApp',
                 return total;
             };
         })
+        .filter('tagsfilter', function() {
+            return function(input, filter) {
+                if(!filter || filter.length==0){
+                    return input;
+                }
+                var filters = filter.split(" ");
+                var filtered = [];
+                angular.forEach(input, function(item) {
+                    cr = true;
+                        angular.forEach(filters, function(fltr) {
+                            if(fltr.startsWith("-") && 2 < fltr.length){
+                                fltrM = fltr.substring(1);
+                                item.tags.filter(function (el) {
+                                    if(el.text.indexOf(fltrM) != -1){
+                                        console.log(el.text);
+                                        cr = false;
+                                    }
+                                }); 
+                            }
+                            if(cr && !fltr.startsWith("-") && 1 < fltr.length){
+                                cr2 = false; 
+                                item.tags.filter(function (el) {
+                                    if(el.text.indexOf(fltr) != -1){
+                                        cr2 = true;
+                                    }
+                                }); 
+                                cr = cr2;
+                            }
+                        }); 
+                    if(cr) filtered.push(item);
+                });
+                return filtered;
+            };
+        })
         .filter('calctotalforshared', function() {
             return function(input, user, userfor) {
                 var total = 0;
