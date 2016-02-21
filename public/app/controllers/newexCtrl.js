@@ -1,10 +1,26 @@
 angular.module('newexCtrl', ['budgetService'])
 
-.controller('newexController', function ($scope, Auth, $uibModalInstance, Budget, Auth) {
+.controller('newexController', function ($scope, Auth, $uibModalInstance, Budget, Auth, existing) {
     var vm = this;
 
     Auth.getUser().then(function (data) {
         vm.me = data.data;
+        if(existing != null){
+            vm.tags = existing.tags;
+            vm.note = existing.note;
+            vm.payed = existing.amount;
+            vm.tags = existing.tags;
+            vm.shares = existing.shares.filter(function(item) {
+                return vm.me.email != item.user;
+            });
+            vm.id = existing._id;
+            vm.dt = existing.date;
+        } else {
+            vm.id = null;
+            vm.tags = [];
+            vm.shares = [];
+            vm.dt = new Date();
+        }
     });
 
     vm.ok = function () {
@@ -13,7 +29,7 @@ angular.module('newexCtrl', ['budgetService'])
             forme = forme - el.amount;
         });
         vm.shares.push({user: vm.me.email, accepted: true, amount: forme});
-        Budget.addExpense($scope.dt, $scope.tags, vm.note, vm.payed, vm.shares).success(function (data) {
+        Budget.addExpense(vm.id, vm.dt, vm.tags, vm.note, vm.payed, vm.shares).success(function (data) {
             $uibModalInstance.close('ok');
         });
     };
@@ -22,51 +38,27 @@ angular.module('newexCtrl', ['budgetService'])
         $uibModalInstance.dismiss('cancel');
     };
 
-    vm.shares = [];
-
     vm.sharePlus = function () {
         vm.shares.push({user: '', accepted: false});
     };
 
-    $scope.today = function() {
-        $scope.dt = new Date();
+    vm.openDt = function() {
+        vm.popup.opened = true;
     };
 
-    $scope.today();
-
-    $scope.open1 = function() {
-        $scope.popup1.opened = true;
-    };
-
-    $scope.setDate = function(year, month, day) {
-        $scope.dt = new Date(year, month, day);
-    };
-
-    $scope.dateOptions = {
+    vm.dateOptions = {
         formatYear: 'yy',
         startingDay: 1
     };
 
-    $scope.format = 'dd.MM.yyyy';
-
-    $scope.popup1 = {
+    vm.format = 'dd.MM.yyyy';
+    vm.popup = {
         opened: false
     };
-
-    $scope.tags = [];
-
-    $scope.allTags = [
-    { "text": "food" },
-    { "text": "workfood" },
-    { "text": "cats" },
-    { "text": "car" },
-    { "text": "petrol" },
-    { "text": "bills" },
-    { "text": "stuff" }
-    ];
-
-    $scope.loadTags = function($query) {
-        return $scope.allTags.filter(function(item) {
+    
+    vm.allTags = [];
+    vm.loadTags = function($query) {
+        return vm.allTags.filter(function(item) {
             return item.text.toLowerCase().indexOf($query.toLowerCase()) != -1;
         });
     };

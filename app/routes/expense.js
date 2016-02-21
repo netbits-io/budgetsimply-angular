@@ -7,19 +7,37 @@ module.exports = function (app, express) {
 
     expenseRouter.route('/')
             .post(function (req, res) {
-                var expense = new Expense();
-
-                expense.date = req.body.date;
-                expense.tags = req.body.tags;
-                expense.note = req.body.note;
-                expense.owner = req.decoded.email;
-                expense.amount = req.body.amount;
-                expense.shares = req.body.shares;
-
-                expense.save(function (err) {
+                if(req.body.expid == null){
+                    var expense = new Expense();
+                    expense.date = req.body.date;
+                    expense.tags = req.body.tags;
+                    expense.note = req.body.note;
+                    expense.owner = req.decoded.email;
+                    expense.amount = req.body.amount;
+                    expense.shares = req.body.shares;
+                    expense.save(function (err) {
+                        if (err) res.json({success: false, message: err.code});
+                        res.json({success: true, message: 'Expense saved!'});
+                    });
+                } else {
+                    Expense.findOne({owner: req.decoded.email, _id: req.body.expid}, function (err, expense) {
                     if (err) res.json({success: false, message: err.code});
-                    res.json({success: true, message: 'Expense saved!'});
+                    if(expense){
+                        expense.date = req.body.date;
+                        expense.tags = req.body.tags;
+                        expense.note = req.body.note;
+                        expense.amount = req.body.amount;
+                        expense.shares = req.body.shares;
+                        expense.save(function (err) {
+                            if (err) res.json({success: false, message: err.code});
+                            res.json({success: true, message: 'Expense saved!'});
+                        });
+                    } else {
+                        res.json({success: false, message: 'Could not update expense!'});
+                    }
                 });
+
+                }
 
             })
             .get(function (req, res) {

@@ -17,7 +17,7 @@
 			<input type="text" class="form-control whiteButton " ng-model="home.filterText">
 		</div>
 		<div class="col-sm-2 text-right">
-			<button class="btn btn-default whiteButton" ng-click="home.modalExpense()" type="button">Add Expense</button>
+			<button class="btn btn-default whiteButton" ng-click="home.modalExpense(null)" type="button">Add Expense</button>
 		</div>
 	</div>
 	<hr>
@@ -47,7 +47,7 @@
 							<span class="glyphicon glyphicon-align-justify"></span>
 						</button>
 						<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
-							<li role="menuitem"><a >edit</a></li>
+							<li role="menuitem"><a ng-click="home.modalExpense(entry)">edit</a></li>
 							<li role="menuitem"><a ng-click="home.deleteExpense(entry._id)">remove</a></li>
 						</ul>
 					</div>

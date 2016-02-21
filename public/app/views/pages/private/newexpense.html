@@ -12,9 +12,9 @@
           <div class="form-group">
             <label>At Date</label>
             <p class="input-group">
-              <input type="text" readonly class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"  show-button-bar="false" show-weeks="false"/>
+              <input type="text" readonly class="form-control" uib-datepicker-popup="{{main.format}}" ng-model="main.dt" is-open="main.popup.opened" datepicker-options="main.dateOptions" ng-required="true" close-text="Close"  show-button-bar="false" show-weeks="false"/>
               <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                <button type="button" class="btn btn-default" ng-click="main.openDt()"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>
             </p>
           </div>
@@ -28,8 +28,8 @@
       </div>
       <div class="form-group">
         <label>Tags</label>
-        <tags-input ng-model="tags" placeholder="...">
-        <auto-complete min-length="0" debounce-delay="0" select-first-match="true" source="loadTags($query)"></auto-complete>
+        <tags-input ng-model="main.tags" placeholder="...">
+        <auto-complete min-length="0" debounce-delay="0" select-first-match="true" source="main.loadTags($query)"></auto-complete>
       </tags-input>
     </div>
     <div class="form-group hidden">

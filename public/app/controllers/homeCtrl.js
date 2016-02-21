@@ -81,14 +81,14 @@ vm.deleteExpense = function (eId) {
 };
 
 
-vm.modalExpense = function () {
+vm.modalExpense = function (existing) {
   var modalInstance = $uibModal.open({
     templateUrl: 'app/views/pages/private/newexpense.html',
     controller: 'newexController',
     controllerAs: 'main',
     resolve: {
-      budget: function () {
-        return vm.budget;
+      existing: function () {
+        return existing;
       }
     }
   });
