@@ -5,6 +5,7 @@ angular.module('newexCtrl', ['budgetService'])
 
     Auth.getUser().then(function (data) {
         vm.me = data.data;
+        vm.mymail = data.data.email;
         if(existing != null){
             vm.tags = existing.tags;
             vm.note = existing.note;
@@ -23,14 +24,57 @@ angular.module('newexCtrl', ['budgetService'])
         }
     });
 
+    vm.sharedwithlist = [];
+    vm.allTags = [];
+
+    redraw = function () {
+        Budget.all().success(function (data) {
+            sharedlst = new Set();
+            allTgs = new Set();
+            data.filter(function (expense) {
+                if(expense.owner === vm.mymail){
+                    expense.shares.filter(function (el) {
+                        sharedlst.add(el.user);
+                    });
+                    expense.tags.filter(function (el) {
+                        allTgs.add(el.text);
+                    });
+                } else {
+                    sharedlst.add(expense.owner);
+                }
+            });
+            sharedlst.delete(vm.mymail);
+            if(sharedlst.size > 0){
+                vm.sharedwithlist = Array.from(sharedlst);
+            }
+            if(allTgs.size > 0){
+                tagsArray=Array.from(allTgs);
+                tagsArray.filter(function (el) {
+                    vm.allTags.push({text: el});
+                });
+            }
+        });
+    }
+
+    redraw();
+
+    vm.cancelDanger = function () {
+        vm.danger="";
+    };
+
     vm.ok = function () {
         forme = vm.payed;
         vm.shares.filter(function(el){
             forme = forme - el.amount;
         });
-        vm.shares.push({user: vm.me.email, accepted: true, amount: forme});
-        Budget.addExpense(vm.id, vm.dt, vm.tags, vm.note, vm.payed, vm.shares).success(function (data) {
-            $uibModalInstance.close('ok');
+        sharesCopy = JSON.parse(JSON.stringify(vm.shares));
+        sharesCopy.push({user: vm.me.email, accepted: true, amount: forme});
+        Budget.addExpense(vm.id, vm.dt, vm.tags, vm.note, vm.payed, sharesCopy).success(function (data) {
+            if(data.success){
+                $uibModalInstance.close('ok');
+            }else{
+                vm.danger=data.message;
+            }
         });
     };
 
@@ -39,7 +83,8 @@ angular.module('newexCtrl', ['budgetService'])
     };
 
     vm.sharePlus = function () {
-        vm.shares.push({user: '', accepted: false});
+
+        vm.shares.push({user: '', accepted: false, amount: vm.payed/2});
     };
 
     vm.openDt = function() {
@@ -55,8 +100,7 @@ angular.module('newexCtrl', ['budgetService'])
     vm.popup = {
         opened: false
     };
-    
-    vm.allTags = [];
+
     vm.loadTags = function($query) {
         return vm.allTags.filter(function(item) {
             return item.text.toLowerCase().indexOf($query.toLowerCase()) != -1;

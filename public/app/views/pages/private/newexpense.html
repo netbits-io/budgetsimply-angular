@@ -7,6 +7,12 @@
   </div>
   <div class="modal-body">
     <form>
+
+      <div ng-show="main.danger" class="alert alert-danger">
+        <a href="#" ng-click="main.cancelDanger()" class="close">&times;</a>
+        {{main.danger}}
+      </div>
+
       <div class="row">
         <div class="col-xs-7">
           <div class="form-group">
@@ -47,7 +53,7 @@
        <div class="col-xs-8">
         <div class="form-group">
           <label>Share User Email</label>
-          <input class="form-control" ng-model="item.user" type="text"/>
+          <input type="text" class="form-control" ng-model="item.user" uib-typeahead="usr for usr in main.sharedwithlist | filter:$viewValue | limitTo:8"/>
         </div>
       </div>
       <div class="col-xs-4">
