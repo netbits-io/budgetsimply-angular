@@ -1,6 +1,6 @@
 angular.module('homeCtrl', [])
 
-.controller('homeController', function($scope, $uibModal, Budget, Auth) {
+.controller('homeController', function($route, $scope, $uibModal, Budget, Auth) {
 
   var monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
@@ -38,21 +38,21 @@ angular.module('homeCtrl', [])
       vm.year++;
       vm.month = 1;
     }
-  }
-  redrawPeriod();
-};
+    }
+    redrawPeriod();
+  };
 
 vm.perMinus = function () {
   if(vm.lPeriod){
-   vm.year--;
- } else {
-  vm.month--;
-  if(vm.month < 1){
     vm.year--;
-    vm.month = 12;
+  } else {
+    vm.month--;
+    if(vm.month < 1){
+      vm.year--;
+      vm.month = 12;
+    }
   }
-}
-redrawPeriod();
+  redrawPeriod();
 };
 
 redrawPeriod = function(){
@@ -80,7 +80,6 @@ vm.deleteExpense = function (eId) {
   });
 };
 
-
 vm.modalExpense = function (existing) {
   var modalInstance = $uibModal.open({
     templateUrl: 'app/views/pages/private/newexpense.html',
@@ -94,12 +93,11 @@ vm.modalExpense = function (existing) {
   });
   modalInstance.result.then(
     function () {
-      redraw();
+      $route.reload();
     }, 
     function () {
     }
-    );
-};
+  )};
 
 })
 
