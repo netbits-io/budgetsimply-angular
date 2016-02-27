@@ -19,12 +19,11 @@ angular.module('app.routes', ['ngRoute'])
 			controller: 'sharedController',
 			controllerAs: 'shared'
 		})
-        // loggedIn home
-		.when('/me', {
-			templateUrl: 'app/views/pages/private/editme.html',
-			controller:   'meController',
-			controllerAs: 'main'
-		})
+		// .when('/me', {
+		// 	templateUrl: 'app/views/pages/private/editme.html',
+		// 	controller:   'meController',
+		// 	controllerAs: 'main'
+		// })
 		// show all users
 		.when('/users', {
 			templateUrl: 'app/views/pages/admin/users/view.html',
@@ -43,7 +42,22 @@ angular.module('app.routes', ['ngRoute'])
 			controller: 'userEditController',
 			controllerAs: 'user'
 		})		
-                // route for the home page
+		.when('/tos', {
+			templateUrl: 'app/views/pages/public/tos.html',
+			controller: 'mainController',
+			controllerAs: 'main'
+		})		
+		.when('/about', {
+			templateUrl: 'app/views/pages/public/about.html',
+			controller: 'mainController',
+			controllerAs: 'main'
+		})
+		.when('/policy', {
+			templateUrl: 'app/views/pages/public/policy.html',
+			controller: 'mainController',
+			controllerAs: 'main'
+		})
+        // route for the welcome page
 		.otherwise( {
 			templateUrl : 'app/views/pages/public/welcome.html'
 		})

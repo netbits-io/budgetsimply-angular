@@ -25,7 +25,7 @@ angular.module('mainCtrl', [])
                         } else {
                             // do nothing for now  
                         }
-                        if (next.templateUrl.indexOf("app/views/pages/public/") >= 0) {
+                        if (next.templateUrl.indexOf("app/views/pages/public/welcome") >= 0) {
                             $location.path("/home");
                         }
                     })
