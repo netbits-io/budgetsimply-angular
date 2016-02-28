@@ -1,11 +1,13 @@
  <div class="modal-content"> 
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="main.cancel()">&times;</button>
+        <h4 class="modal-title">Edit My Account</h4>
+    </div>
     <div class="modal-body">
-        <h2>Edit My Account</h2>
-        <br>
         <div class="alert alert-success" ng-if="main.meSuccess">
             {{main.meSuccess}}
         </div>
-        <form name="meForm" ng-submit="main.saveMe(meForm.$valid)" ng-if="!main.edtSuccess" novalidate>
+        <form name="meForm" novalidate>
             <div class="alert alert-danger" ng-if="main.meError">
                 {{main.meError}}
             </div>
@@ -31,18 +33,18 @@
                 <input class="form-control" type="password" name="passwordconfirm" ng-model="main.meData.passwordconfirm"  password-match="main.meData.password"  />
                 <span ng-show="meForm.passwordconfirm.$error.unique && meForm.passwordconfirm.$dirty">Passwords do not match.</span>
             </div>
-            <hr>
+            <br>
             <div class="form-group" ng-class="{ 'has-error' : meForm.currentpassword.$invalid && !meForm.currentpassword.$pristine }">
                 <label>Current Password</label>
                 <input class="form-control" type="password" name="currentpassword" ng-model="main.meData.currentpassword" required/>
                 <span ng-show="meForm.currentpassword.$error.required && meForm.currentpassword.$dirty">required</span>
             </div>
-            <br>
-            <button type="submit" class="btn btn-block btn-primary" ng-class="{ 'disabled' : meForm.$invalid || main.edtProcessing}">
-                <span>Update Account</span>
-            </button>
         </form>
-            <button class="btn btn-primary" type="button" ng-click="main.ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="main.cancel()">Cancel</button>
-</div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" type="button" ng-click="main.cancel()">Cancel</button>
+        <button class="btn btn-default" type="button" ng-class="{ 'disabled' : meForm.$invalid || main.edtProcessing}" ng-click="main.ok(meForm.$valid)">
+                Update Account</button>
+            
+    </div>
 </div>

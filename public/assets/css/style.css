@@ -91,4 +91,17 @@ html, body {
     display: inline !important;
 }
 
+.btn-navblk {
+    background: #222;
+    color: #999999;
+}
+ 
+.btn-navblk:hover, .btn-navblk:focus, .btn-navblk:active, .btn-navblk.active, .open > .dropdown-toggle.btn-navblk {
+    background: #222;
+    color: #ffffff;
+}
+ 
+.btn-navblk:active, .btn-navblk.active {
+    background: #22;
+    box-shadow: none;
 }

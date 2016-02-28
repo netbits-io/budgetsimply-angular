@@ -8,10 +8,8 @@ angular.module('meCtrl', [])
         vm.meData = vm.user;
     })
 
-    vm.saveMe = function (isValid) {
+    vm.ok = function (isValid) {
         console.log(vm.meData);
-    };
-    vm.ok = function () {
         $uibModalInstance.close('ok');
     };
 
