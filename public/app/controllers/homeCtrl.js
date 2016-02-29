@@ -2,10 +2,11 @@ angular.module('homeCtrl', [])
 
 .controller('homeController', function($route, $scope, $uibModal, Budget, Auth) {
 
-  var monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"];
+  var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   var vm = this;
+
+  vm.radioMode = 'my';
 
   vm.month = 1+(new Date().getMonth());
   vm.year = (new Date().getFullYear());

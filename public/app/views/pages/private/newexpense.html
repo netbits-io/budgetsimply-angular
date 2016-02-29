@@ -44,7 +44,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12 text-right">
-        <button type="button" class="btn btn-default" ng-click="main.sharePlus()">Share Expense with another User</button>
+        <button type="button" class="btn btn-default" ng-click="main.sharePlus()"><span class="glyphicon glyphicon-plus"></span><span class="glyphicon glyphicon-user"></span></button>
       </div>
     </div>
     <br>
@@ -52,7 +52,7 @@
       <div class="row">
        <div class="col-xs-8">
         <div class="form-group">
-          <label>Share User Email</label>
+          <label>Select Friend</label>
           <input type="text" class="form-control" ng-model="item.user" uib-typeahead="usr for usr in main.sharedwithlist | filter:$viewValue | limitTo:8"/>
         </div>
       </div>
