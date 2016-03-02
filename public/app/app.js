@@ -30,7 +30,7 @@ angular.module('userApp',
             };
         }])
         .filter('payedfor', function() {
-            return function(expense, user) {
+            return function(expense, user, mode) {
                 var toReturn = 0;
                 if(expense.owner == user){
                     notMy = 0;
@@ -40,7 +40,11 @@ angular.module('userApp',
                         }
                     });
                     if(notMy != 0){
-                         toReturn = expense.amount+" -"+notMy;
+                        if(mode.startsWith("all")){
+                            toReturn = expense.amount+" -"+notMy;
+                        } else {
+                            toReturn = expense.amount - notMy;
+                        }
                     } else {
                         toReturn = expense.amount;  
                     }
@@ -171,6 +175,33 @@ angular.module('userApp',
                 });
                 return filtered;
             };
-        })
-        ;
+        })   
+        .directive('bootstrapSwitch', [
+        function() {
+            return {
+                restrict: 'A',
+                require: '?ngModel',
+                link: function(scope, element, attrs, ngModel) {
+                    element.bootstrapSwitch();
+
+                    element.on('switchChange.bootstrapSwitch', function(event, state) {
+                        if (ngModel) {
+                            scope.$apply(function() {
+                                ngModel.$setViewValue(state);
+                            });
+                        }
+                    });
+
+                    scope.$watch(attrs.ngModel, function(newValue, oldValue) {
+                        if (newValue) {
+                            element.bootstrapSwitch('state', true, true);
+                        } else {
+                            element.bootstrapSwitch('state', false, true);
+                        }
+                    });
+                }
+            };
+        }
+    ])
+     ;
 

@@ -34,7 +34,6 @@
 			<tr>
 				<th>Date</th>
 				<th>Tags</th>
-				<th></th>
 				<th class="text-right">Amount</th>
 				<th width="50"></th>
 			</tr>
@@ -47,8 +46,7 @@
 						{{tag.text}}
 					</span>		
 				</td>
-				<td>{{entry.note}}</td>
-				<th class="text-right">{{entry | payedfor:home.mymail}}</th>
+				<th class="text-right">{{entry | payedfor:home.mymail:home.radioMode}}</th>
 				<td class="text-right">
 					<div class="btn-group" uib-dropdown ng-show="entry.owner === home.mymail">
 						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
