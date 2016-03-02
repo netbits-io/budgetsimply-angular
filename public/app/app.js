@@ -1,7 +1,7 @@
 angular.module('userApp', 
         ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngAnimate', 
          'app.routes', 'authService', 'budgetService', 'mainCtrl', 
-         'userCtrl', 'homeCtrl', 'meCtrl', 'newexCtrl', 
+         'userCtrl', 'homeCtrl', 'meCtrl', 'newexCtrl', 'viewexCtrl',
          'userService', 'sharedCtrl'])
         // application configuration to integrate token into requests
         .config(function ($httpProvider) {
@@ -57,7 +57,6 @@ angular.module('userApp',
                             toReturn = e.amount;
                         }
                     });
-                    toReturn = "+"+toReturn;
                 }
                 return toReturn.toFixed(2);
             }             

@@ -1,0 +1,26 @@
+
+<!-- Modal content-->
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="main.ok()">&times;</button>
+    <h4 class="modal-title">View Expense</h4>
+  </div>
+  <div class="modal-body">
+
+    Created by: {{main.expense.owner}} <br>
+    For Date:  {{main.expense.date}} <br>
+    Total Amount: {{main.expense.amount}} <br><br>
+    Tags:
+    <span ng-repeat="tag in main.expense.tags">{{tag.text}}</span><br><br>
+
+    Shares:
+    <div ng-repeat="share in main.expense.shares">
+      User: {{share.user}}
+      Amount: {{share.amount}}
+    </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-click="main.ok()">Close</button>
+</div>
+</div>

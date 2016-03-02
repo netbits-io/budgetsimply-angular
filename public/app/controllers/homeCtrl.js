@@ -100,5 +100,27 @@ vm.modalExpense = function (existing) {
     }
   )};
 
+vm.modalViewExpense = function (existing) {
+  var modalInstance = $uibModal.open({
+    templateUrl: 'app/views/pages/private/viewexpense.html',
+    controller: 'viewexController',
+    controllerAs: 'main',
+    resolve: {
+      existing: function () {
+        return existing;
+      }
+    }
+  });
+  modalInstance.result.then(
+    function () {
+    }, 
+    function () {
+    }
+  )};
+
+
+
+
+
 })
 
