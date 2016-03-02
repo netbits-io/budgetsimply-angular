@@ -33,10 +33,12 @@ angular.module('userApp',
             return function(expense, user, mode) {
                 var toReturn = 0;
                 if(expense.owner == user){
-                    notMy = 0;
+                    notMy = 0.0;
                     expense.shares.forEach (function (e){
                         if(e.user != user){
-                           notMy += e.amount | 0;
+                            console.log(e.amount);
+                            notMy += e.amount;
+                            console.log(notMy);
                         }
                     });
                     if(notMy != 0){
@@ -52,12 +54,12 @@ angular.module('userApp',
                 } else {
                     expense.shares.forEach (function (e){
                         if(e.user == user){
-                            toReturn = e.amount | 0;
+                            toReturn = e.amount;
                         }
                     });
                     toReturn = "+"+toReturn;
                 }
-                return toReturn;
+                return toReturn.toFixed(2);
             }             
         })
         .filter('payedforshared', function() {
@@ -67,10 +69,10 @@ angular.module('userApp',
                     var payedForOther = 0;
                     expense.shares.forEach (function (e){
                         if(e.user == userfor){
-                           payedForOther += e.amount | 0;
+                           payedForOther += e.amount;
                         }
                     });
-                    toReturn = payedForOther;
+                    toReturn = payedForOther.toFixed(2);
                 } 
                 return toReturn;
             }             
@@ -94,7 +96,7 @@ angular.module('userApp',
                     if(! isNaN (item.amount-0) && item.amount != null)
                         total += item.amount;
                 });
-                return total;
+                return total.toFixed(2);
             };
         })
         .filter('calctotalfor', function() {
@@ -108,7 +110,7 @@ angular.module('userApp',
                     });
 
                 });
-                return total;
+                return total.toFixed(2);
             };
         })
         .filter('tagsfilter', function() {
@@ -157,7 +159,7 @@ angular.module('userApp',
                         });
                     }
                 });
-                return total;
+                return total.toFixed(2);
             };
         })
          .filter('onlyshared', function() {
@@ -177,32 +179,5 @@ angular.module('userApp',
                 return filtered;
             };
         })   
-        .directive('bootstrapSwitch', [
-        function() {
-            return {
-                restrict: 'A',
-                require: '?ngModel',
-                link: function(scope, element, attrs, ngModel) {
-                    element.bootstrapSwitch();
-
-                    element.on('switchChange.bootstrapSwitch', function(event, state) {
-                        if (ngModel) {
-                            scope.$apply(function() {
-                                ngModel.$setViewValue(state);
-                            });
-                        }
-                    });
-
-                    scope.$watch(attrs.ngModel, function(newValue, oldValue) {
-                        if (newValue) {
-                            element.bootstrapSwitch('state', true, true);
-                        } else {
-                            element.bootstrapSwitch('state', false, true);
-                        }
-                    });
-                }
-            };
-        }
-    ])
      ;
 
