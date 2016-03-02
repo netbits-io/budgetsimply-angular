@@ -40,8 +40,8 @@ angular.module('userApp',
                         }
                     });
                     if(notMy != 0){
-                        if(mode.startsWith("all")){
-                            toReturn = expense.amount+" -"+notMy;
+                        if(mode.startsWith("total")){
+                            toReturn = expense.amount;
                         } else {
                             toReturn = expense.amount - notMy;
                         }
@@ -98,14 +98,15 @@ angular.module('userApp',
             };
         })
         .filter('calctotalfor', function() {
-            return function(input, payer) {
+            return function(input, payer, mode) {
                 var total = 0;
-                angular.forEach(input, function(item) {
+                angular.forEach(input, function(item) {     
                     item.shares.filter(function (el) {
                         if(el.user === payer){
                             total += el.amount;
                         }
                     });
+
                 });
                 return total;
             };

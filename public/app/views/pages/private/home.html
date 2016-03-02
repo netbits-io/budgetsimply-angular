@@ -20,7 +20,7 @@
 		<div class="col-sm-2">
 			<div class="btn-group">
         		<label class="btn btn-default whiteButton" ng-model="home.radioMode" uib-btn-radio="'my'">My</label>
-       		 	<label class="btn btn-default whiteButton" ng-model="home.radioMode" uib-btn-radio="'total'">Total</label>
+       		 	<label class="btn btn-default whiteButton" ng-model="home.radioMode" uib-btn-radio="'total'">All</label>
    			</div>
 		</div>
 
@@ -63,8 +63,7 @@
 				<tr>
 					<td>TOTAL</td>
 					<td></td>
-					<td></td>
-					<th class="text-right"> {{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.mymail }}</th>
+					<th class="text-right"> {{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.mymail:home.radioMode }}</th>
 					<td></td>
 				</tr>
 			</tfoot>
