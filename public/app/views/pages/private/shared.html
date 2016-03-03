@@ -35,6 +35,7 @@
 				<th>Tags</th>
 				<th class="text-right">{{shared.me.email}}</th>
 				<th class="text-right">{{shared.sharedwith}}</th>
+				<th width="50"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,6 +48,19 @@
 				</td>
 				<td class="text-right">{{entry | payedforshared:shared.me.email:shared.sharedwith }}</td>
 				<td class="text-right">{{entry | payedforshared:shared.sharedwith:shared.me.email }}</td>
+				<td class="text-right">
+					<div class="btn-group" uib-dropdown >
+						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
+							<span ng-show="entry.owner === shared.me.email" class="glyphicon glyphicon-align-justify"></span>
+							<span ng-show="entry.owner != shared.me.email" class="glyphicon glyphicon-scale"></span>
+						</button>
+						<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
+							<li role="menuitem"><a ng-click="shared.modalViewExpense(entry)">view</a></li>
+							<li role="menuitem" ng-show="entry.owner === shared.me.email"><a ng-click="shared.modalExpense(entry)">edit</a></li>
+							<li role="menuitem" ng-show="entry.owner === shared.me.email"><a ng-click="shared.deleteExpense(entry._id)">remove</a></li>
+						</ul>
+					</div>
+				</td>
 			</tr>
 			<tfoot>
 				<tr>
@@ -54,6 +68,7 @@
 					<td></td>
 					<td class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | calctotalforshared:shared.me.email:shared.sharedwith }}</td>
 					<td class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | calctotalforshared:shared.sharedwith:shared.me.email }}</td>
+					<td></td>
 				</tr>
 			</tfoot>
 		</tbody>

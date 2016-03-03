@@ -1,6 +1,6 @@
 angular.module('sharedCtrl', [])
 
-.controller('sharedController', function($scope, $uibModal, Budget, Auth) {
+.controller('sharedController', function($route, $scope, $uibModal, Budget, Auth) {
     var monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
     
@@ -91,9 +91,55 @@ redraw = function () {
 }
 
  Auth.getUser().then(function (data) {
-        vm.me = data.data;
-        redraw();
+    vm.me = data.data;
+    redraw();
+});
+
+ vm.deleteExpense = function (eId) {
+  Budget.deleteExpense(eId).success(function (data) {
+    redraw();
+  });
+};
+
+vm.modalExpense = function (existing) {
+  var modalInstance = $uibModal.open({
+    templateUrl: 'app/views/pages/private/newExpense.html',
+    controller: 'newexController',
+    controllerAs: 'main',
+    resolve: {
+      existing: function () {
+        return existing;
+      }
+    }
+  });
+  modalInstance.result.then(
+    function () {
+      $route.reload();
+    }, 
+    function () {
+    }
+  )
+};
+
+  vm.modalViewExpense = function (existing) {
+    var modalInstance = $uibModal.open({
+      templateUrl: 'app/views/pages/private/viewExpense.html',
+      controller: 'viewexController',
+      controllerAs: 'main',
+      resolve: {
+        existing: function () {
+          return existing;
+        }
+      }
     });
+    modalInstance.result.then(
+      function () {
+      }, 
+      function () {
+      }
+    )
+  };
+
 
 })
 
