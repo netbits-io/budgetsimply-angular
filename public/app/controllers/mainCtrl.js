@@ -19,7 +19,7 @@ angular.module('mainCtrl', [])
             Auth.getUser().then(function (data) {
                 vm.user = data.data;
                 sharedProperties.setUser(vm.user);
-                        //console.log(vm.user);
+                    //console.log(vm.user);
                         if (!vm.user.admin) {
                             if (next.templateUrl.indexOf("app/views/pages/admin/") >= 0) {
                                 $location.path("/home");
@@ -30,7 +30,7 @@ angular.module('mainCtrl', [])
                         if (next.templateUrl.indexOf("app/views/pages/public/welcome") >= 0) {
                             $location.path("/home");
                         }
-                    })
+            })
         }
     };
 

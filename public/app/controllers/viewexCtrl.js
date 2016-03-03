@@ -1,6 +1,6 @@
 angular.module('viewexCtrl', ['budgetService'])
 
-.controller('viewexController', function ($scope, Auth, $uibModalInstance, Budget, Auth, existing) {
+.controller('viewexController', function ($scope, $uibModalInstance, Budget, Auth, existing) {
    
     var vm = this;
 

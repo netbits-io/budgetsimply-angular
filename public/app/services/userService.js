@@ -23,6 +23,10 @@ angular.module('userService', [])
 	userFactory.delete = function(id) {
 		return $http.delete('/api/admin/users/' + id);
 	};
+
+	userFactory.addFriend = function (friendMail) {
+        return $http.post('/api/user/friend',{email: friendMail});
+    };
 	// return our entire userFactory object
 	return userFactory;
 

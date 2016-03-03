@@ -1,5 +1,33 @@
 
 <h1>Your Friends</h1>
 <br>
+<infobar success="{{friends.infsuccess}}" danger="{{friends.infdanger}}"></infobar>
+
+<div class="row">
+	<div class="col-sm-10">
+
+		<div class="row">
+			<div class="col-sm-12 mgn25b">
+				<button class="btn btn-default whiteButton" ng-click="friends.modalFriend()" type="button">Add New Friend</button>
+			</div>
+			<div class="col-sm-4 text-left mgn25b" ng-repeat="friend in friends.me.friends">
+				<div class="lbDiv">
+					<b>{{friend.name}}</b>
+					<div class="btn-group" uib-dropdown >
+						<button type="button" class="btn btn-xs btn-default btn-navwht " uib-dropdown-toggle>
+							<span class="glyphicon glyphicon-chevron-down"></span>
+						</button>
+						<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
+							<li role="menuitem"><a ng-click="friends.delete(friend.email)" >delete</a></li>
+						</ul>
+					</div>
+					<br>
+					{{friend.email}}<br>
+					0 shared expenses
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 

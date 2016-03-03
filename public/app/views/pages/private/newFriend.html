@@ -1,0 +1,27 @@
+
+<!-- Modal content-->
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="modal.cancel()">&times;</button>
+    <h4 class="modal-title">Add new Friend</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+
+      <infobar success="{{modal.infsuccess}}" danger="{{modal.infdanger}}"></infobar>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label>Friend E-Mail</label>
+            <input type="text" ng-model="modal.email" class="form-control" /> 
+          </div>
+        </div>
+      </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-click="modal.cancel()">Cancel</button>
+  <button type="button" class="btn btn-default" ng-click="modal.ok()">Save</button>
+</div>
+</div>

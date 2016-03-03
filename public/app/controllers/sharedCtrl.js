@@ -6,9 +6,6 @@ angular.module('sharedCtrl', [])
     
     var vm = this;
 
-    vm.props = sharedProperties;
-    vm.mymail = sharedProperties.getUser().email;
-
     vm.sharedwithlist = [];
     vm.sharedwith = "";
 
@@ -36,21 +33,21 @@ angular.module('sharedCtrl', [])
 
     vm.perPlus = function () {
         if(vm.lPeriod){
-           vm.year++;
-       } else {
-        vm.month++;
-        if(vm.month > 12){
-            vm.year++;
-            vm.month = 1;
+         vm.year++;
+        } else {
+            vm.month++;
+            if(vm.month > 12){
+                vm.year++;
+                vm.month = 1;
+            }
         }
-    }
-    redrawPeriod();
-};
+        redrawPeriod();
+    };
 
 vm.perMinus = function () {
     if(vm.lPeriod){
-       vm.year--;
-   } else {
+     vm.year--;
+ } else {
     vm.month--;
     if(vm.month < 1){
         vm.year--;
@@ -76,7 +73,7 @@ redraw = function () {
 
         sharedlst = new Set();
         vm.expenses.filter(function (expense) {
-            if(expense.owner === vm.mymail){
+            if(expense.owner === vm.me.email){
                 expense.shares.filter(function (el) {
                     sharedlst.add(el.user);
                 });
@@ -84,7 +81,7 @@ redraw = function () {
                 sharedlst.add(expense.owner);
             }
         });
-        sharedlst.delete(vm.mymail);
+        sharedlst.delete(vm.me.email);
         if(sharedlst.size > 0){
             vm.sharedwithlist = Array.from(sharedlst);
             vm.sharedwith = vm.sharedwithlist[0];
@@ -93,7 +90,10 @@ redraw = function () {
     });
 }
 
-redraw();
+ Auth.getUser().then(function (data) {
+        vm.me = data.data;
+        redraw();
+    });
 
 })
 

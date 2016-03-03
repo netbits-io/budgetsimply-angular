@@ -102,6 +102,29 @@ html, body {
 }
  
 .btn-navblk:active, .btn-navblk.active {
-    background: #22;
+    background: #222;
     box-shadow: none;
+}
+
+.btn-navwht {
+    border: none !important;
+    background: #ffffff;
+    color: #000000;
+}
+ 
+.btn-navwht:hover, .btn-navwht:focus, .btn-navwht:active, .btn-navwht.active, .open > .dropdown-toggle.btn-navwht {
+    background: #ffffff;
+    color: #999999;
+    outline: none;
+}
+ 
+.btn-navwht:active, .btn-navwht.active {
+    background: #ffffff;
+    box-shadow: none;
+    outline: none;
+}
+
+.lbDiv{
+    border-left: solid thick #000000;
+    padding: 5px;
 }

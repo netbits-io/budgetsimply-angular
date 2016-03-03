@@ -1,54 +1,14 @@
 angular.module('newexCtrl', ['budgetService'])
 
-.controller('newexController', function ($scope, Auth, $uibModalInstance, Budget, Auth, existing, sharedProperties) {
+.controller('newexController', function ($scope, $uibModalInstance, Budget, Auth, existing, sharedProperties) {
     var vm = this;
-
-    vm.props = sharedProperties;
-    vm.mymail = sharedProperties.getUser().email;
-
-    vm.me = sharedProperties.getUser();
-    vm.mymail = sharedProperties.getUser().email;
-    if(existing != null){
-        vm.tags = existing.tags;
-        vm.note = existing.note;
-        vm.payed = existing.amount;
-        vm.tags = existing.tags;
-        vm.shares = existing.shares.filter(function(item) {
-            return vm.me.email != item.user;
-        });
-        vm.id = existing._id;
-        vm.dt = existing.date;
-    } else {
-        vm.id = null;
-        vm.tags = [];
-        vm.shares = [];
-        vm.dt = new Date();
-    }
-
 
     vm.sharedwithlist = [];
     vm.allTags = [];
 
     redraw = function () {
         Budget.all().success(function (data) {
-            sharedlst = new Set();
             allTgs = new Set();
-            data.filter(function (expense) {
-                if(expense.owner === vm.mymail){
-                    expense.shares.filter(function (el) {
-                        sharedlst.add(el.user);
-                    });
-                    expense.tags.filter(function (el) {
-                        allTgs.add(el.text);
-                    });
-                } else {
-                    sharedlst.add(expense.owner);
-                }
-            });
-            sharedlst.delete(vm.mymail);
-            if(sharedlst.size > 0){
-                vm.sharedwithlist = Array.from(sharedlst);
-            }
             if(allTgs.size > 0){
                 tagsArray=Array.from(allTgs);
                 tagsArray.filter(function (el) {
@@ -58,7 +18,33 @@ angular.module('newexCtrl', ['budgetService'])
         });
     }
 
-    redraw();
+    Auth.getUser().then(function (data) {
+        vm.me = data.data;
+        if(existing != null){
+            vm.tags = existing.tags;
+            vm.note = existing.note;
+            vm.payed = existing.amount;
+            vm.tags = existing.tags;
+            vm.shares = existing.shares.filter(function(item) {
+                return vm.me.email != item.user;
+            });
+            vm.id = existing._id;
+            vm.dt = existing.date;
+        } else {
+            vm.id = null;
+            vm.tags = [];
+            vm.shares = [];
+            vm.dt = new Date();
+        }
+        sharedlst = new Set();
+        vm.me.friends.filter(function (frnd) {
+            sharedlst.add(frnd.email);
+        });
+        if(sharedlst.size > 0){
+            vm.sharedwithlist = Array.from(sharedlst);
+        }
+        redraw();
+    });
 
     vm.cancelDanger = function () {
         vm.danger="";
@@ -85,7 +71,6 @@ angular.module('newexCtrl', ['budgetService'])
     };
 
     vm.sharePlus = function () {
-
         vm.shares.push({user: '', accepted: false, amount: vm.payed/2});
     };
 

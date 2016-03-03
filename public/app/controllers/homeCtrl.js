@@ -6,9 +6,6 @@ angular.module('homeCtrl', [])
 
   var vm = this;
 
-  vm.props = sharedProperties;
-  vm.mymail = sharedProperties.getUser().email;
-
   vm.radioMode = 'my';
 
   vm.month = 1+(new Date().getMonth());
@@ -18,11 +15,27 @@ angular.module('homeCtrl', [])
   vm.periodLabel = "";
   vm.periodString = "";
 
-
   pad = function(num, size) {
     var s = num+"";
     while (s.length < size) s = "0" + s;
     return s;
+  }
+
+  redrawPeriod = function(){
+    if(vm.lPeriod){
+      vm.periodLabel = vm.year;
+      vm.periodString = vm.year;
+    } else {
+      vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
+      vm.periodString = vm.year+"-"+pad(vm.month,2);
+    }
+  }
+
+  redraw = function () {
+    Budget.all().success(function (data) {
+      vm.expenses = data;
+      redrawPeriod();
+    });
   }
 
   vm.perToggle = function () {
@@ -39,9 +52,9 @@ angular.module('homeCtrl', [])
       vm.year++;
       vm.month = 1;
     }
-    }
-    redrawPeriod();
-  };
+  }
+  redrawPeriod();
+};
 
 vm.perMinus = function () {
   if(vm.lPeriod){
@@ -56,24 +69,10 @@ vm.perMinus = function () {
   redrawPeriod();
 };
 
-redrawPeriod = function(){
-  if(vm.lPeriod){
-    vm.periodLabel = vm.year;
-    vm.periodString = vm.year;
-  } else {
-    vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
-    vm.periodString = vm.year+"-"+pad(vm.month,2);
-  }
-}
-
-redraw = function () {
-  Budget.all().success(function (data) {
-    vm.expenses = data;
-    redrawPeriod();
+ Auth.getUser().then(function (data) {
+    vm.me = data.data;
+    redraw();
   });
-}
-
-redraw();
 
 vm.deleteExpense = function (eId) {
   Budget.deleteExpense(eId).success(function (data) {
@@ -83,7 +82,7 @@ vm.deleteExpense = function (eId) {
 
 vm.modalExpense = function (existing) {
   var modalInstance = $uibModal.open({
-    templateUrl: 'app/views/pages/private/newexpense.html',
+    templateUrl: 'app/views/pages/private/newExpense.html',
     controller: 'newexController',
     controllerAs: 'main',
     resolve: {
@@ -98,29 +97,28 @@ vm.modalExpense = function (existing) {
     }, 
     function () {
     }
-  )};
+  )
+};
 
-vm.modalViewExpense = function (existing) {
-  var modalInstance = $uibModal.open({
-    templateUrl: 'app/views/pages/private/viewexpense.html',
-    controller: 'viewexController',
-    controllerAs: 'main',
-    resolve: {
-      existing: function () {
-        return existing;
+  vm.modalViewExpense = function (existing) {
+    var modalInstance = $uibModal.open({
+      templateUrl: 'app/views/pages/private/viewExpense.html',
+      controller: 'viewexController',
+      controllerAs: 'main',
+      resolve: {
+        existing: function () {
+          return existing;
+        }
       }
-    }
-  });
-  modalInstance.result.then(
-    function () {
-    }, 
-    function () {
-    }
-  )};
+    });
+    modalInstance.result.then(
+      function () {
+      }, 
+      function () {
+      }
+    )
+  };
 
 
-
-
-
-})
+  })
 
