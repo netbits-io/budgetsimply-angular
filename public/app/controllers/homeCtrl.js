@@ -1,10 +1,13 @@
 angular.module('homeCtrl', [])
 
-.controller('homeController', function($route, $scope, $uibModal, Budget, Auth) {
+.controller('homeController', function($route, $scope, $uibModal, Budget, Auth, sharedProperties) {
 
   var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   var vm = this;
+
+  vm.props = sharedProperties;
+  vm.mymail = sharedProperties.getUser().email;
 
   vm.radioMode = 'my';
 
@@ -15,9 +18,6 @@ angular.module('homeCtrl', [])
   vm.periodLabel = "";
   vm.periodString = "";
 
-  Auth.getUser().then(function (data) {
-    vm.mymail = data.data.email;
-  });
 
   pad = function(num, size) {
     var s = num+"";

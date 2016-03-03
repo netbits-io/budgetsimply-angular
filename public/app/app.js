@@ -2,11 +2,23 @@ angular.module('userApp',
         ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngAnimate', 
          'app.routes', 'authService', 'budgetService', 'mainCtrl', 
          'userCtrl', 'homeCtrl', 'meCtrl', 'newexCtrl', 'viewexCtrl',
-         'userService', 'sharedCtrl'])
+         'friendsCtrl', 'userService', 'sharedCtrl'])
         // application configuration to integrate token into requests
         .config(function ($httpProvider) {
             // attach our auth interceptor to the http requests
             $httpProvider.interceptors.push('AuthInterceptor');
+        })
+        .service('sharedProperties', function () {
+            var user = undefined;
+
+            return {
+                getUser: function () {
+                    return user;
+                },
+                setUser: function(value) {
+                    user = value;
+                }
+            };
         })
         .directive('passwordMatch', [function () {
             return {

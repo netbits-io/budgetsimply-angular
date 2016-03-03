@@ -1,10 +1,13 @@
 angular.module('sharedCtrl', [])
 
-.controller('sharedController', function($scope, $uibModal, Budget, Auth) {
+.controller('sharedController', function($scope, $uibModal, Budget, Auth, sharedProperties) {
     var monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
     
     var vm = this;
+
+    vm.props = sharedProperties;
+    vm.mymail = sharedProperties.getUser().email;
 
     vm.sharedwithlist = [];
     vm.sharedwith = "";
@@ -19,10 +22,6 @@ angular.module('sharedCtrl', [])
 
     vm.periodLabel = "";
     vm.periodString = "";
-
-    Auth.getUser().then(function (data) {
-        vm.mymail = data.data.email;
-    });
 
     pad = function(num, size) {
         var s = num+"";

@@ -1,28 +1,30 @@
 angular.module('newexCtrl', ['budgetService'])
 
-.controller('newexController', function ($scope, Auth, $uibModalInstance, Budget, Auth, existing) {
+.controller('newexController', function ($scope, Auth, $uibModalInstance, Budget, Auth, existing, sharedProperties) {
     var vm = this;
 
-    Auth.getUser().then(function (data) {
-        vm.me = data.data;
-        vm.mymail = data.data.email;
-        if(existing != null){
-            vm.tags = existing.tags;
-            vm.note = existing.note;
-            vm.payed = existing.amount;
-            vm.tags = existing.tags;
-            vm.shares = existing.shares.filter(function(item) {
-                return vm.me.email != item.user;
-            });
-            vm.id = existing._id;
-            vm.dt = existing.date;
-        } else {
-            vm.id = null;
-            vm.tags = [];
-            vm.shares = [];
-            vm.dt = new Date();
-        }
-    });
+    vm.props = sharedProperties;
+    vm.mymail = sharedProperties.getUser().email;
+
+    vm.me = sharedProperties.getUser();
+    vm.mymail = sharedProperties.getUser().email;
+    if(existing != null){
+        vm.tags = existing.tags;
+        vm.note = existing.note;
+        vm.payed = existing.amount;
+        vm.tags = existing.tags;
+        vm.shares = existing.shares.filter(function(item) {
+            return vm.me.email != item.user;
+        });
+        vm.id = existing._id;
+        vm.dt = existing.date;
+    } else {
+        vm.id = null;
+        vm.tags = [];
+        vm.shares = [];
+        vm.dt = new Date();
+    }
+
 
     vm.sharedwithlist = [];
     vm.allTags = [];
