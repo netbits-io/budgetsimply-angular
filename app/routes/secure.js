@@ -12,7 +12,7 @@ module.exports = function (app, express) {
     // route middleware to verify a token
     secRouter.use(function (req, res, next) {
         // do logging
-        console.log('Somebody just came to our app!');
+        // console.log('Somebody just came to our app!');
         // check header or url parameters or post parameters for token
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
         // decode token

@@ -8,18 +8,6 @@ angular.module('userApp',
             // attach our auth interceptor to the http requests
             $httpProvider.interceptors.push('AuthInterceptor');
         })
-        .service('sharedProperties', function () {
-            var user = undefined;
-
-            return {
-                getUser: function () {
-                    return user;
-                },
-                setUser: function(value) {
-                    user = value;
-                }
-            };
-        })
         .directive('infobar', function () {
             return {
                 restrict: 'E',
@@ -28,7 +16,7 @@ angular.module('userApp',
                     success: '@'
                 },
                 templateUrl: 'app/views/pages/components/infobar.html',
-                controller: function ($scope, $attrs, sharedProperties) {
+                controller: function ($scope, $attrs) {
                     var vm = this;
                     vm.successS = false;
                     vm.dangerS = false;

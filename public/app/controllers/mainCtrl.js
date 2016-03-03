@@ -1,6 +1,6 @@
 angular.module('mainCtrl', [])
 
-.controller('mainController', function ($rootScope, $location, $routeParams, Auth, $uibModal, sharedProperties) {
+.controller('mainController', function ($rootScope, $location, $routeParams, Auth, $uibModal) {
     var vm = this;
 
     vm.loggedIn = Auth.isLoggedIn();
@@ -8,7 +8,6 @@ angular.module('mainCtrl', [])
     checkOnEveryRequest = function (event, next, current) {
         vm.loggedIn = Auth.isLoggedIn();
         if (!vm.loggedIn) {
-            sharedProperties.setUser(undefined);
             if (next.templateUrl.indexOf("app/views/pages/private/") >= 0) {
                 $location.path("/");
             }
@@ -18,7 +17,6 @@ angular.module('mainCtrl', [])
         } else {
             Auth.getUser().then(function (data) {
                 vm.user = data.data;
-                sharedProperties.setUser(vm.user);
                     //console.log(vm.user);
                         if (!vm.user.admin) {
                             if (next.templateUrl.indexOf("app/views/pages/admin/") >= 0) {
@@ -107,7 +105,6 @@ angular.module('mainCtrl', [])
             vm.doLogout = function () {
                 Auth.logout();
                 vm.user = '';
-                sharedProperties.setUser(undefined);
                 //vm.admin = false;
                 $location.path('/');
             };

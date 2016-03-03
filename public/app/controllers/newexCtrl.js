@@ -1,6 +1,6 @@
 angular.module('newexCtrl', ['budgetService'])
 
-.controller('newexController', function ($scope, $uibModalInstance, Budget, Auth, existing, sharedProperties) {
+.controller('newexController', function ($scope, $uibModalInstance, Budget, Auth, existing) {
     var vm = this;
 
     vm.sharedwithlist = [];
@@ -9,6 +9,11 @@ angular.module('newexCtrl', ['budgetService'])
     redraw = function () {
         Budget.all().success(function (data) {
             allTgs = new Set();
+            data.filter(function (expense) {
+                expense.tags.filter(function (el) {
+                    allTgs.add(el.text);
+                });
+            });
             if(allTgs.size > 0){
                 tagsArray=Array.from(allTgs);
                 tagsArray.filter(function (el) {

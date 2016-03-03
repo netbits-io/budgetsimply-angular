@@ -1,6 +1,6 @@
 angular.module('sharedCtrl', [])
 
-.controller('sharedController', function($scope, $uibModal, Budget, Auth, sharedProperties) {
+.controller('sharedController', function($scope, $uibModal, Budget, Auth) {
     var monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
     

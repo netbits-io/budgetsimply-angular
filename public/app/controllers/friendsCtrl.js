@@ -1,6 +1,6 @@
 angular.module('friendsCtrl', [])
 
-.controller('friendsController', function($scope, $uibModal, Budget, Auth, sharedProperties) {
+.controller('friendsController', function($scope, $uibModal, Budget, Auth) {
     var vm = this;
 
     Auth.getUser().then(function (data) {
