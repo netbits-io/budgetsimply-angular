@@ -82,7 +82,7 @@ vm.deleteExpense = function (eId) {
 
 vm.modalExpense = function (existing) {
   var modalInstance = $uibModal.open({
-    templateUrl: 'app/views/pages/private/newExpense.html',
+    templateUrl: 'app/views/pages/private/newexpense.html',
     controller: 'newexController',
     controllerAs: 'main',
     resolve: {
@@ -102,7 +102,7 @@ vm.modalExpense = function (existing) {
 
   vm.modalViewExpense = function (existing) {
     var modalInstance = $uibModal.open({
-      templateUrl: 'app/views/pages/private/viewExpense.html',
+      templateUrl: 'app/views/pages/private/viewexpense.html',
       controller: 'viewexController',
       controllerAs: 'main',
       resolve: {
