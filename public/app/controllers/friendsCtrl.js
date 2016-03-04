@@ -9,7 +9,7 @@ angular.module('friendsCtrl', [])
 
     vm.modalFriend = function () {
     var modalInstance = $uibModal.open({
-      templateUrl: 'app/views/pages/private/newFriend.html',
+      templateUrl: 'app/views/pages/private/newfriendm.html',
       controller: 'newfrndController',
       controllerAs: 'modal',
       resolve: {}
