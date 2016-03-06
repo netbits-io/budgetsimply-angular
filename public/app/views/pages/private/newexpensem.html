@@ -6,13 +6,8 @@
     <h4 class="modal-title">Add new Expense</h4>
   </div>
   <div class="modal-body">
+    <infobar success="{{main.danger}}" danger="{{main.success}}"></infobar>
     <form>
-
-      <div ng-show="main.danger" class="alert alert-danger">
-        <a href="#" ng-click="main.cancelDanger()" class="close">&times;</a>
-        {{main.danger}}
-      </div>
-
       <div class="row">
         <div class="col-xs-7">
           <div class="form-group">

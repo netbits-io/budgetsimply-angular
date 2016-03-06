@@ -22,7 +22,7 @@ module.exports = function (app, express) {
                 } else {
                     Expense.findOne({owner: req.decoded.email, _id: req.body.expid}, function (err, expense) {
                     if (err) res.json({success: false, message: err.code});
-                    if(expense){
+                    else if(expense){
                         expense.date = req.body.date;
                         expense.tags = req.body.tags;
                         expense.note = req.body.note;
@@ -43,7 +43,7 @@ module.exports = function (app, express) {
             .get(function (req, res) {
                 Expense.find({owner: req.decoded.email}, function (err, expenses) {
                     if (err) res.json({success: false, message: err.code});
-                    res.json(expenses);
+                    else res.json(expenses);
                 });
             });
     expenseRouter.route('/:exp_id')
@@ -53,7 +53,7 @@ module.exports = function (app, express) {
                     owner: req.decoded.email
                 }, function (err, user) {
                     if (err) res.json({success: false, message: err.code});
-                    res.json({success: true, message: 'Successfully deleted'});
+                    else res.json({success: true, message: 'Successfully deleted'});
                 });
             });
 
@@ -61,7 +61,7 @@ module.exports = function (app, express) {
             .get(function (req, res) {
                 Expense.find({'shares.user' : req.decoded.email}, function (err, expenses) {
                     if (err) res.json({success: false, message: err.code});
-                    res.json(expenses);
+                    else res.json(expenses);
                 });
             });
 

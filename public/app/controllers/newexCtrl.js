@@ -51,10 +51,6 @@ angular.module('newexCtrl', ['budgetService'])
         redraw();
     });
 
-    vm.cancelDanger = function () {
-        vm.danger="";
-    };
-
     vm.ok = function () {
         forme = vm.payed;
         vm.shares.filter(function(el){
@@ -66,7 +62,7 @@ angular.module('newexCtrl', ['budgetService'])
             if(data.success){
                 $uibModalInstance.close('ok');
             }else{
-                vm.danger=data.message;
+                vm.danger=data.message + " ::: " + new Date();
             }
         });
     };

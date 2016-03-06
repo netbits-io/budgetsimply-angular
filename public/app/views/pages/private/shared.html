@@ -1,6 +1,7 @@
 
 <h1>Shared Expenses</h1>
 <br>
+<infobar success="{{shared.infsuccess}}" danger="{{shared.infdanger}}"></infobar>
 <div class="row">
 	<div class="col-sm-5">
 			<div class="btn-group w100m44p" uib-dropdown>
@@ -66,8 +67,8 @@
 				<tr>
 					<td>TOTALS:</td>
 					<td></td>
-					<td class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | calctotalforshared:shared.me.email:shared.sharedwith }}</td>
-					<td class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | calctotalforshared:shared.sharedwith:shared.me.email }}</td>
+					<td class="text-right"> {{shared.friendTotal}} </td>
+					<td class="text-right"> {{shared.userTotal}}</td>
 					<td></td>
 				</tr>
 			</tfoot>
@@ -76,8 +77,12 @@
 
 <div class="row">
 	<div class="col-sm-12 text-right pad25lr">
-		<b><span> 
-			{{ shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | calcdiff:shared.me.email:shared.sharedwith }}
+		<b ng-show="shared.totalDiffFne > 0"><span> 
+			{{shared.sharedwith}} ows you {{shared.totalDiffFne}} for the selected period! 
+		</span></b>
+		<b ng-show="shared.totalDiffUsr > 0"><span> 
+			You owe {{shared.sharedwith}} {{shared.totalDiffUsr}} for the selected period! 
+			&nbsp;&nbsp;<button class="btn btn-default whiteButton" type="button" ng-click="shared.payback()">pay back {{shared.totalDiffUsr}} </button>
 		</span></b>
 	</div>
 </div>
