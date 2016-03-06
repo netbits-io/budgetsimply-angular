@@ -293,10 +293,10 @@ angular.module('userApp',
             });
 
             if(totalUser > totalFor){
-                return userfor +" ows you " +(totalUser - totalFor) + " !";
+                return userfor +" ows you " +(totalUser - totalFor) + " for the selected period!";
             }
             if(totalUser < totalFor){
-                return  "You owe " +userfor+" "+(totalFor - totalUser) + " !";
+                return  "You owe " +userfor+" "+(totalFor - totalUser) + " for the selected period!";
             }
 
             };
