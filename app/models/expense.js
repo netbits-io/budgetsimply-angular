@@ -7,7 +7,7 @@ var ExpenseSchema = new Schema({
 	note: String,
 	owner: String,
 	amount: Number,
-	shares: [{user: String, accepted: Boolean, amount: Number}]
+	shares: [{user: String, accepted: Boolean, amount: Number, payback: Boolean,}]
 });
 
 module.exports = mongoose.model('Expense', ExpenseSchema);

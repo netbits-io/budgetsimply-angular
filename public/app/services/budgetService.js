@@ -9,7 +9,7 @@ angular.module('budgetService', [])
 	};
 
 	budgetFactory.addExpense = function(expid, date, tags, note, payed, shares) {
-		postData = {expid: expid, date: date, tags: tags, note: note, amount: payed, shares: shares}
+		postData = {expid: expid, date: date, tags: tags,note: note, amount: payed, shares: shares}
 		return $http.post('/api/expense/', postData);
 	};
 

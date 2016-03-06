@@ -71,127 +71,191 @@ angular.module('userApp',
         .filter('payedfor', function() {
             return function(expense, user, mode) {
                 var toReturn = 0;
-                if(expense.owner == user){
-                    notMy = 0.0;
-                    expense.shares.forEach (function (e){
-                        if(e.user != user){
-                            notMy += e.amount;
-                        }
-                    });
-                    if(notMy != 0){
-                        if(mode.startsWith("total")){
-                            toReturn = expense.amount;
-                        } else {
-                            toReturn = expense.amount - notMy;
-                        }
-                    } else {
-                        toReturn = expense.amount;  
-                    }
-
-                } else {
-                    if(mode.startsWith("total")){
-                        toReturn = 0;
+                // show users part of all expenses
+                if(mode.startsWith("my")){
+                    if(expense.owner == user){
+                        notMy = 0;
+                        expense.shares.forEach (function (e){
+                            console.log(e.payback);
+                            if( e.user != user ) {
+                                notMy += e.amount;
+                            }
+                        });
+                        toReturn = expense.amount - notMy;
                     } else {
                         expense.shares.forEach (function (e){
-                            if(e.user == user){
+                            if(e.user == user && e.payback == false){
                                 toReturn = e.amount;
                             }
                         });
                     }
-
+                // show what the user has paid
+                } else if(mode.startsWith("total")){
+                if(expense.owner == user){
+                    toReturn = expense.amount;
+                } else {
+                    expense.shares.forEach (function (e){
+                        if(e.user == user && e.payback == true){
+                                toReturn -= e.amount;
+                        }
+                    });
                 }
+                // show what the user has paid for himself
+                } else if(mode.startsWith("iforme")){
+                if(expense.owner == user){
+                    notMy = 0;
+                    expense.shares.forEach (function (e){
+                        if(e.user != user && e.payback == false){
+                            notMy += e.amount;
+                        }
+                    });
+                    toReturn = expense.amount - notMy;
+                } else {
+                    toReturn = 0;
+                }
+                // show what friends have paid for the user
+                } else if(mode.startsWith("fforme")){
+                if(expense.owner == user){
+                    toReturn = 0;
+                } else {
+                    expense.shares.forEach (function (e){
+                        if(e.user == user){
+                            toReturn = e.amount;
+                        }
+                    });
+                }
+
+                } 
                 return toReturn.toFixed(2);
             }             
         })
-.filter('payedforshared', function() {
-    return function(expense, user, userfor) {
-        toReturn = '';
-        if(expense.owner == user){
-            var payedForOther = 0;
-            expense.shares.forEach (function (e){
-                if(e.user == userfor){
-                 payedForOther += e.amount;
-             }
-         });
-            toReturn = payedForOther.toFixed(2);
-        } 
-        return toReturn;
-    }             
-})
-.filter('periodfor', function() {
-    return function(input, periodString) {
-        var filtered = [];
-        angular.forEach(input, function(item) {
-            date = JSON.stringify(item.date)
-            if(date.indexOf(periodString) != -1) {
-                filtered.push(item);
-            }
-        });
-        return filtered;
-    };
-})
-.filter('calctotal', function() {
-    return function(input) {
-        var total = 0;
-        angular.forEach(input, function(item) {
-            if(! isNaN (item.amount-0) && item.amount != null)
-                total += item.amount;
-        });
-        return total.toFixed(2);
-    };
-})
-.filter('calctotalfor', function() {
-    return function(input, payer, mode) {
-        var total = 0;
-        angular.forEach(input, function(item) {     
-            item.shares.filter(function (el) {
-                if(el.user === payer){
-                    total += el.amount;
-                }
-            });
-
-        });
-        return total.toFixed(2);
-    };
-})
-.filter('tagsfilter', function() {
-    return function(input, filter) {
-        if(!filter || filter.length==0){
-            return input;
-        }
-        var filters = filter.split(" ");
-        var filtered = [];
-        angular.forEach(input, function(item) {
-            cr = true;
-            angular.forEach(filters, function(fltr) {
-                if(fltr.startsWith("-") && 2 < fltr.length){
-                    fltrM = fltr.substring(1);
-                    item.tags.filter(function (el) {
-                        if(el.text.indexOf(fltrM) != -1){
-                            console.log(el.text);
-                            cr = false;
+        .filter('payedforshared', function() {
+                return function(expense, user, userfor) {
+                    toReturn = '';
+                    if(expense.owner == user){
+                        var payedForOther = 0;
+                        expense.shares.forEach (function (e){
+                            if(e.user == userfor){
+                               payedForOther += e.amount;
+                           }
+                       });
+                        toReturn = payedForOther.toFixed(2);
+                    } 
+                    return toReturn;
+                }             
+            })
+            .filter('periodfor', function() {
+                return function(input, periodString) {
+                    var filtered = [];
+                    angular.forEach(input, function(item) {
+                        date = JSON.stringify(item.date)
+                        if(date.indexOf(periodString) != -1) {
+                            filtered.push(item);
                         }
-                    }); 
-                }
-                if(cr && !fltr.startsWith("-") && 1 < fltr.length){
-                    cr2 = false; 
-                    item.tags.filter(function (el) {
-                        if(el.text.indexOf(fltr) != -1){
-                            cr2 = true;
-                        }
-                    }); 
-                    cr = cr2;
-                }
-            }); 
-            if(cr) filtered.push(item);
-        });
-        return filtered;
-    };
-})
-.filter('calctotalforshared', function() {
-    return function(input, user, userfor) {
-        var total = 0;
-        angular.forEach(input, function(item) {
+                    });
+                    return filtered;
+                };
+            }).filter('calctotalfor', function() {
+                return function(input, user, mode) {
+                    var total = 0;
+                    angular.forEach(input, function(expense) { 
+                           var toReturn = 0;
+                            // show users part of all expenses
+                            if(mode.startsWith("my")){
+                                if(expense.owner == user){
+                                    notMy = 0;
+                                    expense.shares.forEach (function (e){
+                                        if( e.user != user ){
+                                            notMy += e.amount;
+                                        }
+                                    });
+                                    toReturn = expense.amount - notMy;
+                                } else {
+                                    expense.shares.forEach (function (e){
+                                        if(e.user == user && e.payback == false){
+                                            toReturn = e.amount;
+                                        }
+                                    });
+                                }
+                            // show what the user has paid
+                            } else if(mode.startsWith("total")){
+                            if(expense.owner == user){
+                                toReturn = expense.amount;
+                            } else {
+                                expense.shares.forEach (function (e){
+                                    if(e.user == user && e.payback == true){
+                                        toReturn -= e.amount;
+                                    }
+                                });
+                            }
+                            // show what the user has paid for himself
+                            } else if(mode.startsWith("iforme")){
+                            if(expense.owner == user){
+                                notMy = 0;
+                                expense.shares.forEach (function (e){
+                                    if(e.user != user && e.payback == false){
+                                        notMy += e.amount;
+                                    }
+                                });
+                                toReturn = expense.amount - notMy;
+                            } else {
+                                toReturn = 0;
+                            }
+                            // show what friends have paid for the user
+                            } else if(mode.startsWith("fforme")){
+                            if(expense.owner == user){
+                                toReturn = 0;
+                            } else {
+                                expense.shares.forEach (function (e){
+                                    if(e.user == user){
+                                        toReturn = e.amount;
+                                    }
+                                });
+                            }
+                        } 
+                        total += toReturn;
+                    });
+                    return total.toFixed(2);
+                };
+        })
+        .filter('tagsfilter', function() {
+                return function(input, filter) {
+                    if(!filter || filter.length==0){
+                        return input;
+                    }
+                    var filters = filter.split(" ");
+                    var filtered = [];
+                    angular.forEach(input, function(item) {
+                        cr = true;
+                        angular.forEach(filters, function(fltr) {
+                            if(fltr.startsWith("-") && 2 < fltr.length){
+                                fltrM = fltr.substring(1);
+                                item.tags.filter(function (el) {
+                                    if(el.text.indexOf(fltrM) != -1){
+                                        console.log(el.text);
+                                        cr = false;
+                                    }
+                                }); 
+                            }
+                            if(cr && !fltr.startsWith("-") && 1 < fltr.length){
+                                cr2 = false; 
+                                item.tags.filter(function (el) {
+                                    if(el.text.indexOf(fltr) != -1){
+                                        cr2 = true;
+                                    }
+                                }); 
+                                cr = cr2;
+                            }
+                        }); 
+                        if(cr) filtered.push(item);
+                    });
+            return filtered;
+            };
+        })
+        .filter('calctotalforshared', function() {
+            return function(input, user, userfor) {
+            var total = 0;
+            angular.forEach(input, function(item) {
             if(item.owner == user){
                 item.shares.filter(function (el) {
                     if(el.user === userfor){
@@ -199,14 +263,48 @@ angular.module('userApp',
                     }
                 });
             }
-        });
-        return total.toFixed(2);
-    };
-})
-.filter('onlyshared', function() {
-    return function(input, user, userfor) {
-        var filtered = [];
-        angular.forEach(input, function(item) {
+            });
+            return total.toFixed(2);
+            };
+        })
+        .filter('calcdiff', function() {
+            return function(input, user, userfor) {
+
+            var totalUser = 0;
+            angular.forEach(input, function(item) {
+                if(item.owner == user){
+                    item.shares.filter(function (el) {
+                        if(el.user === userfor){
+                            totalUser += el.amount;
+                        }
+                    });
+                }
+            });
+
+            var totalFor = 0;
+            angular.forEach(input, function(item) {
+                if(item.owner == userfor){
+                    item.shares.filter(function (el) {
+                        if(el.user === user){
+                            totalFor += el.amount;
+                        }
+                    });
+                }
+            });
+
+            if(totalUser > totalFor){
+                return userfor +" ows you " +(totalUser - totalFor) + " !";
+            }
+            if(totalUser < totalFor){
+                return  "You owe " +userfor+" "+(totalFor - totalUser) + " !";
+            }
+
+            };
+        })
+        .filter('onlyshared', function() {
+            return function(input, user, userfor) {
+            var filtered = [];
+            angular.forEach(input, function(item) {
             if(item.owner === user){
                 item.shares.filter(function (el) {
                     if(el.user === userfor){
@@ -216,9 +314,9 @@ angular.module('userApp',
             } else if(item.owner === userfor){
                 filtered.push(item);
             }
-        });
-        return filtered;
-    };
-})   
+            });
+            return filtered;
+            };
+        })   
 ;
 

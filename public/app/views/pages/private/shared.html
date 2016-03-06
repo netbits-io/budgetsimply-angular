@@ -64,7 +64,7 @@
 			</tr>
 			<tfoot>
 				<tr>
-					<td>TOTAL</td>
+					<td>TOTALS:</td>
 					<td></td>
 					<td class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | calctotalforshared:shared.me.email:shared.sharedwith }}</td>
 					<td class="text-right"> {{shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | calctotalforshared:shared.sharedwith:shared.me.email }}</td>
@@ -74,3 +74,12 @@
 		</tbody>
 	</table>
 
+<div class="row">
+	<div class="col-sm-12 text-right pad25lr">
+		<b><span> 
+			{{ shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | calcdiff:shared.me.email:shared.sharedwith }}
+		</span></b>
+	</div>
+</div>
+
+<br>

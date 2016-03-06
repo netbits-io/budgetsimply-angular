@@ -18,12 +18,13 @@
 			<input type="text" class="form-control whiteButton " ng-model="home.filterText">
 		</div>
 		<div class="col-sm-2">
-			<div class="btn-group">
-        		<label class="btn btn-default whiteButton" ng-model="home.radioMode" uib-btn-radio="'my'">My</label>
-       		 	<label class="btn btn-default whiteButton" ng-model="home.radioMode" uib-btn-radio="'total'">Payed</label>
-   			</div>
+			<select  class="form-control whiteButton"  ng-model="home.radioMode">
+      			<option value="my">My Expenses</option>
+      			<option value="total">All I've Paid</option>
+      			<option value="iforme">I Paid for Me</option>
+      			<option value="fforme">Paid by Friends</option>
+    		</select>
 		</div>
-
 		<div class="col-sm-2 text-right">
 			<button class="btn btn-default whiteButton" ng-click="home.modalExpense(null)" type="button">Add Expense</button>
 		</div>
@@ -63,7 +64,7 @@
 			</tr>
 			<tfoot>
 				<tr>
-					<td>TOTAL</td>
+					<td>TOTAL:</td>
 					<td></td>
 					<th class="text-right"> {{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.me.email:home.radioMode }}</th>
 					<td></td>
@@ -71,4 +72,6 @@
 			</tfoot>
 		</tbody>
 	</table>
+
+<br>
 
