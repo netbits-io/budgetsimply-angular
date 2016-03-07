@@ -78,6 +78,9 @@ redrawPeriod = function(){
   vm.totalDiffFne = vm.friendTotal - vm.userTotal;
   vm.totalDiffUsr = vm.userTotal - vm.friendTotal;
 
+  vm.totalDiffFne = vm.totalDiffFne.toFixed(2);
+  vm.totalDiffUsr = vm.totalDiffUsr.toFixed(2);
+
 }
 
 redraw = function () {
