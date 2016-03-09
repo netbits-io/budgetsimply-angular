@@ -40,7 +40,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString | tagsfilter:home.filterText">
+			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | sortbdate">
 				<td>{{entry.date | date:'MMM dd'}}</td>
 				<td>
 					<span ng-repeat="tag in entry.tags">

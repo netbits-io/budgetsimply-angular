@@ -155,7 +155,16 @@ angular.module('userApp',
                     });
                     return filtered;
                 };
-            }).filter('calctotalfor', function() {
+            })
+            .filter('sortbdate', function() {
+                return function(input) {
+                    input.sort(function(a,b){
+                        return new Date(b.date) - new Date(a.date);
+                    });
+                    return input;
+                };
+            })
+            .filter('calctotalfor', function() {
                 return function(input, user, mode) {
                     var total = 0;
                     angular.forEach(input, function(expense) { 
