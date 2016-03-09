@@ -156,6 +156,17 @@ angular.module('userApp',
                     return filtered;
                 };
             })
+             .filter('pgnte', function() {
+                return function(input, page) {
+                    btm = (page - 1) * 20;
+                    tp = ((page - 1) * 20) + 20;
+                    if(tp > input.length) 
+                        tp = input.length;
+                    console.log(btm);
+                    console.log(tp);
+                    return input.slice(btm, tp);
+                };
+            })
             .filter('sortbdate', function() {
                 return function(input) {
                     input.sort(function(a,b){

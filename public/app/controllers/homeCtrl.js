@@ -1,10 +1,30 @@
 angular.module('homeCtrl', [])
 
-.controller('homeController', function($route, $scope, $uibModal, Budget, Auth) {
+.controller('homeController', function($route, $scope, $uibModal, Budget, Auth, $filter) {
 
   var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   var vm = this;
+
+  vm.totalItems = 1;
+  vm.currentPage = 1;
+
+  repage = function(){
+    fltrd = $filter("periodfor")(vm.expenses, vm.periodString);
+    fltrd = $filter("tagsfilter")(fltrd, vm.filterText);
+    vm.totalItems = fltrd.length;
+  }
+
+  $scope.$watch('home.filterText', function(nw, ol) {
+        repage();
+  });
+  $scope.$watch('home.periodString', function(nw, ol) {
+        repage();
+  });
+
+  vm.pageChanged = function() {
+    
+  };
 
   vm.radioMode = 'my';
 
@@ -29,6 +49,7 @@ angular.module('homeCtrl', [])
       vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
       vm.periodString = vm.year+"-"+pad(vm.month,2);
     }
+    repage();
   }
 
   redraw = function () {

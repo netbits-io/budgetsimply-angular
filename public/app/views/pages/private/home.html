@@ -40,7 +40,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | sortbdate">
+			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | sortbdate | pgnte:home.currentPage">
 				<td>{{entry.date | date:'MMM dd'}}</td>
 				<td>
 					<span ng-repeat="tag in entry.tags">
@@ -72,6 +72,13 @@
 			</tfoot>
 		</tbody>
 	</table>
+	<div class="row">
+		<div class="col-sm-12 text-right pad25lr">
+			<uib-pagination total-items="home.totalItems" 
+				ng-model="home.currentPage" ng-change="home.pageChanged()" items-per-page="20">
+			</uib-pagination>
+		</div>
+	</div>
 
 <br>
 
