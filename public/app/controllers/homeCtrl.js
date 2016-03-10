@@ -22,10 +22,6 @@ angular.module('homeCtrl', [])
         repage();
   });
 
-  vm.pageChanged = function() {
-    
-  };
-
   vm.radioMode = 'my';
 
   vm.month = 1+(new Date().getMonth());

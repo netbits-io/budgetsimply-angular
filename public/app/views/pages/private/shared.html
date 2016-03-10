@@ -29,15 +29,34 @@
 		</div>
 	</div>
 	<hr>
+	<div class="row">
+		<div class="col-sm-12 text-right pad25lr">
+			<b ng-show="shared.totalDiffFne > 0"><span> 
+			{{shared.sharedwith}} ows you {{shared.totalDiffFne}} for the selected period! 
+			</span></b>
+			<b ng-show="shared.totalDiffUsr > 0"><span> 
+			You owe {{shared.sharedwith}} {{shared.totalDiffUsr}} for the selected period! 
+			&nbsp;&nbsp;<button class="btn btn-default whiteButton" type="button" ng-click="shared.payback()">pay back {{shared.totalDiffUsr}} </button>
+			</span></b>
+		</div>
+	</div>
+	<br>
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>Date</th>
-				<th>Tags</th>
-				<th class="text-right">{{shared.me.email}}</th>
-				<th class="text-right">{{shared.sharedwith}}</th>
-				<th width="50"></th>
+				<td><b>Date</b></td>
+				<td><b>Tags</td>
+				<td class="text-right"><b>{{shared.me.email}}</b></td>
+				<td class="text-right"><b>{{shared.sharedwith}}</b></td>
+				<td width="50"></td>
 			</tr>
+			<tr>
+					<th></th>
+					<th></th>
+					<th class="text-right"> {{shared.friendTotal}}</th>
+					<th class="text-right"> {{shared.userTotal}}</th>
+					<th></th>
+				</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="entry in shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | sortbdate | pgnte:shared.currentPage">
@@ -65,33 +84,19 @@
 			</tr>
 			<tfoot>
 				<tr>
-					<td>TOTALS:</td>
-					<td></td>
-					<td class="text-right"> {{shared.friendTotal}} </td>
-					<td class="text-right"> {{shared.userTotal}}</td>
-					<td></td>
+					<th></th>
+					<th></th>
+					<th class="text-right"> {{shared.friendTotal}}</th>
+					<th class="text-right"> {{shared.userTotal}}</th>
+					<th></th>
 				</tr>
 			</tfoot>
 		</tbody>
 	</table>
-
-	<div class="row">
-		<div class="col-sm-12 text-right pad25lr">
-			<b ng-show="shared.totalDiffFne > 0"><span> 
-			{{shared.sharedwith}} ows you {{shared.totalDiffFne}} for the selected period! 
-			</span></b>
-			<b ng-show="shared.totalDiffUsr > 0"><span> 
-			You owe {{shared.sharedwith}} {{shared.totalDiffUsr}} for the selected period! 
-			&nbsp;&nbsp;<button class="btn btn-default whiteButton" type="button" ng-click="shared.payback()">pay back {{shared.totalDiffUsr}} </button>
-			</span></b>
-		</div>
-	</div>
-	<br>
 	<div class="row">
 		<div class="col-sm-12 text-right pad25lr">
 			<uib-pagination total-items="shared.totalItems" ng-model="shared.currentPage" ng-change="shared.pageChanged()" items-per-page="20">
 			</uib-pagination>
 		</div>
 	</div>
-
-<br>
+	<br>

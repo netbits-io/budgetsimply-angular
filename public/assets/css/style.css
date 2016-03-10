@@ -137,3 +137,17 @@ html, body {
 .pagination{
     margin-top: 0px !important;
 }
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #ddd !important;
+    border-color: #000000 !important;
+}
+.pagination>li>a, .pagination>li>span {
+    color: #000000 !important;
+    background-color: #fff !important;
+    border: 1px solid #000000 !important;
+}
+.pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover {
+    color: #aaa !important;
+    background-color: #fff !important;
+    border-color: #000000 !important;
+}

@@ -33,10 +33,17 @@
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>Date</th>
-				<th>Tags</th>
-				<th class="text-right">Amount</th>
-				<th width="50"></th>
+				<td><b>Date</b></td>
+				<td><b>Tags</b></td>
+				<td class="text-right"><b>Amount</b></td>
+				<td width="50"></td>
+			</tr>
+			<tr>
+				<th></th>
+				<th></th>
+				<th class="text-right"><b>TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
+						{{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.me.email:home.radioMode }} </b></td>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,7 +54,7 @@
 						{{tag.text}}
 					</span>		
 				</td>
-				<th class="text-right">{{entry | payedfor:home.me.email:home.radioMode}}</th>
+				<td class="text-right">{{entry | payedfor:home.me.email:home.radioMode}}</td>
 				<td class="text-right">
 					<div class="btn-group" uib-dropdown >
 						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
@@ -64,10 +71,11 @@
 			</tr>
 			<tfoot>
 				<tr>
-					<td>TOTAL:</td>
-					<td></td>
-					<th class="text-right"> {{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.me.email:home.radioMode }}</th>
-					<td></td>
+					<th></th>
+					<th></th>
+					<th class="text-right">TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
+						{{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.me.email:home.radioMode }} </td>
+					<th></th>
 				</tr>
 			</tfoot>
 		</tbody>
