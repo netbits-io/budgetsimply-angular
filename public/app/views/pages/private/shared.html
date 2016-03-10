@@ -40,7 +40,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="entry in shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | sortbdate">
+			<tr ng-repeat="entry in shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | sortbdate | pgnte:shared.currentPage">
 				<td>{{entry.date | date:'MMM dd'}}</td>
 				<td>
 					<span ng-repeat="tag in entry.tags">
@@ -75,16 +75,23 @@
 		</tbody>
 	</table>
 
-<div class="row">
-	<div class="col-sm-12 text-right pad25lr">
-		<b ng-show="shared.totalDiffFne > 0"><span> 
+	<div class="row">
+		<div class="col-sm-12 text-right pad25lr">
+			<b ng-show="shared.totalDiffFne > 0"><span> 
 			{{shared.sharedwith}} ows you {{shared.totalDiffFne}} for the selected period! 
-		</span></b>
-		<b ng-show="shared.totalDiffUsr > 0"><span> 
+			</span></b>
+			<b ng-show="shared.totalDiffUsr > 0"><span> 
 			You owe {{shared.sharedwith}} {{shared.totalDiffUsr}} for the selected period! 
 			&nbsp;&nbsp;<button class="btn btn-default whiteButton" type="button" ng-click="shared.payback()">pay back {{shared.totalDiffUsr}} </button>
-		</span></b>
+			</span></b>
+		</div>
 	</div>
-</div>
+	<br>
+	<div class="row">
+		<div class="col-sm-12 text-right pad25lr">
+			<uib-pagination total-items="shared.totalItems" ng-model="shared.currentPage" ng-change="shared.pageChanged()" items-per-page="20">
+			</uib-pagination>
+		</div>
+	</div>
 
 <br>

@@ -162,8 +162,6 @@ angular.module('userApp',
                     tp = ((page - 1) * 20) + 20;
                     if(tp > input.length) 
                         tp = input.length;
-                    console.log(btm);
-                    console.log(tp);
                     return input.slice(btm, tp);
                 };
             })

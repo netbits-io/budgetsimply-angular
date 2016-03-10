@@ -6,6 +6,24 @@ angular.module('sharedCtrl', [])
     
     var vm = this;
 
+    vm.totalItems = 1;
+    vm.currentPage = 1;
+
+    repage = function(){
+      if(typeof vm.me !== 'undefined'){
+        fltrd = $filter("periodfor")(vm.expenses, vm.periodString);
+        fltrd = $filter("onlyshared")(fltrd, vm.sharedwith, vm.me.email);
+        vm.totalItems = fltrd.length;
+      }
+    };
+
+    $scope.$watch('shared.sharedwith', function(nw, ol) {
+        repage();
+    });
+    $scope.$watch('shared.periodString', function(nw, ol) {
+        repage();
+    });
+
     vm.sharedwithlist = [];
     vm.sharedwith = "";
 
@@ -81,6 +99,7 @@ redrawPeriod = function(){
   vm.totalDiffFne = vm.totalDiffFne.toFixed(2);
   vm.totalDiffUsr = vm.totalDiffUsr.toFixed(2);
 
+  repage();
 }
 
 redraw = function () {
