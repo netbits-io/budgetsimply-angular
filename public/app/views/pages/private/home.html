@@ -47,16 +47,19 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | sortbdate | pgnte:home.currentPage">
-				<td>
-					<div ng-show="!entry.accepted">
+				<td class="text-center">
+					<div ng-show="!entry.accepted && !home.haveIAccepted(entry)">
 						<div class="btn-group" uib-dropdown >
 							<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
 								<span class="glyphicon glyphicon-warning-sign"></span>
 							</button>
 							<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
-								<li role="menuitem" ng-show="!home.haveIAccepted(entry)"><a ng-click="home.acceptExpense(entry._id)">accept expense</a></li>
+								<li role="menuitem"><a ng-click="home.acceptExpense(entry._id)">accept expense</a></li>
 							</ul>
 						</div>
+					</div>
+					<div ng-show="!entry.accepted && home.haveIAccepted(entry)">
+						<span class="glyphicon glyphicon-warning-sign"></span>
 					</div>
 				</td>
 				<td>{{entry.date | date:'MMM dd'}}</td>
@@ -66,7 +69,7 @@
 					</span>		
 				</td>
 				<td class="text-right">{{entry | payedfor:home.me.email:home.radioMode}}</td>
-				<td class="text-right">
+				<td class="text-center">
 					<div class="btn-group" uib-dropdown >
 						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
 							<span ng-show="entry.owner === home.me.email" class="glyphicon glyphicon-align-justify"></span>
