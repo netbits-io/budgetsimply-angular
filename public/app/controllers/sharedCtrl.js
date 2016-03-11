@@ -44,6 +44,18 @@ angular.module('sharedCtrl', [])
         return s;
     }
 
+    vm.myTags = function(entry){
+      var result = [];
+      //console.log(entry);
+      entry.shares.filter(function(share){
+      if(share.user === vm.me.email){
+        console.log(share.tags);
+        result = share.tags;
+      }
+      });
+      return result;
+    }
+
     vm.perToggle = function () {
         vm.lPeriod = !vm.lPeriod;
         redrawPeriod();

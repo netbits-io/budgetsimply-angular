@@ -62,7 +62,7 @@
 			<tr ng-repeat="entry in shared.expenses | periodfor:shared.periodString | onlyshared:shared.me.email:shared.sharedwith | sortbdate | pgnte:shared.currentPage">
 				<td>{{entry.date | date:'MMM dd'}}</td>
 				<td>
-					<span ng-repeat="tag in entry.tags">
+					<span ng-repeat="tag in shared.myTags(entry)">
 						{{tag.text}}
 					</span>		
 				</td>
