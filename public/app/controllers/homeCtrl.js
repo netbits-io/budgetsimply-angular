@@ -11,7 +11,7 @@ angular.module('homeCtrl', [])
 
   repage = function(){
     fltrd = $filter("periodfor")(vm.expenses, vm.periodString);
-    fltrd = $filter("tagsfilter")(fltrd, vm.filterText);
+    fltrd = $filter("tagsfilter")(fltrd, vm.filterText, vm.me.email);
     vm.totalItems = fltrd.length;
   }
 
@@ -53,6 +53,18 @@ angular.module('homeCtrl', [])
       vm.expenses = data;
       redrawPeriod();
     });
+  }
+
+  vm.myTags = function(entry){
+    var result = [];
+    //console.log(entry);
+    entry.shares.filter(function(share){
+      if(share.user === vm.me.email){
+        console.log(share.tags);
+        result = share.tags;
+      }
+    });
+    return result;
   }
 
   vm.perToggle = function () {

@@ -76,7 +76,6 @@ angular.module('userApp',
                     if(expense.owner == user){
                         notMy = 0;
                         expense.shares.forEach (function (e){
-                            console.log(e.payback);
                             if( e.user != user ) {
                                 notMy += e.amount;
                             }
@@ -237,27 +236,32 @@ angular.module('userApp',
                 };
         })
         .filter('tagsfilter', function() {
-                return function(input, filter) {
+                return function(input, filter, usermail) {
                     if(!filter || filter.length==0){
                         return input;
                     }
                     var filters = filter.split(" ");
                     var filtered = [];
                     angular.forEach(input, function(item) {
+                        tgs = item.tags;
+                        angular.forEach(item.shares, function(share) {
+                            if(share.user === usermail){
+                                tgs = share.tags;
+                            }
+                        });
                         cr = true;
                         angular.forEach(filters, function(fltr) {
                             if(fltr.startsWith("-") && 2 < fltr.length){
                                 fltrM = fltr.substring(1);
-                                item.tags.filter(function (el) {
+                                tgs.filter(function (el) {
                                     if(el.text.indexOf(fltrM) != -1){
-                                        console.log(el.text);
                                         cr = false;
                                     }
                                 }); 
                             }
                             if(cr && !fltr.startsWith("-") && 1 < fltr.length){
                                 cr2 = false; 
-                                item.tags.filter(function (el) {
+                                tgs.filter(function (el) {
                                     if(el.text.indexOf(fltr) != -1){
                                         cr2 = true;
                                     }

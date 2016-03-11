@@ -10,8 +10,10 @@ angular.module('newexCtrl', ['budgetService'])
         Budget.all().success(function (data) {
             allTgs = new Set();
             data.filter(function (expense) {
-                expense.tags.filter(function (el) {
-                    allTgs.add(el.text);
+                expense.shares.filter(function (share) {
+                    share.tags.filter(function (tag) {
+                        allTgs.add(tag.text);
+                    });
                 });
             });
             if(allTgs.size > 0){
@@ -57,7 +59,13 @@ angular.module('newexCtrl', ['budgetService'])
             forme = forme - el.amount;
         });
         sharesCopy = JSON.parse(JSON.stringify(vm.shares));
+
         sharesCopy.push({user: vm.me.email, accepted: true, amount: forme, payback: false});
+
+        sharesCopy.filter(function(el){
+            el.tags = vm.tags;
+        });
+
         Budget.addExpense(vm.id, vm.dt, vm.tags, vm.note, vm.payed, sharesCopy).success(function (data) {
             if(data.success){
                 $uibModalInstance.close('ok');

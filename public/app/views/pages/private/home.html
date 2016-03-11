@@ -42,15 +42,15 @@
 				<th></th>
 				<th></th>
 				<th class="text-right"><b>TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
-						{{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.me.email:home.radioMode }} </b></td>
+						{{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email | calctotalfor:home.me.email:home.radioMode }} </b></td>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | sortbdate | pgnte:home.currentPage">
+			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email | sortbdate | pgnte:home.currentPage">
 				<td>{{entry.date | date:'MMM dd'}}</td>
 				<td>
-					<span ng-repeat="tag in entry.tags">
+					<span ng-repeat="tag in home.myTags(entry)">
 						{{tag.text}}
 					</span>		
 				</td>
@@ -74,7 +74,7 @@
 					<th></th>
 					<th></th>
 					<th class="text-right">TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
-						{{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.me.email:home.radioMode }} </td>
+						{{home.expenses | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email | calctotalfor:home.me.email:home.radioMode }} </td>
 					<th></th>
 				</tr>
 			</tfoot>
