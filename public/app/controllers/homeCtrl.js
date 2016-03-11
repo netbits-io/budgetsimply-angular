@@ -57,15 +57,23 @@ angular.module('homeCtrl', [])
 
   vm.myTags = function(entry){
     var result = [];
-    //console.log(entry);
     entry.shares.filter(function(share){
       if(share.user === vm.me.email){
-        console.log(share.tags);
         result = share.tags;
       }
     });
     return result;
   }
+  
+  vm.haveIAccepted = function (entry) {
+    var result = false;
+    entry.shares.filter(function(share){
+      if(share.user === vm.me.email){
+        result = share.accepted;
+      }
+    });
+    return result;
+  };
 
   vm.perToggle = function () {
     vm.lPeriod = !vm.lPeriod;

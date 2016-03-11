@@ -54,7 +54,7 @@
 								<span class="glyphicon glyphicon-warning-sign"></span>
 							</button>
 							<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
-								<li role="menuitem"><a ng-click="home.acceptExpense(entry._id)">accept expense</a></li>
+								<li role="menuitem" ng-show="!home.haveIAccepted(entry)"><a ng-click="home.acceptExpense(entry._id)">accept expense</a></li>
 							</ul>
 						</div>
 					</div>
