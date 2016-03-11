@@ -9,9 +9,12 @@ var ExpenseSchema = new Schema({
 	note: String,
 	owner: String,
 	amount: Number,
+	accepted: Boolean,
+    rejected: Boolean,
 	shares: [{
 		user: String, 
-		accepted: Boolean, 
+		accepted: Boolean,
+    	rejected: Boolean, 
 		amount: Number, 
 		payback: Boolean,
 		tags: [{ 

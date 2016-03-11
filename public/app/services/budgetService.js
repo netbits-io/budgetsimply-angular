@@ -12,6 +12,9 @@ angular.module('budgetService', [])
 		postData = {expid: expid, date: date, tags: tags,note: note, amount: payed, shares: shares}
 		return $http.post('/api/expense/', postData);
 	};
+	budgetFactory.acceptExpense = function(expid) {
+		return $http.post('/api/expense/accept', {expid: expid});
+	};
 
 	budgetFactory.deleteExpense = function(eId) {
 		return $http.delete('/api/expense/'+eId);

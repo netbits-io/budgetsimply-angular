@@ -109,6 +109,12 @@ vm.deleteExpense = function (eId) {
   });
 };
 
+vm.acceptExpense = function (eId) {
+  Budget.acceptExpense(eId).success(function (data) {
+    redraw();
+  });
+};
+
 vm.modalExpense = function (existing) {
   var modalInstance = $uibModal.open({
     templateUrl: 'app/views/pages/private/newexpensem.html',

@@ -11,7 +11,8 @@ angular.module('sharedCtrl', [])
 
     repage = function(){
       if(typeof vm.me !== 'undefined'){
-        fltrd = $filter("periodfor")(vm.expenses, vm.periodString);
+        fltrd = $filter("onlyaccepted")(vm.expenses);
+        fltrd = $filter("periodfor")(fltrd, vm.periodString);
         fltrd = $filter("onlyshared")(fltrd, vm.sharedwith, vm.me.email);
         vm.totalItems = fltrd.length;
       }
@@ -96,11 +97,13 @@ redrawPeriod = function(){
         vm.periodString = vm.year+"-"+pad(vm.month,2);
     }
 
-  input = $filter("periodfor")(vm.expenses, vm.periodString);
+  input = $filter("onlyaccepted")(vm.expenses);
+  input = $filter("periodfor")(input, vm.periodString);
   input = $filter("onlyshared")(input, vm.me.email, vm.sharedwith);
   vm.friendTotal = $filter("calctotalforshared")(input, vm.me.email, vm.sharedwith);
 
-  input = $filter("periodfor")(vm.expenses, vm.periodString);
+  input = $filter("onlyaccepted")(vm.expenses);
+  input = $filter("periodfor")(input, vm.periodString);
   input = $filter("onlyshared")(input, vm.sharedwith, vm.me.email);
   vm.userTotal = $filter("calctotalforshared")(input, vm.sharedwith, vm.me.email);
  

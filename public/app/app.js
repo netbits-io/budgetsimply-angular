@@ -339,6 +339,17 @@ angular.module('userApp',
             });
             return filtered;
             };
-        })   
+        })
+        .filter('onlyaccepted', function() {
+            return function(input, user, userfor) {
+            var filtered = [];
+            angular.forEach(input, function(item) {
+                if(item.accepted ){
+                    filtered.push(item);
+                } 
+            });
+            return filtered;
+            };
+        })    
 ;
 
