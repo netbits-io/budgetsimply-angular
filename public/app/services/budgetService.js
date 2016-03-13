@@ -15,7 +15,9 @@ angular.module('budgetService', [])
 	budgetFactory.acceptExpense = function(expid) {
 		return $http.post('/api/expense/accept', {expid: expid});
 	};
-
+	budgetFactory.rejectExpense = function(expid) {
+		return $http.post('/api/expense/reject', {expid: expid});
+	};
 	budgetFactory.deleteExpense = function(eId) {
 		return $http.delete('/api/expense/'+eId);
 	};

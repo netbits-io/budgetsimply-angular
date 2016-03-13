@@ -11,7 +11,8 @@ angular.module('homeCtrl', [])
 
   repage = function(){
     if(typeof vm.me !== 'undefined'){
-      fltrd = $filter("periodfor")(vm.expenses, vm.periodString);
+      fltrd = $filter("onlymyrejected")(vm.expenses, vm.me.email);
+      fltrd = $filter("periodfor")(fltrd, vm.periodString);
       fltrd = $filter("tagsfilter")(fltrd, vm.filterText, vm.me.email);
       vm.totalItems = fltrd.length;
     }
@@ -119,13 +120,26 @@ vm.deleteExpense = function (eId) {
     redraw();
   });
 };
-
 vm.acceptExpense = function (eId) {
   Budget.acceptExpense(eId).success(function (data) {
-    redraw();
+    if(data.success){
+      redraw();
+      vm.infsuccess = data.message +" ::: "+new Date();
+    }else{
+      vm.infdanger = data.message +" ::: "+new Date();
+    }
   });
 };
-
+vm.rejectExpense = function (eId) {
+  Budget.rejectExpense(eId).success(function (data) {
+    if(data.success){
+      redraw();
+      vm.infsuccess = data.message +" ::: "+new Date();
+    }else{
+      vm.infdanger = data.message +" ::: "+new Date();
+    }
+  });
+};
 vm.modalExpense = function (existing) {
   var modalInstance = $uibModal.open({
     templateUrl: 'app/views/pages/private/newexpensem.html',

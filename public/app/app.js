@@ -341,10 +341,21 @@ angular.module('userApp',
             };
         })
         .filter('onlyaccepted', function() {
-            return function(input, user, userfor) {
+            return function(input) {
             var filtered = [];
             angular.forEach(input, function(item) {
                 if(item.accepted ){
+                    filtered.push(item);
+                } 
+            });
+            return filtered;
+            };
+        }) 
+        .filter('onlymyrejected', function() {
+            return function(input, user) {
+            var filtered = [];
+            angular.forEach(input, function(item) {
+                if(!item.rejected || item.owner === user){
                     filtered.push(item);
                 } 
             });

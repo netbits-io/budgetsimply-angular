@@ -151,3 +151,7 @@ html, body {
     background-color: #fff !important;
     border-color: #000000 !important;
 }
+.tooltip-inner {
+  white-space:nowrap;
+  max-width:none;
+}

@@ -115,22 +115,62 @@ module.exports = function (app, express) {
     expenseRouter.route('/accept')
             .post(function (req, res) {
                 Expense.findOne({ _id: req.body.expid}, function (err, expense) {
-                    if (err) res.json({success: false, message: err.code});
+                    if (err) res.json({success: false, message: 'Could not update expense!'});
                     else if(expense){
-                        acptd = true;
-                        expense.shares.forEach(function(share){
-                            if(share.user === req.decoded.email){
-                                share.accepted = true;
+                        if(expense.accepted != true && expense.rejected != true && expense.shares.length > 1){
+                            acptd = true;
+                            iAccepted = false;
+                            expense.shares.forEach(function(share){
+                                if(share.user === req.decoded.email){
+                                    share.accepted = true;
+                                    iAccepted = true;
+                                }
+                                if(!share.accepted){
+                                    acptd = false; 
+                                }
+                            });
+                            if(iAccepted){
+                                expense.accepted = acptd;
+                                expense.save(function (err) {
+                                    if (err) res.json({success: false, message: err.code});
+                                    else res.json({success: true, message: 'Expense accepted!'});
+                                });
+                            } else {
+                                //expense is shared and not accepted byt not with the current user
+                                res.json({success: false, message: 'Could not update expense!'});
                             }
-                            if(!share.accepted){
-                               acptd = false; 
+                        } else {
+                            res.json({success: false, message: 'Expense is already accepted, rejected or not shared!'});
+                        }
+                    } else {
+                        res.json({success: false, message: 'Could not update expense!'});
+                    }
+                });
+            });
+    expenseRouter.route('/reject')
+            .post(function (req, res) {
+                Expense.findOne({ _id: req.body.expid}, function (err, expense) {
+                    if (err) res.json({success: false, message: 'Could not update expense!'});
+                    else if(expense){
+                        if(expense.accepted != true && expense.rejected != true && expense.shares.length > 1){
+                            expense.shares.forEach(function(share){
+                                if(share.user === req.decoded.email && share.accepted === false){
+                                    share.rejected = true;
+                                    expense.rejected = true;
+                                }
+                            });
+                            if(expense.rejected){
+                                expense.save(function (err) {
+                                    if (err) res.json({success: false, message: err.code});
+                                    else res.json({success: true, message: 'Expense rejected!'});
+                                });
+                            } else {
+                                //expense is shared and not accepted byt not with the current user
+                                res.json({success: false, message: 'Could not update expense!'});
                             }
-                        });
-                        expense.accepted = acptd;
-                        expense.save(function (err) {
-                            if (err) res.json({success: false, message: err.code});
-                            else res.json({success: true, message: 'Expense accepted!'});
-                        });
+                        } else {
+                            res.json({success: false, message: 'Expense is already accepted, rejected or not shared!'});
+                        }
                     } else {
                         res.json({success: false, message: 'Could not update expense!'});
                     }

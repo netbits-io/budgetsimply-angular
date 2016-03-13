@@ -1,6 +1,7 @@
 
-<h1>Your Expenses</h1>
-<br>
+	<h1>Your Expenses</h1>
+	<br>
+	<infobar success="{{home.infsuccess}}" danger="{{home.infdanger}}"></infobar>
 	<div class="row">
 		<div class="col-sm-4">
 			<div class="input-group">
@@ -46,20 +47,24 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="entry in home.expenses | periodfor:home.periodString | tagsfilter:home.filterText | sortbdate | pgnte:home.currentPage">
+			<tr ng-repeat="entry in home.expenses | onlymyrejected:home.me.email | periodfor:home.periodString | tagsfilter:home.filterText | sortbdate | pgnte:home.currentPage">
 				<td class="text-center">
-					<div ng-show="!entry.accepted && !home.haveIAccepted(entry)">
+					<div ng-show="!entry.rejected && !entry.accepted && !home.haveIAccepted(entry)">
 						<div class="btn-group" uib-dropdown >
 							<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
-								<span class="glyphicon glyphicon-warning-sign"></span>
+								<span class="glyphicon glyphicon-warning-sign" uib-tooltip="Click to accept or reject."></span>
 							</button>
 							<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
 								<li role="menuitem"><a ng-click="home.acceptExpense(entry._id)">accept expense</a></li>
+								<li role="menuitem"><a ng-click="home.rejectExpense(entry._id)">reject expense</a></li>
 							</ul>
 						</div>
 					</div>
-					<div ng-show="!entry.accepted && home.haveIAccepted(entry)">
-						<span class="glyphicon glyphicon-warning-sign"></span>
+					<div ng-show="!entry.rejected && !entry.accepted && home.haveIAccepted(entry)">
+						<span class="glyphicon glyphicon-warning-sign" uib-tooltip="Expense is not yet accepted!"></span>
+					</div>
+					<div ng-show="entry.rejected">
+						<span class="glyphicon glyphicon-remove" uib-tooltip="Expense was rejected by a friend!"></span>
 					</div>
 				</td>
 				<td>{{entry.date | date:'MMM dd'}}</td>
