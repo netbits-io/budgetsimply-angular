@@ -52,7 +52,7 @@
 					<div ng-show="!entry.rejected && !entry.accepted && !home.haveIAccepted(entry)">
 						<div class="btn-group" uib-dropdown >
 							<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
-								<span class="glyphicon glyphicon-warning-sign" uib-tooltip="Click to accept or reject."></span>
+								<span class="glyphicon glyphicon-warning-sign" uib-tooltip="Click to accept or reject"></span>
 							</button>
 							<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
 								<li role="menuitem"><a ng-click="home.acceptExpense(entry._id)">accept expense</a></li>
@@ -77,8 +77,8 @@
 				<td class="text-center">
 					<div class="btn-group" uib-dropdown >
 						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
-							<span ng-show="entry.owner === home.me.email" class="glyphicon glyphicon-align-justify"></span>
-							<span ng-show="entry.owner != home.me.email" class="glyphicon glyphicon-scale"></span>
+							<span ng-show="entry.owner === home.me.email" class="glyphicon glyphicon-align-justify" uib-tooltip="Options"></span>
+							<span ng-show="entry.owner != home.me.email" class="glyphicon glyphicon-scale" uib-tooltip="Options"></span>
 						</button>
 						<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
 							<li role="menuitem"><a ng-click="home.modalViewExpense(entry)">view</a></li>

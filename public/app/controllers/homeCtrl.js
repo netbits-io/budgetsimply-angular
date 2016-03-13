@@ -65,7 +65,6 @@ angular.module('homeCtrl', [])
         result = share.tags;
       }
     });
-    console.log(result);
     return result;
   }
   
