@@ -10,9 +10,11 @@ angular.module('homeCtrl', [])
   vm.currentPage = 1;
 
   repage = function(){
-    fltrd = $filter("periodfor")(vm.expenses, vm.periodString);
-    fltrd = $filter("tagsfilter")(fltrd, vm.filterText, vm.me.email);
-    vm.totalItems = fltrd.length;
+    if(typeof vm.me !== 'undefined'){
+      fltrd = $filter("periodfor")(vm.expenses, vm.periodString);
+      fltrd = $filter("tagsfilter")(fltrd, vm.filterText, vm.me.email);
+      vm.totalItems = fltrd.length;
+    }
   }
 
   $scope.$watch('home.filterText', function(nw, ol) {
@@ -62,6 +64,7 @@ angular.module('homeCtrl', [])
         result = share.tags;
       }
     });
+    console.log(result);
     return result;
   }
   

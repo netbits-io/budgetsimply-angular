@@ -13,7 +13,7 @@ angular.module('sharedCtrl', [])
       if(typeof vm.me !== 'undefined'){
         fltrd = $filter("onlyaccepted")(vm.expenses);
         fltrd = $filter("periodfor")(fltrd, vm.periodString);
-        fltrd = $filter("onlyshared")(fltrd, vm.sharedwith, vm.me.email);
+        fltrd = $filter("onlyshared")(fltrd, vm.me.email, vm.sharedwith);
         vm.totalItems = fltrd.length;
       }
     };
@@ -154,9 +154,7 @@ vm.payback = function(){
     nte = ""
     shrs = [];
     amnt = vm.totalDiffUsr;
-    shrs.push({user: fnd, accepted: false, amount: amnt, payback: false});
-    shrs.push({user: usr, accepted: true, amount: 0, payback: false});
-    console.log(shrs);
+    shrs.push({user: fnd, accepted: false, amount: amnt, payback: true});
     Budget.addExpense(undefined, dat, tgs, nte, amnt, shrs).success(function (data) {
         if(data.success){
             redraw();

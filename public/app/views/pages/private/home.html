@@ -64,7 +64,7 @@
 				</td>
 				<td>{{entry.date | date:'MMM dd'}}</td>
 				<td>
-					<span ng-repeat="tag in entry.tags">
+					<span ng-repeat="tag in home.myTags(entry)">
 						{{tag.text}}
 					</span>		
 				</td>
@@ -94,9 +94,7 @@
 	</table>
 	<div class="row">
 		<div class="col-sm-12 text-right pad25lr">
-			<uib-pagination total-items="home.totalItems" 
-				ng-model="home.currentPage" ng-change="home.pageChanged()" items-per-page="20">
-			</uib-pagination>
+			<uib-pagination total-items="home.totalItems" ng-model="home.currentPage" items-per-page="20"></uib-pagination>
 		</div>
 	</div>
 	<br>

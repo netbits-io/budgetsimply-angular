@@ -86,8 +86,8 @@
 				<tr>
 					<th></th>
 					<th></th>
-					<th class="text-right"> {{shared.friendTotal}}</th>
-					<th class="text-right"> {{shared.userTotal}}</th>
+					<th class="text-right">{{shared.friendTotal}}</th>
+					<th class="text-right">{{shared.userTotal}}</th>
 					<th></th>
 				</tr>
 			</tfoot>
@@ -95,8 +95,7 @@
 	</table>
 	<div class="row">
 		<div class="col-sm-12 text-right pad25lr">
-			<uib-pagination total-items="shared.totalItems" ng-model="shared.currentPage" ng-change="shared.pageChanged()" items-per-page="20">
-			</uib-pagination>
+			<uib-pagination total-items="shared.totalItems" ng-model="shared.currentPage" items-per-page="20"></uib-pagination>
 		</div>
 	</div>
 	<br>
