@@ -28,6 +28,9 @@ html, body {
     margin-bottom: 5px;
     margin-top: 5px;
 }
+.mgn5t{
+    margin-top: 5px;
+}
 .mgn50t{
     margin-top:50px;
 }
@@ -35,10 +38,20 @@ html, body {
     padding-right: 5px;
     padding-left: 5px;
 }
+.pad0lr{
+    padding-right: 5px;
+    padding-left: 5px;
+}
 
 .pad25lr{
     padding-right: 25px;
     padding-left: 25px;
+}
+.pad8r{
+   padding-right: 8px; 
+}
+.pad6r{
+   padding-right: 6px; 
 }
 
 .fg-custom{
@@ -154,4 +167,7 @@ html, body {
 .tooltip-inner {
   white-space:nowrap;
   max-width:none;
+}
+.clBlack{
+    color: #000000;
 }

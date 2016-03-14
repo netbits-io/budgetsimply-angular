@@ -71,6 +71,9 @@ angular.module('newexCtrl', ['budgetService'])
     vm.sharePlus = function () {
         vm.shares.push({user: '', accepted: false, amount: vm.payed/2, payback: false});
     };
+    vm.shareMinus = function (index) {
+        vm.shares.splice(index, 1);
+    };
 
     vm.openDt = function() {
         vm.popup.opened = true;
