@@ -243,7 +243,7 @@ angular.module('userApp',
                     var filters = filter.split(" ");
                     var filtered = [];
                     angular.forEach(input, function(item) {
-                        tgs = item.tags;
+                        tgs = [];
                         angular.forEach(item.shares, function(share) {
                             if(share.user === usermail){
                                 tgs = share.tags;

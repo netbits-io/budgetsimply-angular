@@ -42,12 +42,12 @@
 			</tr>
 			<tr>
 				<th class="text-right" colspan="4"><b>TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
-						{{home.expenses | onlyaccepted | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.me.email:home.radioMode }} </b></td>
+						{{home.expenses | onlyaccepted | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email:home.radioMode }} </b></td>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="entry in home.expenses | onlymyrejected:home.me.email | periodfor:home.periodString | tagsfilter:home.filterText | sortbdate | pgnte:home.currentPage">
+			<tr ng-repeat="entry in home.expenses | onlymyrejected:home.me.email | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email  | sortbdate | pgnte:home.currentPage">
 				<td class="text-center">
 					<div ng-show="!entry.rejected && !entry.accepted && !home.haveIAccepted(entry)">
 						<div class="btn-group" uib-dropdown >
@@ -91,7 +91,7 @@
 			<tfoot>
 				<tr>
 					<th class="text-right" colspan="4">TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
-						{{home.expenses | onlyaccepted | periodfor:home.periodString | tagsfilter:home.filterText | calctotalfor:home.me.email:home.radioMode }} </td>
+						{{home.expenses | onlyaccepted | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email:home.radioMode }} </td>
 					<th></th>
 				</tr>
 			</tfoot>
