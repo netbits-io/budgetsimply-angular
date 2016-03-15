@@ -43,7 +43,9 @@ angular.module('newexCtrl', ['budgetService'])
                 if(item.loan){
                     vm.loan = true;
                 }
-
+                if(vm.me.email == item.user){
+                    vm.tags = item.tags;
+                }
                 return vm.me.email != item.user;
             });
             vm.id = existing._id;
