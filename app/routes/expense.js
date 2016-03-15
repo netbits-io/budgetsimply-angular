@@ -7,6 +7,8 @@ module.exports = function (app, express) {
 
     expenseRouter.route('/')
             .post(function (req, res) {
+                error = false;
+                special = req.body.payback || req.body.loan;
                 if(req.body.expid == null){
                     var expense = new Expense();
                     expense.date = req.body.date;
@@ -15,16 +17,18 @@ module.exports = function (app, express) {
                     expense.amount = req.body.amount;
                     expense.shares = req.body.shares;
                     for(var i = expense.shares.length - 1; i >= 0; i--) {
-                        console.log(expense.shares[i].user);
                         if(expense.shares[i].user === req.decoded.email) {
-                            expense.shares.splice(i, 1);
+                            error = true;
+                        } else {
+                            expense.shares[i].payback = req.body.payback;
+                            expense.shares[i].loan = req.body.loan;
                         }
                     }
                     forme = req.body.amount;
                     req.body.shares.filter(function(el){
                         forme = forme - el.amount;
                     });
-                    expense.shares.push({user: req.decoded.email, accepted: true, amount: forme, payback: false});
+                    expense.shares.push({user: req.decoded.email, accepted: true, amount: forme, payback: false, loan: false});
                     expense.shares.filter(function(el){
                         el.tags = req.body.tags;
                     });
@@ -32,61 +36,66 @@ module.exports = function (app, express) {
                     expense.shares.forEach(function(share){
                         share.accepted = (share.user === req.decoded.email);
                     });
-                    if(expense.amount < 0 || forme < 0){
+                    if(isNaN(req.body.amount) || expense.amount < 0 || forme < 0 || error){
                         res.json({success: false, message: 'Invalid Expense amount(s)!'});
+                    } else if(special && expense.shares.length != 2){
+                            res.json({success: false, message: 'Payback or Loan expenses need be shared with exactly one Friend!'});
                     } else {
                         expense.save(function (err) {
                             if (err) res.json({success: false, message: 'Could not update expense!'});
                             else res.json({success: true, message: 'Expense saved!'});
                         });
                     }
-
                 } else {
                     Expense.findOne({owner: req.decoded.email, _id: req.body.expid}, function (err, expense) {
-                    if (err) res.json({success: false, message: err.code});
-                    else if(expense){
-                        expense.date = req.body.date;
-                        expense.note = req.body.note;
-                        expense.amount = req.body.amount;
-                        for(var i = expense.shares .length - 1; i >= 0; i--) {
-                            if(expense.shares[i].user === req.decoded.email) {
-                                expense.shares.splice(i, 1);
-                            }
-                        }
-                        // keep the old tags
-                        for(var i = req.body.shares - 1; i >= 0; i--) {
-                            for(var p = expense.shares - 1; p >= 0; p--) {
-                                if(req.body.shares[i].user === expense.shares[p].user ) {
-                                    expense.shares[p].tags = req.body.shares[p].tags; 
+                        if (err) res.json({success: false, message: err.code});
+                        else if(expense){
+                            expense.date = req.body.date;
+                            expense.note = req.body.note;
+                            expense.amount = req.body.amount;
+                            error = false;
+                            special = false;
+                            for(var i = expense.shares .length - 1; i >= 0; i--) {
+                                if(expense.shares[i].user === req.decoded.email) {
+                                    error = true;
+                                } else {
+                                    expense.shares[i].payback = req.body.payback;
+                                    expense.shares[i].loan = req.body.loan;
                                 }
                             }
-                        }
-                        expense.shares = req.body.shares;
-                        forme = req.body.amount;
-                        req.body.shares.filter(function(el){
-                            forme = forme - el.amount;
-                        });
-                        expense.shares.push({user: req.decoded.email, accepted: true, amount: forme, payback: false, tags: req.body.tags});
-                        expense.accepted = (expense.shares.length == 1);
-                        expense.shares.forEach(function(share){
-                            share.accepted = (share.user === req.decoded.email);
-                        });
-                        if(expense.amount < 0 || forme < 0){
-                            res.json({success: false, message: 'Invalid Expense amount(s)!'});
-                        } else {
-                            expense.save(function (err) {
-                                if (err) res.json({success: false, message: 'Could not update expense!'});
-                                else res.json({success: true, message: 'Expense saved!'});
+                            // keep the old tags
+                            for(var i = req.body.shares - 1; i >= 0; i--) {
+                                for(var p = expense.shares - 1; p >= 0; p--) {
+                                    if(req.body.shares[i].user === expense.shares[p].user ) {
+                                        expense.shares[p].tags = req.body.shares[p].tags; 
+                                    }
+                                }
+                            }
+                            expense.shares = req.body.shares;
+                            forme = req.body.amount;
+                            req.body.shares.filter(function(el){
+                                forme = forme - el.amount;
                             });
+                            expense.shares.push({user: req.decoded.email, accepted: true, amount: forme, payback: false, loan: false, tags: req.body.tags});
+                            expense.accepted = (expense.shares.length == 1);
+                            expense.shares.forEach(function(share){
+                                share.accepted = (share.user === req.decoded.email);
+                            });
+                            if(isNaN(req.body.amount) || expense.amount < 0 || forme < 0 || error){
+                                res.json({success: false, message: 'Invalid Expense amount(s)!'});
+                            } else if(special && expense.shares.length != 2){
+                                res.json({success: false, message: 'Payback or Loan expenses need be shared with exactly one Friend!'});
+                            } else {
+                                expense.save(function (err) {
+                                    if (err) res.json({success: false, message: 'Could not update expense!'});
+                                    else res.json({success: true, message: 'Expense saved!'});
+                                });
+                            }
+                        } else {
+                            res.json({success: false, message: 'Could not update expense!'});
                         }
-
-                    } else {
-                        res.json({success: false, message: 'Could not update expense!'});
-                    }
-                });
-
+                    });
                 }
-
             })
             .get(function (req, res) {
                 Expense.find({owner: req.decoded.email}, function (err, expenses) {

@@ -3,6 +3,10 @@ angular.module('newexCtrl', ['budgetService'])
 .controller('newexController', function ($scope, $uibModalInstance, Budget, Auth, existing) {
     var vm = this;
 
+    vm.extended = false;
+    vm.payback = false;
+    vm.loan = false;
+
     vm.sharedwithlist = [];
     vm.allTags = [];
 
@@ -33,6 +37,13 @@ angular.module('newexCtrl', ['budgetService'])
             vm.payed = existing.amount;
             vm.tags = existing.tags;
             vm.shares = existing.shares.filter(function(item) {
+                if(item.payback){
+                    vm.payback = true;
+                }
+                if(item.loan){
+                    vm.loan = true;
+                }
+
                 return vm.me.email != item.user;
             });
             vm.id = existing._id;
@@ -55,7 +66,7 @@ angular.module('newexCtrl', ['budgetService'])
 
     vm.ok = function () {
         forme = vm.payed;
-        Budget.addExpense(vm.id, vm.dt, vm.tags, vm.note, vm.payed, vm.shares).success(function (data) {
+        Budget.addExpense(vm.id, vm.dt, vm.tags, vm.note, vm.payed, vm.shares, vm.payback, vm.loan).success(function (data) {
             if(data.success){
                 $uibModalInstance.close('ok');
             }else{

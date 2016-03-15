@@ -83,10 +83,11 @@ angular.module('userApp',
                         toReturn = expense.amount - notMy;
                     } else {
                         expense.shares.forEach (function (e){
-                            if(e.user == user && e.payback == false){
+                            if(e.user == user && e.payback == false && e.loan != true){
                                 toReturn = e.amount;
                             }
                         });
+
                     }
                 // show what the user has paid
                 } else if(mode.startsWith("total")){
@@ -94,7 +95,7 @@ angular.module('userApp',
                     toReturn = expense.amount;
                 } else {
                     expense.shares.forEach (function (e){
-                        if(e.user == user && e.payback == true){
+                        if(e.user == user && (e.payback == true || e.loan == true )){
                                 toReturn -= e.amount;
                         }
                     });
@@ -104,7 +105,7 @@ angular.module('userApp',
                 if(expense.owner == user){
                     notMy = 0;
                     expense.shares.forEach (function (e){
-                        if(e.user != user && e.payback == false){
+                        if(e.user != user){
                             notMy += e.amount;
                         }
                     });
@@ -118,7 +119,7 @@ angular.module('userApp',
                     toReturn = 0;
                 } else {
                     expense.shares.forEach (function (e){
-                        if(e.user == user){
+                        if(e.user == user && e.loan != true && e.payback != true){
                             toReturn = e.amount;
                         }
                     });
@@ -136,8 +137,8 @@ angular.module('userApp',
                         expense.shares.forEach (function (e){
                             if(e.user == userfor){
                                payedForOther += e.amount;
-                           }
-                       });
+                            }
+                        });
                         toReturn = payedForOther.toFixed(2);
                     } 
                     return toReturn;
@@ -189,7 +190,7 @@ angular.module('userApp',
                                     toReturn = expense.amount - notMy;
                                 } else {
                                     expense.shares.forEach (function (e){
-                                        if(e.user == user && e.payback == false){
+                                        if(e.user == user && e.payback == false && e.loan != true){
                                             toReturn = e.amount;
                                         }
                                     });
@@ -200,7 +201,7 @@ angular.module('userApp',
                                 toReturn = expense.amount;
                             } else {
                                 expense.shares.forEach (function (e){
-                                    if(e.user == user && e.payback == true){
+                                    if(e.user == user  && (e.payback == true || e.loan == true )){
                                         toReturn -= e.amount;
                                     }
                                 });
@@ -210,7 +211,7 @@ angular.module('userApp',
                             if(expense.owner == user){
                                 notMy = 0;
                                 expense.shares.forEach (function (e){
-                                    if(e.user != user && e.payback == false){
+                                    if(e.user != user){
                                         notMy += e.amount;
                                     }
                                 });
@@ -224,7 +225,7 @@ angular.module('userApp',
                                 toReturn = 0;
                             } else {
                                 expense.shares.forEach (function (e){
-                                    if(e.user == user){
+                                    if(e.user == user && e.loan != true && e.payback != true){
                                         toReturn = e.amount;
                                     }
                                 });

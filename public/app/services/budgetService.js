@@ -8,8 +8,8 @@ angular.module('budgetService', [])
 		return $http.get('/api/expense/shares');
 	};
 
-	budgetFactory.addExpense = function(expid, date, tags, note, payed, shares) {
-		postData = {expid: expid, date: date, tags: tags,note: note, amount: payed, shares: shares}
+	budgetFactory.addExpense = function(expid, date, tags, note, payed, shares, payback, loan) {
+		postData = {expid: expid, date: date, tags: tags,note: note, amount: payed, shares: shares, payback: payback, loan: loan}
 		return $http.post('/api/expense/', postData);
 	};
 	budgetFactory.acceptExpense = function(expid) {

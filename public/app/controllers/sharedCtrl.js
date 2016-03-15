@@ -140,7 +140,7 @@ redraw = function () {
     });
 }
 
- Auth.getUser().then(function (data) {
+Auth.getUser().then(function (data) {
     vm.me = data.data;
     redraw();
 });
@@ -154,8 +154,8 @@ vm.payback = function(){
     nte = ""
     shrs = [];
     amnt = vm.totalDiffUsr;
-    shrs.push({user: fnd, accepted: false, amount: amnt, payback: true});
-    Budget.addExpense(undefined, dat, tgs, nte, amnt, shrs).success(function (data) {
+    shrs.push({user: fnd, accepted: false, amount: amnt});
+    Budget.addExpense(undefined, dat, tgs, nte, amnt, shrs, true, false).success(function (data) {
         if(data.success){
             redraw();
             vm.infsuccess = "Payback expense added! ::: "+new Date();
@@ -165,7 +165,7 @@ vm.payback = function(){
     });
 }
 
- vm.deleteExpense = function (eId) {
+vm.deleteExpense = function (eId) {
   Budget.deleteExpense(eId).success(function (data) {
     redraw();
   });

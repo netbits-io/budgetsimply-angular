@@ -17,6 +17,7 @@ var ExpenseSchema = new Schema({
     	rejected: Boolean, 
 		amount: Number, 
 		payback: Boolean,
+		loan: Boolean,
 		tags: [{ 
 			text: String,
 		}]
