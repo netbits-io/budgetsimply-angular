@@ -1,6 +1,6 @@
 angular.module('homeCtrl', [])
 
-.controller('homeController', function($route, $scope, $uibModal, Budget, Auth, $filter) {
+.controller('homeController', function($route, $scope, $uibModal, Budget, Auth, $filter, $timeout) {
 
   var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -116,13 +116,13 @@ vm.perMinus = function () {
 
 vm.deleteExpense = function (eId) {
   Budget.deleteExpense(eId).success(function (data) {
-    redraw();
+    $timeout(function(){redraw();, 500);   
   });
 };
 vm.acceptExpense = function (eId) {
   Budget.acceptExpense(eId).success(function (data) {
     if(data.success){
-      redraw();
+      $timeout(function(){redraw();, 500);
       vm.infsuccess = data.message +" ::: "+new Date();
     }else{
       vm.infdanger = data.message +" ::: "+new Date();
@@ -132,7 +132,7 @@ vm.acceptExpense = function (eId) {
 vm.rejectExpense = function (eId) {
   Budget.rejectExpense(eId).success(function (data) {
     if(data.success){
-      redraw();
+      $timeout(function(){redraw();, 500);
       vm.infsuccess = data.message +" ::: "+new Date();
     }else{
       vm.infdanger = data.message +" ::: "+new Date();
