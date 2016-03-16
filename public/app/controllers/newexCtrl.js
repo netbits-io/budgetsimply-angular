@@ -50,6 +50,7 @@ angular.module('newexCtrl', ['budgetService'])
             });
             vm.id = existing._id;
             vm.dt = existing.date;
+            vm.extended = vm.payback || vm.loan || vm.note.length > 0;
         } else {
             vm.id = null;
             vm.tags = [];
