@@ -18,11 +18,12 @@ module.exports = function (app, express) {
                     expense.shares = req.body.shares;
                     for(var i = expense.shares.length - 1; i >= 0; i--) {
                         if(expense.shares[i].user === req.decoded.email) {
-                            error = true;
-                        } else {
-                            expense.shares[i].payback = req.body.payback;
-                            expense.shares[i].loan = req.body.loan;
-                        }
+                            expense.shares.splice(i, 1);
+                        } 
+                    }
+                    for(var i = expense.shares.length - 1; i >= 0; i--) {
+                        expense.shares[i].payback = req.body.payback;
+                        expense.shares[i].loan = req.body.loan;
                     }
                     forme = req.body.amount;
                     req.body.shares.filter(function(el){
@@ -36,7 +37,7 @@ module.exports = function (app, express) {
                     expense.shares.forEach(function(share){
                         share.accepted = (share.user === req.decoded.email);
                     });
-                    if(isNaN(req.body.amount) || expense.amount < 0 || forme < 0 || error){
+                    if(isNaN(req.body.amount) || expense.amount < 0 || forme < 0){
                         res.json({success: false, message: 'Invalid Expense amount(s)!'});
                     } else if(special && expense.shares.length != 2){
                             res.json({success: false, message: 'Payback or Loan expenses need be shared with exactly one Friend!'});
@@ -55,14 +56,6 @@ module.exports = function (app, express) {
                             expense.amount = req.body.amount;
                             error = false;
                             special = false;
-                            for(var i = expense.shares .length - 1; i >= 0; i--) {
-                                if(expense.shares[i].user === req.decoded.email) {
-                                    error = true;
-                                } else {
-                                    expense.shares[i].payback = req.body.payback;
-                                    expense.shares[i].loan = req.body.loan;
-                                }
-                            }
                             // keep the old tags
                             for(var i = req.body.shares - 1; i >= 0; i--) {
                                 for(var p = expense.shares - 1; p >= 0; p--) {
@@ -72,6 +65,15 @@ module.exports = function (app, express) {
                                 }
                             }
                             expense.shares = req.body.shares;
+                            for(var i = expense.shares.length - 1; i >= 0; i--) {
+                                if(expense.shares[i].user === req.decoded.email) {
+                                    expense.shares.splice(i, 1);
+                                } 
+                            }
+                            for(var i = expense.shares.length - 1; i >= 0; i--) {
+                                expense.shares[i].payback = req.body.payback;
+                                expense.shares[i].loan = req.body.loan;
+                            }
                             forme = req.body.amount;
                             req.body.shares.filter(function(el){
                                 forme = forme - el.amount;
