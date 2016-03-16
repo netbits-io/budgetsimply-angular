@@ -116,13 +116,13 @@ vm.perMinus = function () {
 
 vm.deleteExpense = function (eId) {
   Budget.deleteExpense(eId).success(function (data) {
-    $timeout(function(){redraw();, 500);   
+    $timeout(function(){redraw();}, 500);   
   });
 };
 vm.acceptExpense = function (eId) {
   Budget.acceptExpense(eId).success(function (data) {
     if(data.success){
-      $timeout(function(){redraw();, 500);
+      $timeout(function(){redraw();}, 500);
       vm.infsuccess = data.message +" ::: "+new Date();
     }else{
       vm.infdanger = data.message +" ::: "+new Date();
@@ -132,7 +132,7 @@ vm.acceptExpense = function (eId) {
 vm.rejectExpense = function (eId) {
   Budget.rejectExpense(eId).success(function (data) {
     if(data.success){
-      $timeout(function(){redraw();, 500);
+      $timeout(function(){redraw();}, 500);
       vm.infsuccess = data.message +" ::: "+new Date();
     }else{
       vm.infdanger = data.message +" ::: "+new Date();
