@@ -56,15 +56,16 @@ module.exports = function (app, express) {
                             expense.amount = req.body.amount;
                             error = false;
                             special = false;
+                            newShares = req.body.shares;
                             // keep the old tags
-                            for(var i = req.body.shares - 1; i >= 0; i--) {
+                            for(var i = newShares - 1; i >= 0; i--) {
                                 for(var p = expense.shares - 1; p >= 0; p--) {
-                                    if(req.body.shares[i].user === expense.shares[p].user ) {
-                                        expense.shares[p].tags = req.body.shares[p].tags; 
+                                    if(newShares[i].user === expense.shares[p].user ) {
+                                        newShares[i].tags = expense.shares[p].tags; 
                                     }
                                 }
                             }
-                            expense.shares = req.body.shares;
+                            expense.shares = newShares;
                             for(var i = expense.shares.length - 1; i >= 0; i--) {
                                 if(expense.shares[i].user === req.decoded.email) {
                                     expense.shares.splice(i, 1);
