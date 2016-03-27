@@ -1,0 +1,85 @@
+
+<!-- Modal content-->
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="main.cancel()">&times;</button>
+    <h4 class="modal-title">Edit Tags</h4>
+  </div>
+  <div class="modal-body">
+    <infobar success="{{main.danger}}" danger="{{main.success}}"></infobar>
+    <form>
+     <div class="row">
+      <div class="col-xs-7">
+        Created by: <b>{{main.expense.owner}}</b>
+      </div>
+      <div class="col-xs-5">
+        Amount: <b>{{main.expense.amount}}</b>
+      </div>
+      <div class="col-xs-12">
+        For Date:  <b>{{main.expense.date}}</b>
+      </div>
+    </div>
+    <div ng-show="main.payback">
+      <br>
+      <div class="row">
+        <div class="col-xs-7">
+          <b>Marked as payback expense</b>
+        </div>
+      </div>
+    </div>
+    <div ng-show="main.loan">
+      <br>
+      <div class="row">
+        <div class="col-xs-7">
+          <b>Marked as loan expense</b>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label>Tags</label>
+          <tags-input ng-model="main.tags" placeholder="...">
+          <auto-complete min-length="0" debounce-delay="0" select-first-match="true" source="main.loadTags($query)"></auto-complete>
+        </tags-input>
+      </div>
+    </div>
+
+  </div>
+
+  <div ng-show="main.expense.note.length > 0">
+    <br>
+    <div class="row">
+      <div class="col-xs-12">
+        Additional notes:
+      </div>
+      <div class="col-xs-12">
+        <b>{{main.expense.note}}</b>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="row" ng-show="main.expense.shares.length > 1">
+    <div class="col-xs-12">
+      Shares details:
+    </div>
+    <div ng-repeat="share in main.expense.shares">
+      <div class="col-xs-7">
+        User: <b>{{share.user}}</b>
+      </div>
+      <div class="col-xs-5">
+        Amount: <b>{{share.amount}}</b>
+      </div>
+    </div>
+  </div>
+
+</form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" ng-click="main.cancel()">Cancel</button>
+  <button type="button" class="btn btn-default" ng-click="main.ok()">Save</button>
+</div>
+</div>

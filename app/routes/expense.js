@@ -49,7 +49,7 @@ module.exports = function (app, express) {
                     }
                 } else {
                     Expense.findOne({owner: req.decoded.email, _id: req.body.expid}, function (err, expense) {
-                        if (err) res.json({success: false, message: err.code});
+                        if (err) res.json({success: false, message: 'Could not update expense!'});
                         else if(expense){
                             expense.date = req.body.date;
                             expense.note = req.body.note;
@@ -102,7 +102,7 @@ module.exports = function (app, express) {
             })
             .get(function (req, res) {
                 Expense.find({owner: req.decoded.email}, function (err, expenses) {
-                    if (err) res.json({success: false, message: err.code});
+                    if (err) res.json({success: false, message: 'Could not get expenses!'});
                     else res.json(expenses);
                 });
             });
@@ -112,7 +112,7 @@ module.exports = function (app, express) {
                     _id: req.params.exp_id,
                     owner: req.decoded.email
                 }, function (err, user) {
-                    if (err) res.json({success: false, message: err.code});
+                    if (err) res.json({success: false, message: 'Could not delete expense!'});
                     else res.json({success: true, message: 'Successfully deleted'});
                 });
             });
@@ -144,7 +144,7 @@ module.exports = function (app, express) {
                             if(iAccepted){
                                 expense.accepted = acptd;
                                 expense.save(function (err) {
-                                    if (err) res.json({success: false, message: err.code});
+                                    if (err) res.json({success: false, message: 'Could not update expense!'});
                                     else res.json({success: true, message: 'Expense accepted!'});
                                 });
                             } else {
@@ -173,7 +173,7 @@ module.exports = function (app, express) {
                             });
                             if(expense.rejected){
                                 expense.save(function (err) {
-                                    if (err) res.json({success: false, message: err.code});
+                                    if (err) res.json({success: false, message: 'Could not update expense!'});
                                     else res.json({success: true, message: 'Expense rejected!'});
                                 });
                             } else {
@@ -183,6 +183,25 @@ module.exports = function (app, express) {
                         } else {
                             res.json({success: false, message: 'Expense is already accepted, rejected or not shared!'});
                         }
+                    } else {
+                        res.json({success: false, message: 'Could not update expense!'});
+                    }
+                });
+            });
+    expenseRouter.route('/tags')
+            .post(function (req, res) {
+                Expense.findOne({_id: req.body.expid}, function (err, expense) {
+                    if (err) res.json({success: false, message: 'Could not update expense!'});
+                    else if(expense){
+                        for(var i = expense.shares.length - 1; i >= 0; i--) {
+                            if(expense.shares[i].user === req.decoded.email) {
+                                expense.shares[i].tags = req.body.tags
+                            } 
+                        }
+                        expense.save(function (err) {
+                            if (err) res.json({success: false, message: 'Could not update expense!'});
+                            else res.json({success: true, message: 'Expense saved!'});
+                        });
                     } else {
                         res.json({success: false, message: 'Could not update expense!'});
                     }

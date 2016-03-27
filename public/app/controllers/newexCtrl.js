@@ -32,10 +32,8 @@ angular.module('newexCtrl', ['budgetService'])
     Auth.getUser().then(function (data) {
         vm.me = data.data;
         if(existing != null){
-            vm.tags = existing.tags;
             vm.note = existing.note;
             vm.payed = existing.amount;
-            vm.tags = existing.tags;
             vm.shares = existing.shares.filter(function(item) {
                 if(item.payback){
                     vm.payback = true;
@@ -68,7 +66,6 @@ angular.module('newexCtrl', ['budgetService'])
     });
 
     vm.ok = function () {
-        forme = vm.payed;
         Budget.addExpense(vm.id, vm.dt, vm.tags, vm.note, vm.payed, vm.shares, vm.payback, vm.loan).success(function (data) {
             if(data.success){
                 $uibModalInstance.close('ok');

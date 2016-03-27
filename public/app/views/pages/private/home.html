@@ -82,6 +82,7 @@
 						</button>
 						<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
 							<li role="menuitem"><a ng-click="home.modalViewExpense(entry)">view</a></li>
+							<li role="menuitem"><a ng-click="home.modalTags(entry)">edit tags</a></li>
 							<li role="menuitem" ng-show="entry.owner === home.me.email"><a ng-click="home.modalExpense(entry)">edit</a></li>
 							<li role="menuitem" ng-show="entry.owner === home.me.email"><a ng-click="home.deleteExpense(entry._id)">remove</a></li>
 						</ul>

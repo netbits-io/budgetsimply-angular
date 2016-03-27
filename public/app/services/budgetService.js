@@ -12,6 +12,10 @@ angular.module('budgetService', [])
 		postData = {expid: expid, date: date, tags: tags,note: note, amount: payed, shares: shares, payback: payback, loan: loan}
 		return $http.post('/api/expense/', postData);
 	};
+	budgetFactory.editTags = function(expid, tags) {
+		postData = {expid: expid, tags: tags}
+		return $http.post('/api/expense/tags', postData);
+	};
 	budgetFactory.acceptExpense = function(expid) {
 		return $http.post('/api/expense/accept', {expid: expid});
 	};

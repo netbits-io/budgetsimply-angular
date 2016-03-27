@@ -139,10 +139,30 @@ vm.rejectExpense = function (eId) {
     }
   });
 };
+
 vm.modalExpense = function (existing) {
   var modalInstance = $uibModal.open({
     templateUrl: 'app/views/pages/private/newexpensem.html',
     controller: 'newexController',
+    controllerAs: 'main',
+    resolve: {
+      existing: function () {
+        return existing;
+      }
+    }
+  });
+  modalInstance.result.then(
+    function () {
+      $route.reload();
+    }, 
+    function () {
+    }
+  )
+};
+vm.modalTags = function (existing) {
+  var modalInstance = $uibModal.open({
+    templateUrl: 'app/views/pages/private/edittagsm.html',
+    controller: 'edtgsController',
     controllerAs: 'main',
     resolve: {
       existing: function () {
