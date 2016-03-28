@@ -81,15 +81,12 @@ module.exports = function (app, express) {
                             if (err) res.json({success: false, message: 'Could not accept friend request!'});
                             else res.json({success: true, message: 'Friend request accepted!'});
                         });
-
                     } else {
                         res.json({success: false, message: 'Could not accept friend request!'});
                     }
-
                 } else {
                     res.json({success: false, message: 'Friend request is already accepted or rejected!'});
                 }
-
             } else {
                 res.json({success: false, message: 'Could not accept friend request!'});
             }
@@ -119,7 +116,6 @@ userRouter.post('/freject', function (req, res) {
                             if (err) res.json({success: false, message: 'Could not reject friend request!'});
                             else res.json({success: true, message: 'Friend request rejected!'});
                         });
-                        
                     } else {
                         res.json({success: false, message: 'Could not reject friend request!'});
                     }
@@ -127,7 +123,6 @@ userRouter.post('/freject', function (req, res) {
                 } else {
                     res.json({success: false, message: 'Friend request is already accepted or rejected!'});
                 }
-
             } else {
                 res.json({success: false, message: 'Could not reject friend request!'});
             }
@@ -147,7 +142,6 @@ userRouter.post('/friend', function (req, res) {
             } else {
                 User.findOne({'email': fMail}, function (err, friend) {
                     if (friend) {
-
                         var link = new Friendship();
                         link.users.push({ email: friend.email, name: friend.name, accepted: false });
                         link.users.push({ email: user.email, name: user.name, accepted: true });
@@ -155,7 +149,6 @@ userRouter.post('/friend', function (req, res) {
                         link.date = new Date();
                         link.rejected = false;
                         link.save();
-
                         res.json({success: true, message: 'Friend request sent!'});
                     } else {
                         res.json({success: false, message: 'Could not find a User for the email: '+fMail});
