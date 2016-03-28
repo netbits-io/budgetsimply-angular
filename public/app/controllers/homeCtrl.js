@@ -1,6 +1,6 @@
 angular.module('homeCtrl', [])
 
-.controller('homeController', function($route, $scope, $uibModal, Budget, Auth, $filter, $timeout) {
+.controller('homeController', function($route, $scope, $uibModal, Budget, Auth, $filter, $timeout, User) {
 
   var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -8,6 +8,42 @@ angular.module('homeCtrl', [])
 
   vm.totalItems = 1;
   vm.currentPage = 1;
+
+  redrawReqs = function(){
+    User.friendRequests().success(function (data) {
+      if(data.success){
+        vm.frequests = data.requests;
+      }
+    });
+  };
+  redrawReqs();
+
+  vm.acceptFriend = function (rId, rMail) {
+    User.acceptFriend(rId, rMail).success(function (data) {
+      if(data.success){
+        $timeout(
+          function(){
+            redrawReqs();
+            vm.infsuccess = data.message +" ::: "+new Date();
+          }, 900);
+      }else{
+        vm.infdanger = data.message +" ::: "+new Date();
+      }
+    });
+  };
+  vm.rejectFriend = function (rId, rMail) {
+    User.rejectFriend(rId, rMail).success(function (data) {
+      if(data.success){
+        $timeout(
+          function(){
+            redrawReqs();
+            vm.infsuccess = data.message +" ::: "+new Date();
+          }, 900);
+      }else{
+        vm.infdanger = data.message +" ::: "+new Date();
+      }
+    });
+  };
 
   repage = function(){
     if(typeof vm.me !== 'undefined'){
@@ -19,10 +55,10 @@ angular.module('homeCtrl', [])
   }
 
   $scope.$watch('home.filterText', function(nw, ol) {
-        repage();
+    repage();
   });
   $scope.$watch('home.periodString', function(nw, ol) {
-        repage();
+    repage();
   });
 
   vm.radioMode = 'my';
@@ -109,10 +145,10 @@ vm.perMinus = function () {
   redrawPeriod();
 };
 
- Auth.getUser().then(function (data) {
-    vm.me = data.data;
-    redraw();
-  });
+Auth.getUser().then(function (data) {
+  vm.me = data.data;
+  redraw();
+});
 
 vm.deleteExpense = function (eId) {
   Budget.deleteExpense(eId).success(function (data) {
@@ -157,7 +193,7 @@ vm.modalExpense = function (existing) {
     }, 
     function () {
     }
-  )
+    )
 };
 vm.modalTags = function (existing) {
   var modalInstance = $uibModal.open({
@@ -176,28 +212,28 @@ vm.modalTags = function (existing) {
     }, 
     function () {
     }
-  )
+    )
 };
 
-  vm.modalViewExpense = function (existing) {
-    var modalInstance = $uibModal.open({
-      templateUrl: 'app/views/pages/private/viewexpensem.html',
-      controller: 'viewexController',
-      controllerAs: 'main',
-      resolve: {
-        existing: function () {
-          return existing;
-        }
+vm.modalViewExpense = function (existing) {
+  var modalInstance = $uibModal.open({
+    templateUrl: 'app/views/pages/private/viewexpensem.html',
+    controller: 'viewexController',
+    controllerAs: 'main',
+    resolve: {
+      existing: function () {
+        return existing;
       }
-    });
-    modalInstance.result.then(
-      function () {
-      }, 
-      function () {
-      }
+    }
+  });
+  modalInstance.result.then(
+    function () {
+    }, 
+    function () {
+    }
     )
-  };
+};
 
 
-  })
+})
 

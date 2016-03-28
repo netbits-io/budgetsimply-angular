@@ -1,6 +1,21 @@
 
 	<h1>Your Expenses</h1>
 	<br>
+	<div ng-repeat="reqst in home.frequests">
+		<div class="alert whiteButton">
+    		<div class="row">
+			<div class="col-sm-12">
+				<b>"{{reqst.name}}" ( {{reqst.email}} ) sent you a friend request. Do you want to accept it? {{reqst.id}}</b>
+			</div>
+			<div class="col-sm-12 text-right">
+				<button class="btn btn-xs btn-default whiteButton" ng-click="home.rejectFriend(reqst.id, reqst.email)" type="button">Reject</button>&nbsp;
+				<button class="btn btn-xs btn-default whiteButton" ng-click="home.acceptFriend(reqst.id, reqst.email)" type="button">Accept</button>
+			</div>
+			</div>
+		</div>
+		<br>
+	</div>
+
 	<infobar success="{{home.infsuccess}}" danger="{{home.infdanger}}"></infobar>
 	<div class="row">
 		<div class="col-sm-4">
