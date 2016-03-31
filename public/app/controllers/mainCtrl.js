@@ -3,8 +3,6 @@ angular.module('mainCtrl', [])
 .controller('mainController', function ($rootScope, $location, $routeParams, Auth, $uibModal) {
     var vm = this;
 
-    vm.loggedIn = Auth.isLoggedIn();
-
     checkOnEveryRequest = function (event, next, current) {
         vm.loggedIn = Auth.isLoggedIn();
         if (!vm.loggedIn) {
