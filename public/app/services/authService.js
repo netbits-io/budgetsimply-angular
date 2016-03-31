@@ -99,7 +99,7 @@ angular.module('authService', [])
 // ===================================================
 // application configuration to integrate token into requests
 // ===================================================
-.factory('AuthInterceptor', function ($q, $location, AuthToken) {
+.factory('AuthInterceptor', function ($q, $location, AuthToken, $window) {
     var interceptorFactory = {};
             // this will happen on all HTTP requests
             interceptorFactory.request = function (config) {
@@ -116,7 +116,8 @@ angular.module('authService', [])
                 // if our server returns a 403 forbidden response
                 if (response.status == 403) {
                     AuthToken.setToken();
-                    $location.path('/');
+                    //$location.path('/');
+                    $window.location.reload();
                 }
                 // return the errors from the server as a promise
                 return $q.reject(response);
