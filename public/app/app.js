@@ -8,6 +8,74 @@ angular.module('userApp',
             // attach our auth interceptor to the http requests
             $httpProvider.interceptors.push('AuthInterceptor');
         })
+
+        .directive('navbar', function () {
+            return {
+                restrict: 'E',
+                scope: {
+                    loggedin: '@',
+                    usermail: '@',
+                    useradmin: '@'
+                },
+                templateUrl: 'app/views/pages/components/navbar.html',
+                controller: function ($scope, $attrs, $location, $uibModal, Auth) {
+                    var vm = this;
+                    vm.loggedin = false;
+                    vm.useradmin = false;
+                    vm.usermail = '';
+
+                    $attrs.$observe('loggedin', function(value) {
+                        if(value == 'true'){
+                            vm.loggedin = true;
+                        } else {
+                            vm.loggedin = false;
+                        }
+                    });
+                    $attrs.$observe('useradmin', function(value) {
+                        if(value == 'true'){
+                            vm.useradmin = true;
+                        } else {
+                            vm.useradmin = false;
+                        }
+                    });
+                    $attrs.$observe('usermail', function(value) {
+                        if(value && value.length > 0){
+                            vm.usermail = value
+                        }
+                    });
+
+                    vm.doLogout = function () {
+                        Auth.logout();
+                        vm.loggedin = false;
+                        vm.useradmin = false;
+                        vm.usermail = '';
+                        $location.path('/');
+                    };
+
+                    vm.doTest = function () {
+                        var modalInstance = $uibModal.open({
+                            templateUrl: 'app/views/pages/private/editme.html',
+                            controller: 'meController',
+                            controllerAs: 'main',
+                            resolve: {}
+                        });
+                        modalInstance.result.then(
+                            function () {
+                                console.log('Modal ok at: ' + new Date());
+                            }, 
+                            function () {
+                                console.log('Modal dismissed at: ' + new Date());
+                            }
+                        );
+                    };
+
+                },
+                controllerAs: 'nb'
+            }
+        })
+
+
+
         .directive('infobar', function () {
             return {
                 restrict: 'E',
@@ -47,6 +115,7 @@ angular.module('userApp',
                 controllerAs: 'ib'
             }
         })
+
         .directive('passwordMatch', [function () {
             return {
                 restrict: 'A',

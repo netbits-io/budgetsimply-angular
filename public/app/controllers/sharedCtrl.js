@@ -5,6 +5,9 @@ angular.module('sharedCtrl', [])
     "July", "August", "September", "October", "November", "December"];
     
     var vm = this;
+    vm.loggedin = false
+    vm.usermail = '';
+    vm.useradmin = false;
 
     vm.totalItems = 1;
     vm.currentPage = 1;
@@ -142,6 +145,9 @@ redraw = function () {
 
 Auth.getUser().then(function (data) {
     vm.me = data.data;
+    vm.loggedin = true;
+    vm.usermail = data.data.email;
+    vm.useradmin = data.data.admin;
     redraw();
 });
 

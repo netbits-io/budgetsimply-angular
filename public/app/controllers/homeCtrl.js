@@ -5,6 +5,9 @@ angular.module('homeCtrl', [])
   var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   var vm = this;
+  vm.loggedin = false
+  vm.usermail = '';
+  vm.useradmin = false;
 
   vm.totalItems = 1;
   vm.currentPage = 1;
@@ -147,6 +150,9 @@ vm.perMinus = function () {
 
 Auth.getUser().then(function (data) {
   vm.me = data.data;
+  vm.loggedin = true;
+  vm.usermail = vm.me.email;
+  vm.useradmin = vm.me.admin;
   redraw();
 });
 

@@ -2,6 +2,9 @@ angular.module('mainCtrl', [])
 
 .controller('mainController', function ($rootScope, $location, $routeParams, Auth, $uibModal) {
     var vm = this;
+    vm.loggedin = false
+    vm.usermail = '';
+    vm.useradmin = false;
 
     checkOnEveryRequest = function (event, next, current) {
         vm.loggedIn = Auth.isLoggedIn();
@@ -15,7 +18,6 @@ angular.module('mainCtrl', [])
         } else {
             Auth.getUser().then(function (data) {
                 vm.user = data.data;
-                    //console.log(vm.user);
                         if (!vm.user.admin) {
                             if (next.templateUrl.indexOf("app/views/pages/admin/") >= 0) {
                                 $location.path("/home");
@@ -32,6 +34,12 @@ angular.module('mainCtrl', [])
 
             // check to see if a user is logged in on every request
             $rootScope.$on('$routeChangeStart', checkOnEveryRequest);
+
+            Auth.getUser().then(function (data) {
+                vm.loggedin = true;
+                vm.usermail = data.data.email;
+                vm.useradmin = data.data.admin;
+            });
 
             // function to handle login form
             vm.doLogin = function (isValid) {
@@ -98,31 +106,5 @@ angular.module('mainCtrl', [])
                     vm.rstProcessing = false;
                 }
             };
-
-            // function to handle logging out
-            vm.doLogout = function () {
-                Auth.logout();
-                vm.user = '';
-                //vm.admin = false;
-                $location.path('/');
-            };
-
-            vm.doTest = function () {
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'app/views/pages/private/editme.html',
-                    controller: 'meController',
-                    controllerAs: 'main',
-                    resolve: {}
-                });
-                modalInstance.result.then(
-                    function () {
-                        console.log('Modal ok at: ' + new Date());
-                    }, 
-                    function () {
-                        console.log('Modal dismissed at: ' + new Date());
-                    }
-                    );
-            };
-
 
         });
