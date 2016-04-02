@@ -28,7 +28,7 @@ angular.module('homeCtrl', [])
           function(){
             redrawReqs();
             vm.infsuccess = data.message +" ::: "+new Date();
-          }, 900);
+          }, 700);
       }else{
         vm.infdanger = data.message +" ::: "+new Date();
       }
@@ -41,7 +41,7 @@ angular.module('homeCtrl', [])
           function(){
             redrawReqs();
             vm.infsuccess = data.message +" ::: "+new Date();
-          }, 900);
+          }, 700);
       }else{
         vm.infdanger = data.message +" ::: "+new Date();
       }

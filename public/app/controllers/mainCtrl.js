@@ -18,16 +18,16 @@ angular.module('mainCtrl', [])
         } else {
             Auth.getUser().then(function (data) {
                 vm.user = data.data;
-                        if (!vm.user.admin) {
-                            if (next.templateUrl.indexOf("app/views/pages/admin/") >= 0) {
-                                $location.path("/home");
-                            }
-                        } else {
-                            // do nothing for now  
-                        }
-                        if (next.templateUrl.indexOf("app/views/pages/public/welcome") >= 0) {
-                            $location.path("/home");
-                        }
+                if (!vm.user.admin) {
+                    if (next.templateUrl.indexOf("app/views/pages/admin/") >= 0) {
+                        $location.path("/home");
+                    }
+                } else {
+                    // do nothing for now  
+                }
+                if (next.templateUrl.indexOf("app/views/pages/public/welcome") >= 0) {
+                    $location.path("/home");
+                }
             })
         }
     };

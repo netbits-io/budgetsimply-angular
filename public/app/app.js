@@ -18,7 +18,7 @@ angular.module('userApp',
                     useradmin: '@'
                 },
                 templateUrl: 'app/views/pages/components/navbar.html',
-                controller: function ($scope, $attrs, $location, $uibModal, Auth) {
+                controller: function ($scope, $attrs, $location, $uibModal, $timeout, Auth) {
                     var vm = this;
                     vm.loggedin = false;
                     vm.useradmin = false;
@@ -46,10 +46,14 @@ angular.module('userApp',
 
                     vm.doLogout = function () {
                         Auth.logout();
-                        vm.loggedin = false;
-                        vm.useradmin = false;
-                        vm.usermail = '';
-                        $location.path('/');
+                        $timeout(
+                            function(){
+                                vm.loggedin = false;
+                                vm.useradmin = false;
+                                vm.usermail = '';
+                                $location.path('/');
+                            }, 700
+                        );
                     };
 
                     vm.doTest = function () {
