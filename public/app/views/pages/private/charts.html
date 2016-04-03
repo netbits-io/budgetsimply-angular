@@ -1,0 +1,40 @@
+
+<navbar loggedin="{{charts.loggedin}}" usermail="{{charts.usermail}}" useradmin="{{charts.useradmin}}"></navbar>
+<div class="container">
+	<h1>Charts</h1>
+	<br>
+		<div class="row">
+		<div class="col-sm-4">
+			<div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perMinus()"><span class="glyphicon glyphicon-chevron-left"></span></button>
+				</span>
+				<input type="text" class="form-control whiteButton text-center" ng-value="charts.periodLabel">
+				<span class="input-group-btn">
+					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perToggle()"><span class="glyphicon glyphicon glyphicon-sort"></span></button>
+					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perPlus()"><span class="glyphicon glyphicon-chevron-right"></span></button>
+				</span>
+			</div>
+		</div>	
+		<div class="col-sm-4">
+			<input type="text" class="form-control whiteButton " ng-model="charts.filterText">
+		</div>
+		<div class="col-sm-2">
+		</div>
+		<div class="col-sm-2">
+			<select  class="form-control whiteButton"  ng-model="charts.radioMode">
+      			<option value="my">Selected Period</option>
+      			<option value="total">Current Period</option>
+      			<option value="iforme">Current Year By Months</option>
+    		</select>	
+			<!-- <button class="btn btn-default whiteButton" ng-click="charts.modalExpense(null)" type="button">Add Expense</button> -->
+		</div>
+	</div>
+	<hr>
+
+	<div>
+		<div google-chart chart="chartObject" style="height:500px; width:100%;"></div>
+	</div>
+
+	<br>
+</div>

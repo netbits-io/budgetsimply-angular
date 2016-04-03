@@ -24,6 +24,11 @@ angular.module('app.routes', ['ngRoute'])
 			controller: 'friendsController',
 			controllerAs: 'friends'
 		})
+		.when('/charts', {
+			templateUrl: 'app/views/pages/private/charts.html',
+			controller: 'chartsController',
+			controllerAs: 'charts'
+		})
 		// .when('/me', {
 		// 	templateUrl: 'app/views/pages/private/editme.html',
 		// 	controller:   'meController',
