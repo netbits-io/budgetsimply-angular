@@ -36,12 +36,6 @@
 			<input type="text" class="form-control whiteButton " ng-model="home.filterText">
 		</div>
 		<div class="col-sm-2">
-			<select  class="form-control whiteButton"  ng-model="home.radioMode">
-      			<option value="my">My Expenses</option>
-      			<option value="total">All I've Paid</option>
-      			<option value="iforme">I Paid for Me</option>
-      			<option value="fforme">Paid by Friends</option>
-    		</select>
 		</div>
 		<div class="col-sm-2 text-right">
 			<button class="btn btn-default whiteButton" ng-click="home.modalExpense(null)" type="button">Add Expense</button>
@@ -59,7 +53,7 @@
 			</tr>
 			<tr>
 				<th class="text-right" colspan="4"><b>TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
-						{{home.expenses | onlyaccepted | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email:home.radioMode }} </b></td>
+						{{home.expenses | onlyaccepted | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email }} </b></td>
 				<th></th>
 			</tr>
 		</thead>
@@ -90,7 +84,7 @@
 						{{tag.text}}
 					</span>		
 				</td>
-				<td class="text-right">{{entry | payedfor:home.me.email:home.radioMode}}</td>
+				<td class="text-right">{{entry | payedfor:home.me.email}}</td>
 				<td class="text-center">
 					<div class="btn-group" uib-dropdown >
 						<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
@@ -109,7 +103,7 @@
 			<tfoot>
 				<tr>
 					<th class="text-right" colspan="4">TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
-						{{home.expenses | onlyaccepted | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email:home.radioMode }} </td>
+						{{home.expenses | onlyaccepted | periodfor:home.periodString | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email }} </td>
 					<th></th>
 				</tr>
 			</tfoot>

@@ -142,10 +142,8 @@ angular.module('userApp',
                 };
             }])
         .filter('payedfor', function() {
-            return function(expense, user, mode) {
+            return function(expense, user) {
                 var toReturn = 0;
-                // show users part of all expenses
-                if(mode.startsWith("my")){
                     if(expense.owner == user){
                         notMy = 0;
                         expense.shares.forEach (function (e){
@@ -162,43 +160,6 @@ angular.module('userApp',
                         });
 
                     }
-                // show what the user has paid
-                } else if(mode.startsWith("total")){
-                if(expense.owner == user){
-                    toReturn = expense.amount;
-                } else {
-                    expense.shares.forEach (function (e){
-                        if(e.user == user && (e.payback == true || e.loan == true )){
-                                toReturn -= e.amount;
-                        }
-                    });
-                }
-                // show what the user has paid for himself
-                } else if(mode.startsWith("iforme")){
-                if(expense.owner == user){
-                    notMy = 0;
-                    expense.shares.forEach (function (e){
-                        if(e.user != user){
-                            notMy += e.amount;
-                        }
-                    });
-                    toReturn = expense.amount - notMy;
-                } else {
-                    toReturn = 0;
-                }
-                // show what friends have paid for the user
-                } else if(mode.startsWith("fforme")){
-                if(expense.owner == user){
-                    toReturn = 0;
-                } else {
-                    expense.shares.forEach (function (e){
-                        if(e.user == user && e.loan != true && e.payback != true){
-                            toReturn = e.amount;
-                        }
-                    });
-                }
-
-                } 
                 return toReturn.toFixed(2);
             }             
         })
@@ -251,8 +212,6 @@ angular.module('userApp',
                     var total = 0;
                     angular.forEach(input, function(expense) { 
                            var toReturn = 0;
-                            // show users part of all expenses
-                            if(mode.startsWith("my")){
                                 if(expense.owner == user){
                                     notMy = 0;
                                     expense.shares.forEach (function (e){
@@ -268,42 +227,6 @@ angular.module('userApp',
                                         }
                                     });
                                 }
-                            // show what the user has paid
-                            } else if(mode.startsWith("total")){
-                            if(expense.owner == user){
-                                toReturn = expense.amount;
-                            } else {
-                                expense.shares.forEach (function (e){
-                                    if(e.user == user  && (e.payback == true || e.loan == true )){
-                                        toReturn -= e.amount;
-                                    }
-                                });
-                            }
-                            // show what the user has paid for himself
-                            } else if(mode.startsWith("iforme")){
-                            if(expense.owner == user){
-                                notMy = 0;
-                                expense.shares.forEach (function (e){
-                                    if(e.user != user){
-                                        notMy += e.amount;
-                                    }
-                                });
-                                toReturn = expense.amount - notMy;
-                            } else {
-                                toReturn = 0;
-                            }
-                            // show what friends have paid for the user
-                            } else if(mode.startsWith("fforme")){
-                            if(expense.owner == user){
-                                toReturn = 0;
-                            } else {
-                                expense.shares.forEach (function (e){
-                                    if(e.user == user && e.loan != true && e.payback != true){
-                                        toReturn = e.amount;
-                                    }
-                                });
-                            }
-                        } 
                         total += toReturn;
                     });
                     return total.toFixed(2);
