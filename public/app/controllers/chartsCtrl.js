@@ -1,6 +1,6 @@
 angular.module('chartsCtrl', [])
 
-.controller('chartsController', function($route, $scope, $uibModal, Budget, Auth, $filter, $timeout, User) {
+.controller('chartsController', function($route, $scope, $uibModal, Budget, Auth, $filter, $timeout, User, Filter) {
 
 var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -39,8 +39,13 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
   redraw = function () {
     Budget.all().success(function (data) {
       vm.expenses = data;
-      redrawPeriod();
+      Filter.all().success(function (data) {
+        vm.items = data;
+        redrawPeriod();
+        vm.piechart();
+      });
     });
+    
   }
 
   vm.perToggle = function () {
@@ -73,7 +78,11 @@ vm.perMinus = function () {
   }
   redrawPeriod();
 };
-
+vm.deleteFilter = function (eId) {
+  Filter.deleteFilter(eId).success(function (data) {
+    $timeout(function(){redraw();}, 600);   
+  });
+};
 
 Auth.getUser().then(function (data) {
   vm.me = data.data;
@@ -83,25 +92,21 @@ Auth.getUser().then(function (data) {
   redraw();
 });
 
-
-vm.items = [
-  {filter: "food", amount: 300, period: "April"},
-  {filter: "transp", amount: 100, period: "April"},
-  {filter: "dom-potrebi", amount: 100, period: "April"}
-];
-
-
 vm.piechart = function(){
   $scope.chartObject.data = {};
 
-  cols = [
-        {id: "t", label: "Topping", type: "string"},
-        {id: "s", label: "Slices", type: "number"}
-  ];
+  cols = [  {id: "t", label: "Topping", type: "string"},
+            {id: "s", label: "Slices", type: "number"}  ];
 
   rows = [];
   vm.items.filter(function(item){
-    rows.push({c: [{v: item.filter},{v: item.amount}]});
+      if(typeof vm.me !== 'undefined'){
+        fltrd = $filter("onlyaccepted")(vm.expenses);
+        fltrd = $filter("periodfor")(fltrd, item.period, new Date(item.date));
+        fltrd = $filter("tagsfilter")(fltrd, item.filter, vm.me.email);
+        amount = $filter("calctotalfor")(fltrd, vm.me.email);
+        rows.push({c: [{v: ""+item.filter+" ("+parseInt(amount)+")"},{v: parseInt(amount) }]});
+      }
   });
 
   $scope.chartObject.type = "PieChart";
@@ -112,8 +117,6 @@ vm.piechart = function(){
 
   console.log(rows);
 }
-
-vm.piechart();
 
 })
 

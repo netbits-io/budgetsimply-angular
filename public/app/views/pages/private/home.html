@@ -36,7 +36,7 @@
 			<input type="text" class="form-control whiteButton " ng-model="home.filterText">
 		</div>
 		<div class="col-sm-2">
-			<button class="btn btn-default whiteButton" type="button" ng-click="home.addFilter()"><span class="glyphicon glyphicon-stats"></span></button>
+			<button class="btn btn-default whiteButton" type="button" ng-click="home.addFilter()"><span class="glyphicon glyphicon-stats" uib-tooltip="add filter to charts"></span></button>
 		</div>
 		<div class="col-sm-2 text-right">
 			<button class="btn btn-default whiteButton" ng-click="home.modalExpense(null)" type="button">Add Expense</button>
@@ -63,7 +63,7 @@
 				<td class="text-center">
 					<div ng-show="!entry.rejected && !entry.accepted && !home.haveIAccepted(entry)">
 						<div class="btn-group" uib-dropdown >
-							<button type="button" class="btn btn-xs btn-default whiteButton " uib-dropdown-toggle>
+							<button type="button" class="btn btn-xs btn-default whiteButton" uib-dropdown-toggle>
 								<span class="glyphicon glyphicon-warning-sign" uib-tooltip="Click to accept or reject"></span>
 							</button>
 							<ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
