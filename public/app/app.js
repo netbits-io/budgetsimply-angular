@@ -1,6 +1,6 @@
 angular.module('userApp', 
     ['ui.bootstrap', 'ngTagsInput', 'mgcrea.ngStrap', 'ngAnimate', 
-    'app.routes', 'authService', 'budgetService', 'mainCtrl', 
+    'app.routes', 'authService', 'budgetService', 'filterService', 'mainCtrl', 
     'userCtrl', 'homeCtrl', 'meCtrl', 'chartsCtrl','newexCtrl', 'viewexCtrl', 'newfrndCtrl',
     'friendsCtrl', 'userService', 'sharedCtrl', 'edtgsCtrl', 'googlechart'])
         // application configuration to integrate token into requests

@@ -1,6 +1,6 @@
 angular.module('homeCtrl', [])
 
-.controller('homeController', function($route, $scope, $uibModal, Budget, Auth, $filter, $timeout, User) {
+.controller('homeController', function($route, $scope, $uibModal, Budget, Auth, $filter, $timeout, User, Filter) {
 
   var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -168,6 +168,15 @@ vm.rejectExpense = function (eId) {
     }else{
       vm.infdanger = data.message +" ::: "+new Date();
     }
+  });
+};
+vm.addFilter = function () {
+  Filter.addFilter(vm.period, vm.date, vm.filterText).success(function (data) {
+    if(data.success){
+      vm.infsuccess = data.message +" ::: "+new Date();
+    }else{
+      vm.infdanger = data.message +" ::: "+new Date();
+    }  
   });
 };
 
