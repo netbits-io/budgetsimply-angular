@@ -51,7 +51,7 @@ angular.module('homeCtrl', [])
   repage = function(){
     if(typeof vm.me !== 'undefined'){
       fltrd = $filter("onlymyrejected")(vm.expenses, vm.me.email);
-      fltrd = $filter("periodfor")(fltrd, vm.periodString);
+      fltrd = $filter("periodfor")(fltrd, vm.period, vm.date);
       fltrd = $filter("tagsfilter")(fltrd, vm.filterText, vm.me.email);
       vm.totalItems = fltrd.length;
     }
@@ -64,14 +64,9 @@ angular.module('homeCtrl', [])
     repage();
   });
 
-  vm.radioMode = 'my';
-
-  vm.month = 1+(new Date().getMonth());
-  vm.year = (new Date().getFullYear());
-  vm.lPeriod = false;
-
+  vm.date = new Date();
+  vm.period = "m";
   vm.periodLabel = "";
-  vm.periodString = "";
 
   pad = function(num, size) {
     var s = num+"";
@@ -80,12 +75,10 @@ angular.module('homeCtrl', [])
   }
 
   redrawPeriod = function(){
-    if(vm.lPeriod){
-      vm.periodLabel = vm.year;
-      vm.periodString = vm.year;
+    if(vm.period === "y"){
+      vm.periodLabel = vm.date.getFullYear();
     } else {
-      vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
-      vm.periodString = vm.year+"-"+pad(vm.month,2);
+      vm.periodLabel = monthNames[vm.date.getMonth()]+" "+vm.date.getFullYear();
     }
     repage();
   }
@@ -118,33 +111,29 @@ angular.module('homeCtrl', [])
   };
 
   vm.perToggle = function () {
-    vm.lPeriod = !vm.lPeriod;
+    if(vm.period === "y"){
+      vm.period = "m";
+    } else {
+      vm.period = "y";
+    }
     redrawPeriod();
   };
 
-  vm.perPlus = function () {
-    if(vm.lPeriod){
-     vm.year++;
-   } else {
-    vm.month++;
-    if(vm.month > 12){
-      vm.year++;
-      vm.month = 1;
+vm.perPlus = function () {
+    if(vm.period === "y"){
+      vm.date.setYear(vm.date.getFullYear() + 1);
+    }else{
+      vm.date.setMonth(vm.date.getMonth() + 1);     
     }
-  }
-  redrawPeriod();
+    redrawPeriod();
 };
 
 vm.perMinus = function () {
-  if(vm.lPeriod){
-    vm.year--;
-  } else {
-    vm.month--;
-    if(vm.month < 1){
-      vm.year--;
-      vm.month = 12;
+  if(vm.period === "y"){
+      vm.date.setYear(vm.date.getFullYear() - 1);
+    }else{
+      vm.date.setMonth(vm.date.getMonth() - 1);     
     }
-  }
   redrawPeriod();
 };
 

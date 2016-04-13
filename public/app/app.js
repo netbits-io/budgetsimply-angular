@@ -52,7 +52,7 @@ angular.module('userApp',
                                 vm.useradmin = false;
                                 vm.usermail = '';
                                 $location.path('/');
-                            }, 700
+                            }, 900
                         );
                     };
 
@@ -179,12 +179,18 @@ angular.module('userApp',
                 }             
             })
             .filter('periodfor', function() {
-                return function(input, periodString) {
+                return function(input, period, date) {
                     var filtered = [];
                     angular.forEach(input, function(item) {
-                        date = JSON.stringify(item.date)
-                        if(date.indexOf(periodString) != -1) {
-                            filtered.push(item);
+                        current = new Date(item.date);
+                        if(period === "y"){
+                            if(current.getFullYear() === date.getFullYear()){
+                                filtered.push(item);
+                            }
+                        }else{
+                            if(current.getFullYear() === date.getFullYear() && current.getMonth() === date.getMonth()){
+                                filtered.push(item);
+                            }
                         }
                     });
                     return filtered;

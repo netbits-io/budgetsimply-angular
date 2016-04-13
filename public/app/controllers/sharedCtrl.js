@@ -15,32 +15,30 @@ angular.module('sharedCtrl', [])
     repage = function(){
       if(typeof vm.me !== 'undefined'){
         fltrd = $filter("onlyaccepted")(vm.expenses);
-        fltrd = $filter("periodfor")(fltrd, vm.periodString);
+        fltrd = $filter("periodfor")(fltrd, vm.period, vm.date);
         fltrd = $filter("onlyshared")(fltrd, vm.me.email, vm.sharedwith);
         vm.totalItems = fltrd.length;
       }
     };
 
-    $scope.$watch('shared.sharedwith', function(nw, ol) {
-        repage();
-    });
-    $scope.$watch('shared.periodString', function(nw, ol) {
-        repage();
-    });
+    // $scope.$watch('shared.sharedwith', function(nw, ol) {
+    //     repage();
+    // });
+    // $scope.$watch('shared.periodLabel', function(nw, ol) {
+    //     repage();
+    // });
 
     vm.sharedwithlist = [];
     vm.sharedwith = "";
 
     $scope.toggle = function(userId) {
         vm.sharedwith = userId;
+        repage();
     };
 
-    vm.month = 1+(new Date().getMonth());
-    vm.year = (new Date().getFullYear());
-    vm.lPeriod = false;
-
+    vm.date = new Date();
+    vm.period = "m";
     vm.periodLabel = "";
-    vm.periodString = "";
 
     pad = function(num, size) {
         var s = num+"";
@@ -60,57 +58,50 @@ angular.module('sharedCtrl', [])
       return result;
     }
 
-    vm.perToggle = function () {
-        vm.lPeriod = !vm.lPeriod;
-        redrawPeriod();
-    };
+ vm.perToggle = function () {
+    if(vm.period === "y"){
+      vm.period = "m";
+    } else {
+      vm.period = "y";
+    }
+    redrawPeriod();
+  };
 
-    vm.perPlus = function () {
-        if(vm.lPeriod){
-         vm.year++;
-        } else {
-            vm.month++;
-            if(vm.month > 12){
-                vm.year++;
-                vm.month = 1;
-            }
-        }
-        redrawPeriod();
-    };
+vm.perPlus = function () {
+    if(vm.period === "y"){
+      vm.date.setYear(vm.date.getFullYear() + 1);
+    }else{
+      vm.date.setMonth(vm.date.getMonth() + 1);     
+    }
+    redrawPeriod();
+};
 
 vm.perMinus = function () {
-    if(vm.lPeriod){
-     vm.year--;
- } else {
-    vm.month--;
-    if(vm.month < 1){
-        vm.year--;
-        vm.month = 12;
+  if(vm.period === "y"){
+      vm.date.setYear(vm.date.getFullYear() - 1);
+    }else{
+      vm.date.setMonth(vm.date.getMonth() - 1);     
     }
-}
-redrawPeriod();
+  redrawPeriod();
 };
 
 redrawPeriod = function(){
-    if(vm.lPeriod){
-        vm.periodLabel = vm.year;
-        vm.periodString = vm.year;
+    if(vm.period === "y"){
+      vm.periodLabel = vm.date.getFullYear();
     } else {
-        vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
-        vm.periodString = vm.year+"-"+pad(vm.month,2);
+      vm.periodLabel = monthNames[vm.date.getMonth()]+" "+vm.date.getFullYear();
     }
 
   input = $filter("onlyaccepted")(vm.expenses);
-  input = $filter("periodfor")(input, vm.periodString);
+  input = $filter("periodfor")(input, vm.period, vm.date);
   input = $filter("onlyshared")(input, vm.me.email, vm.sharedwith);
   vm.friendTotal = $filter("calctotalforshared")(input, vm.me.email, vm.sharedwith);
 
   input = $filter("onlyaccepted")(vm.expenses);
-  input = $filter("periodfor")(input, vm.periodString);
+  input = $filter("periodfor")(input, vm.period, vm.date);
   input = $filter("onlyshared")(input, vm.sharedwith, vm.me.email);
   vm.userTotal = $filter("calctotalforshared")(input, vm.sharedwith, vm.me.email);
  
-
   vm.totalDiffFne = vm.friendTotal - vm.userTotal;
   vm.totalDiffUsr = vm.userTotal - vm.friendTotal;
 
