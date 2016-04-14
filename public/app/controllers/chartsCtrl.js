@@ -11,14 +11,12 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
   $scope.chartObject = {};
 
-    vm.radioMode = 'my';
+  vm.radioMode = "s";
 
-  vm.month = 1+(new Date().getMonth());
-  vm.year = (new Date().getFullYear());
-  vm.lPeriod = false;
+  vm.date = new Date();
+  vm.period = "m";
 
   vm.periodLabel = "";
-  vm.periodString = "";
 
   pad = function(num, size) {
     var s = num+"";
@@ -27,12 +25,34 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
   }
 
   redrawPeriod = function(){
-    if(vm.lPeriod){
-      vm.periodLabel = vm.year;
-      vm.periodString = vm.year;
+    if(vm.period === "y"){
+      vm.periodLabel = vm.date.getFullYear();
     } else {
-      vm.periodLabel = monthNames[vm.month-1]+" "+vm.year;
-      vm.periodString = vm.year+"-"+pad(vm.month,2);
+      vm.periodLabel = monthNames[vm.date.getMonth()]+" "+vm.date.getFullYear();
+    }
+
+    if(typeof vm.me !== 'undefined'){
+
+      vm.items.filter(function(item){
+        idate = new Date(item.date);
+        iperiod = item.period;
+        if(vm.radioMode === "c"){
+          idate = vm.date;
+          iperiod = vm.period;
+        }
+        fltrd = $filter("onlyaccepted")(vm.expenses);
+        fltrd = $filter("periodfor")(fltrd, iperiod, idate);
+        fltrd = $filter("tagsfilter")(fltrd, item.filter, vm.me.email);
+        amount = $filter("calctotalfor")(fltrd, vm.me.email);
+        item.amount = parseInt(amount);
+        if(iperiod === "y"){
+          item.periodLabel = idate.getFullYear();
+        } else {
+          item.periodLabel = monthNames[idate.getMonth()]+" "+idate.getFullYear();
+        }
+      });
+
+      vm.piechart();
     }
   }
 
@@ -42,42 +62,41 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
       Filter.all().success(function (data) {
         vm.items = data;
         redrawPeriod();
-        vm.piechart();
       });
     });
-    
   }
 
-  vm.perToggle = function () {
-    vm.lPeriod = !vm.lPeriod;
+  vm.redrawPeriod = function(){
     redrawPeriod();
   };
 
-  vm.perPlus = function () {
-    if(vm.lPeriod){
-     vm.year++;
-   } else {
-    vm.month++;
-    if(vm.month > 12){
-      vm.year++;
-      vm.month = 1;
+  vm.perToggle = function () {
+    if(vm.period === "y"){
+      vm.period = "m";
+    } else {
+      vm.period = "y";
     }
-  }
-  redrawPeriod();
+    redrawPeriod();
+  };
+
+vm.perPlus = function () {
+    if(vm.period === "y"){
+      vm.date.setYear(vm.date.getFullYear() + 1);
+    }else{
+      vm.date.setMonth(vm.date.getMonth() + 1);     
+    }
+    redrawPeriod();
 };
 
 vm.perMinus = function () {
-  if(vm.lPeriod){
-    vm.year--;
-  } else {
-    vm.month--;
-    if(vm.month < 1){
-      vm.year--;
-      vm.month = 12;
+  if(vm.period === "y"){
+      vm.date.setYear(vm.date.getFullYear() - 1);
+    }else{
+      vm.date.setMonth(vm.date.getMonth() - 1);     
     }
-  }
   redrawPeriod();
 };
+
 vm.deleteFilter = function (eId) {
   Filter.deleteFilter(eId).success(function (data) {
     $timeout(function(){redraw();}, 600);   
@@ -100,13 +119,7 @@ vm.piechart = function(){
 
   rows = [];
   vm.items.filter(function(item){
-      if(typeof vm.me !== 'undefined'){
-        fltrd = $filter("onlyaccepted")(vm.expenses);
-        fltrd = $filter("periodfor")(fltrd, item.period, new Date(item.date));
-        fltrd = $filter("tagsfilter")(fltrd, item.filter, vm.me.email);
-        amount = $filter("calctotalfor")(fltrd, vm.me.email);
-        rows.push({c: [{v: ""+item.filter+" ("+parseInt(amount)+")"},{v: parseInt(amount) }]});
-      }
+      rows.push({c: [{v: ""+item.filter+" ("+item.amount+")"},{v: item.amount }]});
   });
 
   $scope.chartObject.type = "PieChart";
@@ -114,8 +127,6 @@ vm.piechart = function(){
   $scope.chartObject.data = {
       "cols": cols, 
       "rows": rows};
-
-  console.log(rows);
 }
 
 })

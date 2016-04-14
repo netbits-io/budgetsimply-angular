@@ -4,8 +4,14 @@
 	<h1>Charts</h1>
 	<br>
 		<div class="row">
+		<div class="col-sm-3">
+			<select  class="form-control whiteButton"  ng-model="charts.radioMode" ng-change="charts.redrawPeriod()">
+      			<option value="s">Defined Period</option>
+      			<option value="c">Custom Period</option>
+    		</select>	
+		</div>	
 		<div class="col-sm-4">
-			<div class="input-group">
+			<div class="input-group" ng-show="charts.radioMode != 's'">
 				<span class="input-group-btn">
 					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perMinus()"><span class="glyphicon glyphicon-chevron-left"></span></button>
 				</span>
@@ -15,19 +21,8 @@
 					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perPlus()"><span class="glyphicon glyphicon-chevron-right"></span></button>
 				</span>
 			</div>
-		</div>	
-		<div class="col-sm-4">
-			<input type="text" class="form-control whiteButton " ng-model="charts.filterText">
-		</div>
-		<div class="col-sm-1">
 		</div>
 		<div class="col-sm-3">
-			<select  class="form-control whiteButton"  ng-model="charts.radioMode">
-      			<option value="my">Selected Period</option>
-      			<option value="total">Current Period</option>
-      			<option value="iforme">Current Year By Months</option>
-    		</select>	
-			<!-- <button class="btn btn-default whiteButton" ng-click="charts.modalExpense(null)" type="button">Add Expense</button> -->
 		</div>
 	</div>
 	<hr>
@@ -37,16 +32,16 @@
 		<thead>
 			<tr>
 				<td><b>period</b></td>
-				<td><b>date</b></td>
 				<td><b>filter</b></td>
+				<td><b>amount</b></td>
 				<td width="40"></td>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="item in charts.items">
-				<td>{{item.period}}</td>
-				<td>{{item.date}}</td>
+				<td>{{item.periodLabel}}</td>
 				<td>{{item.filter}}</td>
+				<td>{{item.amount}}</td>
 				<td>
 					<button class="btn-xs btn-default whiteButton" ng-click="charts.deleteFilter(item._id)" type="button">
 						<span class="glyphicon glyphicon-remove" uib-tooltip="remove filter"></span>
@@ -56,10 +51,8 @@
 		</tbody>
 	</table>
 	</div>
-
 	<div>
 		<div google-chart chart="chartObject" style="height:400px; width:100%;"></div>
 	</div>
-
 	<br>
 </div>
