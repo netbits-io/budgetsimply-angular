@@ -11,8 +11,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
   $scope.chartObject = {};
 
-  vm.radioMode = "s";
-
+  vm.radioMode = "c";
   vm.date = new Date();
   vm.period = "m";
 
