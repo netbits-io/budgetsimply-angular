@@ -171,13 +171,18 @@ vm.rejectExpense = function (eId) {
   });
 };
 vm.addFilter = function () {
-  Filter.addFilter(vm.period, vm.date, vm.filterText).success(function (data) {
-    if(data.success){
-      vm.infsuccess = data.message +" ::: "+new Date();
-    }else{
-      vm.infdanger = data.message +" ::: "+new Date();
-    }  
-  });
+
+  if(vm.filterText && vm.filterText.length > 0){
+    Filter.addFilter(vm.period, vm.date, vm.filterText).success(function (data) {
+      if(data.success){
+        vm.infsuccess = data.message +" ::: "+new Date();
+    } else{
+        vm.infdanger = data.message +" ::: "+new Date();
+      }  
+    });
+  }else{
+    vm.infdanger = "You must enter a filter before adding it to the charts! ::: "+new Date();
+  }
 };
 
 vm.modalExpense = function (existing) {
