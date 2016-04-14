@@ -170,8 +170,8 @@ vm.rejectExpense = function (eId) {
     }
   });
 };
-vm.addFilter = function () {
 
+vm.addFilter = function () {
   if(vm.filterText && vm.filterText.length > 0){
     Filter.addFilter(vm.period, vm.date, vm.filterText).success(function (data) {
       if(data.success){

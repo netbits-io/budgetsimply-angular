@@ -88,7 +88,7 @@ angular.module('userApp',
                     success: '@'
                 },
                 templateUrl: 'app/views/pages/components/infobar.html',
-                controller: function ($scope, $attrs) {
+                controller: function ($scope, $attrs, $timeout) {
                     var vm = this;
                     vm.successS = false;
                     vm.dangerS = false;
@@ -98,6 +98,7 @@ angular.module('userApp',
                             newMessage = newMessage.substring(0, newMessage.indexOf(":::"));
                             vm.danger = newMessage;
                             vm.dangerS = true;
+                            $timeout(function(){vm.dangerS = false;}, 3000);
                         }
                     });
 
@@ -106,10 +107,11 @@ angular.module('userApp',
                             newMessage = newMessage.substring(0, newMessage.indexOf(":::"));
                             vm.success = newMessage;
                             vm.successS = true;
+                            $timeout(function(){vm.successS = false;}, 3000);
                         }
                     });
                     vm.closeDanger = function () {
-                        $attrs.$set('danger', "a");
+                        //$attrs.$set('danger', "a");
                         vm.dangerS = false;
                     };
                     vm.closeSuccess = function () {
