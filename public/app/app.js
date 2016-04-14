@@ -257,7 +257,7 @@ angular.module('userApp',
                             if(fltr.startsWith("-") && 2 < fltr.length){
                                 fltrM = fltr.substring(1);
                                 tgs.filter(function (el) {
-                                    if(el.text.indexOf(fltrM) != -1){
+                                    if(el.text.indexOf(fltrM) === 0){
                                         cr = false;
                                     }
                                 }); 
@@ -265,7 +265,7 @@ angular.module('userApp',
                             if(cr && !fltr.startsWith("-") && 1 < fltr.length){
                                 cr2 = false; 
                                 tgs.filter(function (el) {
-                                    if(el.text.indexOf(fltr) != -1){
+                                    if(el.text.indexOf(fltr) === 0){
                                         cr2 = true;
                                     }
                                 }); 
