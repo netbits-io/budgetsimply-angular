@@ -173,7 +173,7 @@ vm.rejectExpense = function (eId) {
 
 vm.addFilter = function () {
   if(vm.filterText && vm.filterText.length > 0){
-    Filter.addFilter(vm.period, vm.date, vm.filterText).success(function (data) {
+    Filter.addFilter(vm.period, vm.date, "default", vm.filterText).success(function (data) {
       if(data.success){
         vm.infsuccess = data.message +" ::: "+new Date();
     } else{
@@ -183,6 +183,44 @@ vm.addFilter = function () {
   }else{
     vm.infdanger = "You must enter a filter before adding it to the charts! ::: "+new Date();
   }
+};
+
+vm.modalFilters = function () {
+  var modalInstance = $uibModal.open({
+    templateUrl: 'app/views/pages/private/addfilter.html',
+    controller: ['$scope', '$modalInstance', 'Filter', function ($scope, $uibModalInstance, Filter){
+                                var mm = this;
+
+                              mm.ok = function () {
+                                  if(vm.filterText && vm.filterText.length > 0){
+                                     Filter.addFilter(vm.period, vm.date, mm.tab, vm.filterText).success(function (data) {
+                                      if(data.success){
+                                         vm.infsuccess = data.message +" ::: "+new Date();
+                                      } else{
+                                        vm.infdanger = data.message +" ::: "+new Date();
+                                      }  
+                                    });
+                                  }else{
+                                    vm.infdanger = "You must enter a filter before adding it to the charts! ::: "+new Date();
+                                  }
+                                  $uibModalInstance.close('ok');
+                              };
+
+                              mm.cancel = function () {
+                                $uibModalInstance.dismiss('cancel');
+                              };
+                            }
+               ],
+    controllerAs: 'main',
+    resolve: {}
+  });
+  modalInstance.result.then(
+    function () {
+
+    }, 
+    function () {
+    }
+    )
 };
 
 vm.modalExpense = function (existing) {
@@ -204,6 +242,7 @@ vm.modalExpense = function (existing) {
     }
     )
 };
+
 vm.modalTags = function (existing) {
   var modalInstance = $uibModal.open({
     templateUrl: 'app/views/pages/private/edittagsm.html',

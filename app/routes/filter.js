@@ -12,6 +12,7 @@ module.exports = function (app, express) {
                     filter.period = req.body.period;
                     filter.owner = req.decoded.email;
                     filter.filter = req.body.filter;
+                    filter.tab = req.body.tab;
                     filter.save(function (err) {
                         if (err) res.json({success: false, message: 'Could not save filter!'});
                         else res.json({success: true, message: 'Filter saved!'});

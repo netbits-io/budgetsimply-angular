@@ -3,7 +3,8 @@
 <div class="container">
 	<h1>Charts</h1>
 	<br>
-		<div class="row">
+
+	<div class="row">
 		<div class="col-sm-3">
 			<select  class="form-control whiteButton"  ng-model="charts.radioMode" ng-change="charts.redrawPeriod()">
       			<option value="s">Defined Period</option>
@@ -25,23 +26,30 @@
 		<div class="col-sm-3">
 		</div>
 	</div>
+
 	<hr>
+
+	<ul class="nav nav-tabs">
+  		<li ng-repeat="tab in charts.tabs" ng-class="{active: tab === charts.activeTab}"> <a ng-click="charts.setTab(tab)">{{tab}}</a> </li>
+	</ul>
+
 	<div>
-	
-	<table class="table table-striped table-hover">
+	<table class="table table-hover">
 		<thead>
 			<tr>
 				<td><b>period</b></td>
 				<td><b>filter</b></td>
 				<td><b>amount</b></td>
 				<td width="40"></td>
+				<td width="40"></td>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="item in charts.items">
+			<tr ng-repeat="item in charts.items" ng-show="item.tab === charts.activeTab">
 				<td>{{item.periodLabel}}</td>
 				<td>{{item.filter}}</td>
 				<td>{{item.amount}}</td>
+				<td><input type="checkbox" ng-model="item.active" ng-change="charts.redrawPeriod()"></td>
 				<td>
 					<button class="btn-xs btn-default whiteButton" ng-click="charts.deleteFilter(item._id)" type="button">
 						<span class="glyphicon glyphicon-remove" uib-tooltip="remove filter"></span>

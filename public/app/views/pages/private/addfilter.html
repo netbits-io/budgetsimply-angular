@@ -1,0 +1,26 @@
+
+<!-- Modal content-->
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="main.cancel()">&times;</button>
+    <h4 class="modal-title">Add Filter to Charts</h4>
+  </div>
+  <div class="modal-body">
+      <form>
+        <div class="row">
+          <div class="col-xs-1 text-right pad7t">
+          </div>
+          <div class="col-xs-10">
+          <div class="form-group">
+            <label>Add to tab</label>
+            <input type="text" ng-model="main.tab" class="form-control" /> 
+          </div>
+          </div>
+        </div>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="main.cancel()">Cancel</button>
+    <button type="button" class="btn btn-default" ng-click="main.ok()">Save</button>
+  </div>
+</div>

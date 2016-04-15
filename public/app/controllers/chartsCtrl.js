@@ -29,9 +29,7 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
     } else {
       vm.periodLabel = monthNames[vm.date.getMonth()]+" "+vm.date.getFullYear();
     }
-
     if(typeof vm.me !== 'undefined'){
-
       vm.items.filter(function(item){
         idate = new Date(item.date);
         iperiod = item.period;
@@ -50,7 +48,6 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
           item.periodLabel = monthNames[idate.getMonth()]+" "+idate.getFullYear();
         }
       });
-
       vm.piechart();
     }
   }
@@ -60,6 +57,18 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
       vm.expenses = data;
       Filter.all().success(function (data) {
         vm.items = data;
+        vm.tabs = [];
+        vm.items.filter(function(item){
+          item.active = true;
+          vm.tabs.push(item.tab);
+        });
+        var uniqueNames = [];
+        $.each(vm.tabs, function(i, el){
+          if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+        });
+        vm.tabs = uniqueNames;
+        vm.activeTab = vm.tabs[0];
+
         redrawPeriod();
       });
     });
@@ -102,6 +111,11 @@ vm.deleteFilter = function (eId) {
   });
 };
 
+vm.setTab = function (tab) {
+  vm.activeTab = tab;
+  redrawPeriod();
+};
+
 Auth.getUser().then(function (data) {
   vm.me = data.data;
   vm.loggedin = true;
@@ -118,7 +132,9 @@ vm.piechart = function(){
 
   rows = [];
   vm.items.filter(function(item){
+    if(item.active && item.tab == vm.activeTab){
       rows.push({c: [{v: ""+item.filter+" ("+item.amount+")"},{v: item.amount }]});
+    }
   });
 
   $scope.chartObject.type = "PieChart";

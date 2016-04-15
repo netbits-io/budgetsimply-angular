@@ -5,8 +5,8 @@ angular.module('filterService', [])
     filterFactory.all = function() {
         return $http.get('/api/filter');
     };
-    filterFactory.addFilter= function(period, date, filter) {
-        postData = {period: period, date: date, filter: filter}
+    filterFactory.addFilter= function(period, date, tab, filter) {
+        postData = {period: period, date: date, tab: tab, filter: filter}
         return $http.post('/api/filter/', postData);
     };
     filterFactory.deleteFilter = function(eId) {
