@@ -69,7 +69,6 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         });
         vm.tabs = uniqueNames;
         vm.activeTab = vm.tabs[0];
-
         redrawPeriod();
       });
     });
