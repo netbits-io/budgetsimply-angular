@@ -41,13 +41,14 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         fltrd = $filter("periodfor")(fltrd, iperiod, idate);
         fltrd = $filter("tagsfilter")(fltrd, item.filter, vm.me.email);
         amount = $filter("calctotalfor")(fltrd, vm.me.email);
-        item.amount = parseInt(amount);
+        item.amount = parseFloat(amount);
         if(iperiod === "y"){
           item.periodLabel = idate.getFullYear();
         } else {
           item.periodLabel = monthNames[idate.getMonth()]+" "+idate.getFullYear();
         }
       });
+
       vm.piechart();
     }
   }
@@ -131,11 +132,24 @@ vm.piechart = function(){
             {id: "s", label: "Slices", type: "number"}  ];
 
   rows = [];
+  total = 0;
   vm.items.filter(function(item){
     if(item.active && item.tab == vm.activeTab){
       rows.push({c: [{v: ""+item.filter+" ("+item.amount+")"},{v: item.amount }]});
+      total += parseFloat(item.amount);
+      average = $filter("calcaverage")(item.amount, iperiod, idate);
+      item.average = parseFloat(average);
     }
   });
+      if(vm.radioMode === "c"){
+        idate = vm.date;
+        iperiod = vm.period;
+        vm.average = $filter("calcaverage")(total, iperiod, idate);
+        vm.total = total.toFixed(2);
+      } else {
+        vm.average = 'n/a';
+        vm.total = 'n/a';
+      }
 
   $scope.chartObject.type = "PieChart";
 

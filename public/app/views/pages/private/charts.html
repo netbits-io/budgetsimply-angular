@@ -37,17 +37,32 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<td><b>period</b></td>
-				<td><b>filter</b></td>
-				<td><b>amount</b></td>
-				<td width="40"></td>
-				<td width="40"></td>
+				<th>period</th>
+				<th>filter</th>
+				<th>average</th>
+				<th>amount</th>
+				<th width="40"></th>
+				<th width="40"></th>
+			</tr>
+			<tr>
+				<th class="text-right" colspan="4">
+					<b>
+						daily average: &nbsp;&nbsp; {{charts.average}} 
+					</b>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<b>
+						total: &nbsp;&nbsp; {{charts.total}}
+					</b>
+				</th>
+				<th width="40"></th>
+				<th width="40"></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="item in charts.items" ng-show="item.tab === charts.activeTab">
 				<td>{{item.periodLabel}}</td>
 				<td>{{item.filter}}</td>
+				<td>{{item.average}}</td>
 				<td>{{item.amount}}</td>
 				<td><input type="checkbox" ng-model="item.active" ng-change="charts.redrawPeriod()"></td>
 				<td>

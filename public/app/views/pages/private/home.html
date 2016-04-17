@@ -53,8 +53,17 @@
 				<td width="40"></td>
 			</tr>
 			<tr>
-				<th class="text-right" colspan="4"><b>TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
-						{{home.expenses | onlyaccepted | periodfor:home.period:home.date | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email }} </b></td>
+				<th class="text-right" colspan="4">
+					<b>
+						DAILY AVERAGE: &nbsp;&nbsp;
+						{{home.expenses | onlyaccepted | periodfor:home.period:home.date | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email | calcaverage:home.period:home.date }} 
+					</b>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<b>
+						TOTAL: &nbsp;&nbsp;
+						{{home.expenses | onlyaccepted | periodfor:home.period:home.date | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email }} 
+					</b>
+				</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -103,8 +112,17 @@
 			</tr>
 			<tfoot>
 				<tr>
-					<th class="text-right" colspan="4">TOTAL: &nbsp;&nbsp;&nbsp;&nbsp;
-						{{home.expenses | onlyaccepted | periodfor:home.period:home.date | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email }} </td>
+					<th class="text-right" colspan="4">
+						<b>
+							DAILY AVERAGE: &nbsp;&nbsp;
+							{{home.expenses | onlyaccepted | periodfor:home.period:home.date | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email | calcaverage:home.period:home.date }} 
+						</b>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>
+							TOTAL: &nbsp;&nbsp;
+							{{home.expenses | onlyaccepted | periodfor:home.period:home.date | tagsfilter:home.filterText:home.me.email  | calctotalfor:home.me.email }} 
+						</b>	
+					</th>
 					<th></th>
 				</tr>
 			</tfoot>

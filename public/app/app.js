@@ -239,9 +239,9 @@ angular.module('userApp',
                     });
                     return total.toFixed(2);
                 };
-        })
+            })
         .filter('tagsfilter', function() {
-                return function(input, filter, usermail) {
+            return function(input, filter, usermail) {
                     if(!filter || filter.length==0){
                         return input;
                     }
@@ -366,6 +366,22 @@ angular.module('userApp',
             });
             return filtered;
             };
-        })    
+        })
+        .filter('calcaverage', function() {
+            return function(input, period, date) {
+                var total = parseFloat(input);
+                current = new Date(date);
+                if(period === "y"){
+                    first = new Date(date.getFullYear(), 0, 1);
+                    last = new Date(date.getFullYear()+1, 0, 1);
+                }else{
+                    first = new Date(date.getFullYear(), date.getMonth(), 1);
+                    last = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+                }
+                days = Math.round((last-first)/(1000*60*60*24));
+                value = (total/days);
+                return value.toFixed(2);
+            };
+        })  
 ;
 
