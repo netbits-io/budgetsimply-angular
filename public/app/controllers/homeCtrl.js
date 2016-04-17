@@ -189,7 +189,21 @@ vm.modalFilters = function () {
   var modalInstance = $uibModal.open({
     templateUrl: 'app/views/pages/private/addfilter.html',
     controller: ['$scope', '$modalInstance', 'Filter', function ($scope, $uibModalInstance, Filter){
-                                var mm = this;
+                              var mm = this;
+
+                              Filter.all().success(function (data) {
+                                mm.items = data;
+                                mm.tabs = [];
+                                mm.items.filter(function(item){
+                                  item.active = true;
+                                  mm.tabs.push(item.tab);
+                                });
+                                var uniqueNames = [];
+                                $.each(mm.tabs, function(i, el){
+                                  if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+                                });
+                                mm.tabs = uniqueNames;
+                              });
 
                               mm.ok = function () {
                                   if(vm.filterText && vm.filterText.length > 0){
