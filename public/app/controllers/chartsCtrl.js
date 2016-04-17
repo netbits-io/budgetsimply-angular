@@ -138,25 +138,25 @@ vm.piechart = function(){
       rows.push({c: [{v: ""+item.filter+" ("+item.amount+")"},{v: item.amount }]});
       total += parseFloat(item.amount);
       average = $filter("calcaverage")(item.amount, iperiod, idate);
-      item.average = parseFloat(average);
+      item.average = average;
     }
   });
-      if(vm.radioMode === "c"){
-        idate = vm.date;
-        iperiod = vm.period;
-        vm.average = $filter("calcaverage")(total, iperiod, idate);
-        vm.total = total.toFixed(2);
-      } else {
-        vm.average = 'n/a';
-        vm.total = 'n/a';
-      }
+  if(vm.radioMode === "c"){
+    idate = vm.date;
+    iperiod = vm.period;
+    vm.average = $filter("calcaverage")(total, iperiod, idate);
+  } else {
+    vm.average = 'n/a';
+  }
+  vm.total = total.toFixed(2);
 
   $scope.chartObject.type = "PieChart";
 
   $scope.chartObject.data = {
       "cols": cols, 
-      "rows": rows};
+      "rows": rows
+  };
 }
 
-})
+});
 
