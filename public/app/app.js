@@ -186,11 +186,11 @@ angular.module('userApp',
                     angular.forEach(input, function(item) {
                         current = new Date(item.date);
                         if(period === "y"){
-                            if(current.getFullYear() === date.getFullYear()){
+                            if(current.getFullYear() === date.getFullYear() || !(item.accepted===true)){
                                 filtered.push(item);
                             }
                         }else{
-                            if(current.getFullYear() === date.getFullYear() && current.getMonth() === date.getMonth()){
+                            if((current.getFullYear() === date.getFullYear() && current.getMonth() === date.getMonth()) || !(item.accepted===true)){
                                 filtered.push(item);
                             }
                         }
@@ -210,6 +210,9 @@ angular.module('userApp',
             .filter('sortbdate', function() {
                 return function(input) {
                     input.sort(function(a,b){
+                        if(!a.accepted ^ !b.accepted){
+                            return a.accepted ?1 :-1;
+                        }
                         return new Date(b.date) - new Date(a.date);
                     });
                     return input;
