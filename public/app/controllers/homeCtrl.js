@@ -154,7 +154,7 @@ vm.acceptExpense = function (eId) {
   Budget.acceptExpense(eId).success(function (data) {
     if(data.success){
       $timeout(function(){redraw();}, 900);
-      vm.infsuccess = data.message +" ::: "+new Date();
+      //vm.infsuccess = data.message +" ::: "+new Date();
     }else{
       vm.infdanger = data.message +" ::: "+new Date();
     }
