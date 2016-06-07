@@ -11,7 +11,6 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
 
   $scope.chartObject = {};
 
-  vm.radioMode = "c";
   vm.date = new Date();
   vm.period = "m";
 
@@ -31,12 +30,10 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
     }
     if(typeof vm.me !== 'undefined'){
       vm.items.filter(function(item){
-        idate = new Date(item.date);
-        iperiod = item.period;
-        if(vm.radioMode === "c"){
-          idate = vm.date;
-          iperiod = vm.period;
-        }
+
+        idate = vm.date;
+        iperiod = vm.period;
+        
         fltrd = $filter("onlyaccepted")(vm.expenses);
         fltrd = $filter("periodfor")(fltrd, iperiod, idate);
         fltrd = $filter("tagsfilter")(fltrd, item.filter, vm.me.email);
@@ -140,13 +137,10 @@ vm.piechart = function(){
       item.average = average;
     }
   });
-  if(vm.radioMode === "c"){
-    idate = vm.date;
-    iperiod = vm.period;
-    vm.average = $filter("calcaverage")(total, iperiod, idate);
-  } else {
-    vm.average = 'n/a';
-  }
+
+  idate = vm.date;
+  iperiod = vm.period;
+  vm.average = $filter("calcaverage")(total, iperiod, idate);
   vm.total = total.toFixed(2);
 
   $scope.chartObject.type = "PieChart";

@@ -5,24 +5,20 @@
 	<br>
 
 	<div class="row">
-		<div class="col-sm-3">
-			<select  class="form-control whiteButton"  ng-model="charts.radioMode" ng-change="charts.redrawPeriod()">
-      			<option value="s">Defined Period</option>
-      			<option value="c">Custom Period</option>
-    		</select>	
-		</div>	
 		<div class="col-sm-4">
-			<div class="input-group" ng-show="charts.radioMode != 's'">
+			<div class="input-group">
 				<span class="input-group-btn">
 					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perMinus()"><span class="glyphicon glyphicon-chevron-left"></span></button>
+					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perPlus()"><span class="glyphicon glyphicon-chevron-right"></span></button>
 				</span>
 				<input type="text" class="form-control whiteButton text-center" ng-value="charts.periodLabel">
 				<span class="input-group-btn">
 					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perToggle()"><span class="glyphicon glyphicon glyphicon-sort"></span></button>
-					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perPlus()"><span class="glyphicon glyphicon-chevron-right"></span></button>
 				</span>
 			</div>
 		</div>
+		<div class="col-sm-3">
+		</div>	
 		<div class="col-sm-3">
 		</div>
 	</div>
