@@ -78,8 +78,6 @@ angular.module('userApp',
             }
         })
 
-
-
         .directive('infobar', function () {
             return {
                 restrict: 'E',
@@ -129,20 +127,21 @@ angular.module('userApp',
                 require: 'ngModel',
                 link: function (scope, elem, attrs, control) {
                     var checker = function () {
-                            //get the value of the first password
-                            var e1 = scope.$eval(attrs.ngModel);
-                            //get the value of the other password  
-                            var e2 = scope.$eval(attrs.passwordMatch);
-                            return e1 == e2;
-                        };
-                        scope.$watch(checker, function (n) {
-                            //set the form control to valid if both 
-                            //passwords are the same, else invalid
-                            control.$setValidity("unique", n);
-                        });
-                    }
-                };
-            }])
+                        //get the value of the first password
+                        var e1 = scope.$eval(attrs.ngModel);
+                        //get the value of the other password  
+                        var e2 = scope.$eval(attrs.passwordMatch);
+                        return e1 == e2;
+                    };
+                    scope.$watch(checker, function (n) {
+                        //set the form control to valid if both 
+                        //passwords are the same, else invalid
+                        control.$setValidity("unique", n);
+                    });
+                }
+            };
+        }])
+
         .filter('payedfor', function() {
             return function(expense, user) {
                 var toReturn = 0;
@@ -165,22 +164,24 @@ angular.module('userApp',
                 return toReturn.toFixed(2);
             }             
         })
+
         .filter('payedforshared', function() {
-                return function(expense, user, userfor) {
-                    toReturn = '';
-                    if(expense.owner == user){
-                        var payedForOther = 0;
-                        expense.shares.forEach (function (e){
-                            if(e.user == userfor){
-                               payedForOther += e.amount;
-                            }
-                        });
-                        toReturn = payedForOther.toFixed(2);
-                    } 
-                    return toReturn;
-                }             
-            })
-            .filter('periodfor', function() {
+            return function(expense, user, userfor) {
+                toReturn = '';
+                if(expense.owner == user){
+                    var payedForOther = 0;
+                    expense.shares.forEach (function (e){
+                        if(e.user == userfor){
+                             payedForOther += e.amount;
+                        }
+                    });
+                    toReturn = payedForOther.toFixed(2);
+                } 
+                return toReturn;
+            }             
+        })
+
+        .filter('periodfor', function() {
                 return function(input, period, date) {
                     var filtered = [];
                     angular.forEach(input, function(item) {
@@ -197,8 +198,9 @@ angular.module('userApp',
                     });
                     return filtered;
                 };
-            })
-             .filter('pgnte', function() {
+        })
+
+        .filter('pgnte', function() {
                 return function(input, page) {
                     btm = (page - 1) * 20;
                     tp = ((page - 1) * 20) + 20;
@@ -206,8 +208,9 @@ angular.module('userApp',
                         tp = input.length;
                     return input.slice(btm, tp);
                 };
-            })
-            .filter('sortbdate', function() {
+        })
+
+        .filter('sortbdate', function() {
                 return function(input) {
                     input.sort(function(a,b){
                         if(!a.accepted ^ !b.accepted){
@@ -217,71 +220,74 @@ angular.module('userApp',
                     });
                     return input;
                 };
-            })
-            .filter('calctotalfor', function() {
-                return function(input, user, mode) {
-                    var total = 0;
-                    angular.forEach(input, function(expense) { 
-                           var toReturn = 0;
-                                if(expense.owner == user){
-                                    notMy = 0;
-                                    expense.shares.forEach (function (e){
-                                        if( e.user != user ){
-                                            notMy += e.amount;
-                                        }
-                                    });
-                                    toReturn = expense.amount - notMy;
-                                } else {
-                                    expense.shares.forEach (function (e){
-                                        if(e.user == user && e.payback == false && e.loan != true){
-                                            toReturn = e.amount;
-                                        }
-                                    });
+        })
+            
+        .filter('calctotalfor', function() {
+            return function(input, user, mode) {
+                var total = 0;
+                angular.forEach(input, function(expense) { 
+                    var toReturn = 0;
+                        if(expense.owner == user){
+                            notMy = 0;
+                            expense.shares.forEach (function (e){
+                                if( e.user != user ){
+                                    notMy += e.amount;
                                 }
-                        total += toReturn;
-                    });
-                    return total.toFixed(2);
-                };
-            })
+                            });
+                            toReturn = expense.amount - notMy;
+                         } else {
+                            expense.shares.forEach (function (e){
+                                if(e.user == user && e.payback == false && e.loan != true){
+                                    toReturn = e.amount;
+                                }
+                            });
+                        }
+                    total += toReturn;
+                });
+                return total.toFixed(2);
+            };
+        })
+
         .filter('tagsfilter', function() {
             return function(input, filter, usermail) {
-                    if(!filter || filter.length==0){
-                        return input;
-                    }
-                    var filters = filter.split(" ");
-                    var filtered = [];
-                    angular.forEach(input, function(item) {
-                        tgs = [];
-                        angular.forEach(item.shares, function(share) {
-                            if(share.user === usermail){
-                                tgs = share.tags;
-                            }
-                        });
-                        cr = true;
-                        angular.forEach(filters, function(fltr) {
-                            if(fltr.startsWith("-") && 2 < fltr.length){
-                                fltrM = fltr.substring(1);
-                                tgs.filter(function (el) {
-                                    if(el.text.indexOf(fltrM) === 0){
-                                        cr = false;
-                                    }
-                                }); 
-                            }
-                            if(cr && !fltr.startsWith("-") && 1 < fltr.length){
-                                cr2 = false; 
-                                tgs.filter(function (el) {
-                                    if(el.text.indexOf(fltr) === 0){
-                                        cr2 = true;
-                                    }
-                                }); 
-                                cr = cr2;
-                            }
-                        }); 
-                        if(cr) filtered.push(item);
+                if(!filter || filter.length==0){
+                    return input;
+                }
+                var filters = filter.split(" ");
+                var filtered = [];
+                angular.forEach(input, function(item) {
+                    tgs = [];
+                    angular.forEach(item.shares, function(share) {
+                        if(share.user === usermail){
+                            tgs = share.tags;
+                        }
                     });
+                    cr = true;
+                     angular.forEach(filters, function(fltr) {
+                        if(fltr.startsWith("-") && 2 < fltr.length){
+                            fltrM = fltr.substring(1);
+                            tgs.filter(function (el) {
+                                if(el.text.indexOf(fltrM) === 0){
+                                    cr = false;
+                                }
+                            }); 
+                        }
+                        if(cr && !fltr.startsWith("-") && 1 < fltr.length){
+                            cr2 = false; 
+                            tgs.filter(function (el) {
+                                if(el.text.indexOf(fltr) === 0){
+                                    cr2 = true;
+                                }
+                            }); 
+                            cr = cr2;
+                        }
+                    }); 
+                    if(cr) filtered.push(item);
+                });
             return filtered;
             };
         })
+
         .filter('calctotalforshared', function() {
             return function(input, user, userfor) {
             var total = 0;
@@ -297,40 +303,38 @@ angular.module('userApp',
             return total.toFixed(2);
             };
         })
+
         .filter('calcdiff', function() {
             return function(input, user, userfor) {
-
-            var totalUser = 0;
-            angular.forEach(input, function(item) {
-                if(item.owner == user){
-                    item.shares.filter(function (el) {
-                        if(el.user === userfor){
-                            totalUser += el.amount;
-                        }
-                    });
+                var totalUser = 0;
+                angular.forEach(input, function(item) {
+                    if(item.owner == user){
+                        item.shares.filter(function (el) {
+                            if(el.user === userfor){
+                                totalUser += el.amount;
+                            }
+                        });
+                    }
+                });
+                var totalFor = 0;
+                angular.forEach(input, function(item) {
+                    if(item.owner == userfor){
+                        item.shares.filter(function (el) {
+                            if(el.user === user){
+                                totalFor += el.amount;
+                            }
+                        });
+                    }
+                });
+                if(totalUser > totalFor){
+                    return userfor +" ows you " +(totalUser - totalFor) + " for the selected period!";
                 }
-            });
-
-            var totalFor = 0;
-            angular.forEach(input, function(item) {
-                if(item.owner == userfor){
-                    item.shares.filter(function (el) {
-                        if(el.user === user){
-                            totalFor += el.amount;
-                        }
-                    });
+                if(totalUser < totalFor){
+                    return  "You owe " +userfor+" "+(totalFor - totalUser) + " for the selected period!";
                 }
-            });
-
-            if(totalUser > totalFor){
-                return userfor +" ows you " +(totalUser - totalFor) + " for the selected period!";
-            }
-            if(totalUser < totalFor){
-                return  "You owe " +userfor+" "+(totalFor - totalUser) + " for the selected period!";
-            }
-
             };
         })
+
         .filter('onlyshared', function() {
             return function(input, user, userfor) {
             var filtered = [];
@@ -348,6 +352,7 @@ angular.module('userApp',
             return filtered;
             };
         })
+
         .filter('onlyaccepted', function() {
             return function(input) {
             var filtered = [];
@@ -359,6 +364,7 @@ angular.module('userApp',
             return filtered;
             };
         }) 
+
         .filter('onlymyrejected', function() {
             return function(input, user) {
             var filtered = [];
@@ -370,6 +376,7 @@ angular.module('userApp',
             return filtered;
             };
         })
+
         .filter('calcaverage', function() {
             return function(input, period, date) {
                 var total = parseFloat(input);
