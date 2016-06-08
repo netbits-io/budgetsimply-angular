@@ -21,16 +21,7 @@
 	<infobar success="{{home.infsuccess}}" danger="{{home.infdanger}}"></infobar>
 	<div class="row">
 		<div class="col-sm-4">
-			<div class="input-group">
-				<span class="input-group-btn">
-					<button class="btn btn-default whiteButton" type="button" ng-click="home.perMinus()"><span class="glyphicon glyphicon-chevron-left"></span></button>
-					<button class="btn btn-default whiteButton" type="button" ng-click="home.perPlus()"><span class="glyphicon glyphicon-chevron-right"></span></button>
-				</span>
-				<input type="text" class="form-control whiteButton text-center" ng-value="home.periodLabel">
-				<span class="input-group-btn">
-					<button class="btn btn-default whiteButton" type="button" ng-click="home.perToggle()"><span class="glyphicon glyphicon glyphicon-sort"></span></button>
-				</span>
-			</div>
+			<periodselect callback="home.redrawC(dte, per)" ></periodselect>
 		</div>	
 		<div class="col-sm-4">
 			<input type="text" class="form-control whiteButton " ng-model="home.filterText">

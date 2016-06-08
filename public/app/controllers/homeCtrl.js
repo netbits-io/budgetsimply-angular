@@ -2,8 +2,6 @@ angular.module('homeCtrl', [])
 
 .controller('homeController', function($route, $scope, $uibModal, Budget, Auth, $filter, $timeout, User, Filter) {
 
-  var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
   var vm = this;
   vm.loggedin = false
   vm.usermail = '';
@@ -34,6 +32,7 @@ angular.module('homeCtrl', [])
       }
     });
   };
+
   vm.rejectFriend = function (rId, rMail) {
     User.rejectFriend(rId, rMail).success(function (data) {
       if(data.success){
@@ -66,7 +65,10 @@ angular.module('homeCtrl', [])
 
   vm.date = new Date();
   vm.period = "m";
-  vm.periodLabel = "";
+
+  $scope.$watch("home.date", function handleFooChange( newValue, oldValue ) {
+    console.log( "vm.date: ", newValue );
+  });
 
   pad = function(num, size) {
     var s = num+"";
@@ -74,19 +76,16 @@ angular.module('homeCtrl', [])
     return s;
   }
 
-  redrawPeriod = function(){
-    if(vm.period === "y"){
-      vm.periodLabel = vm.date.getFullYear();
-    } else {
-      vm.periodLabel = monthNames[vm.date.getMonth()]+" "+vm.date.getFullYear();
-    }
+  vm.redrawC = function(dte, per){
+    vm.date = new Date(dte);
+    vm.period = per;
     repage();
   }
 
   redraw = function () {
     Budget.all().success(function (data) {
       vm.expenses = data;
-      redrawPeriod();
+      repage();
     });
   }
 
@@ -109,33 +108,6 @@ angular.module('homeCtrl', [])
     });
     return result;
   };
-
-  vm.perToggle = function () {
-    if(vm.period === "y"){
-      vm.period = "m";
-    } else {
-      vm.period = "y";
-    }
-    redrawPeriod();
-  };
-
-vm.perPlus = function () {
-    if(vm.period === "y"){
-      vm.date.setYear(vm.date.getFullYear() + 1);
-    }else{
-      vm.date.setMonth(vm.date.getMonth() + 1);     
-    }
-    redrawPeriod();
-};
-
-vm.perMinus = function () {
-  if(vm.period === "y"){
-      vm.date.setYear(vm.date.getFullYear() - 1);
-    }else{
-      vm.date.setMonth(vm.date.getMonth() - 1);     
-    }
-  redrawPeriod();
-};
 
 Auth.getUser().then(function (data) {
   vm.me = data.data;
@@ -230,7 +202,6 @@ vm.modalFilters = function () {
   });
   modalInstance.result.then(
     function () {
-
     }, 
     function () {
     }

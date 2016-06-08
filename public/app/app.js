@@ -9,6 +9,63 @@ angular.module('userApp',
             $httpProvider.interceptors.push('AuthInterceptor');
         })
 
+        .directive('periodselect', function () {
+            return {
+                restrict: 'E',
+                scope: {
+                    callback: '&'
+                },
+                templateUrl: 'app/views/pages/components/periodselect.html',
+                controller: function ($scope, $attrs) {
+                    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    var vm = this;
+
+                    vm.date = new Date();
+                    vm.period = "m";
+                    vm.periodLabel = "";
+
+                    redrawPeriod = function(){
+                        if(vm.period === "y"){
+                          vm.periodLabel = vm.date.getFullYear();
+                        } else {
+                          vm.periodLabel = monthNames[vm.date.getMonth()]+" "+vm.date.getFullYear();
+                        }
+                        $scope.callback({dte: vm.date, per: vm.period});
+                    }
+
+                    redrawPeriod();
+
+                    vm.perToggle = function () {
+                        if(vm.period === "y"){
+                            vm.period = "m";
+                        } else {
+                            vm.period = "y";
+                        }
+                        redrawPeriod();
+                     };
+
+                    vm.perPlus = function () {
+                        if(vm.period === "y"){
+                          vm.date.setYear(vm.date.getFullYear() + 1);
+                        }else{
+                          vm.date.setMonth(vm.date.getMonth() + 1);     
+                        }
+                        redrawPeriod();
+                    };
+
+                    vm.perMinus = function () {
+                      if(vm.period === "y"){
+                          vm.date.setYear(vm.date.getFullYear() - 1);
+                        }else{
+                          vm.date.setMonth(vm.date.getMonth() - 1);     
+                        }
+                        redrawPeriod();
+                    };
+                },
+                controllerAs: 'ps'
+            }
+        })
+
         .directive('navbar', function () {
             return {
                 restrict: 'E',
@@ -182,22 +239,22 @@ angular.module('userApp',
         })
 
         .filter('periodfor', function() {
-                return function(input, period, date) {
-                    var filtered = [];
-                    angular.forEach(input, function(item) {
-                        current = new Date(item.date);
-                        if(period === "y"){
-                            if(current.getFullYear() === date.getFullYear() || !(item.accepted===true)){
-                                filtered.push(item);
-                            }
-                        }else{
-                            if((current.getFullYear() === date.getFullYear() && current.getMonth() === date.getMonth()) || !(item.accepted===true)){
-                                filtered.push(item);
-                            }
+            return function(input, period, date) {
+                var filtered = [];
+                angular.forEach(input, function(item) {
+                    current = new Date(item.date);
+                    if(period === "y"){
+                        if(current.getFullYear() === date.getFullYear() || !(item.accepted===true)){
+                            filtered.push(item);
                         }
-                    });
-                    return filtered;
-                };
+                    }else{
+                        if((current.getFullYear() === date.getFullYear() && current.getMonth() === date.getMonth()) || !(item.accepted===true)){
+                             filtered.push(item);
+                        }
+                    }
+                });
+                return filtered;
+            };
         })
 
         .filter('pgnte', function() {
@@ -339,15 +396,15 @@ angular.module('userApp',
             return function(input, user, userfor) {
             var filtered = [];
             angular.forEach(input, function(item) {
-            if(item.owner === user){
-                item.shares.filter(function (el) {
-                    if(el.user === userfor){
-                        filtered.push(item);
-                    }
-                });
-            } else if(item.owner === userfor){
-                filtered.push(item);
-            }
+                if(item.owner === user){
+                    item.shares.filter(function (el) {
+                        if(el.user === userfor){
+                            filtered.push(item);
+                        }
+                    });
+                } else if(item.owner === userfor){
+                    filtered.push(item);
+                }
             });
             return filtered;
             };
@@ -355,25 +412,25 @@ angular.module('userApp',
 
         .filter('onlyaccepted', function() {
             return function(input) {
-            var filtered = [];
-            angular.forEach(input, function(item) {
-                if(item.accepted ){
-                    filtered.push(item);
-                } 
-            });
-            return filtered;
+                var filtered = [];
+                angular.forEach(input, function(item) {
+                    if(item.accepted ){
+                        filtered.push(item);
+                    } 
+                });
+                return filtered;
             };
         }) 
 
         .filter('onlymyrejected', function() {
             return function(input, user) {
-            var filtered = [];
-            angular.forEach(input, function(item) {
-                if(!item.rejected || item.owner === user){
-                    filtered.push(item);
-                } 
-            });
-            return filtered;
+                var filtered = [];
+                angular.forEach(input, function(item) {
+                    if(!item.rejected || item.owner === user){
+                        filtered.push(item);
+                    } 
+                });
+                return filtered;
             };
         })
 
