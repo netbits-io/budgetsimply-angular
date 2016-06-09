@@ -91,7 +91,7 @@ angular.module('sharedCtrl', [])
               vm.sharedwithlist = Array.from(sharedlst);
               vm.sharedwith = vm.sharedwithlist[0];
           }
-          vm.redrawOnPC(vm.data, vm.period);
+          vm.redrawOnPC(vm.date, vm.period);
       });
   }
 
