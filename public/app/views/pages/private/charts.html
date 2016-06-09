@@ -6,16 +6,7 @@
 
 	<div class="row">
 		<div class="col-sm-4">
-			<div class="input-group">
-				<span class="input-group-btn">
-					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perMinus()"><span class="glyphicon glyphicon-chevron-left"></span></button>
-					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perPlus()"><span class="glyphicon glyphicon-chevron-right"></span></button>
-				</span>
-				<input type="text" class="form-control whiteButton text-center" ng-value="charts.periodLabel">
-				<span class="input-group-btn">
-					<button class="btn btn-default whiteButton" type="button" ng-click="charts.perToggle()"><span class="glyphicon glyphicon glyphicon-sort"></span></button>
-				</span>
-			</div>
+			<periodselect callback="charts.redrawOnPC(dte, per)" ></periodselect>
 		</div>
 		<div class="col-sm-3">
 		</div>	
@@ -60,7 +51,7 @@
 				<td>{{item.filter}}</td>
 				<td>{{item.average}}</td>
 				<td>{{item.amount}}</td>
-				<td><input type="checkbox" ng-model="item.active" ng-change="charts.redrawPeriod()"></td>
+				<td><input type="checkbox" ng-model="item.active" ng-change="charts.redrawOnPC(charts.date, charts.period)"></td>
 				<td>
 					<button class="btn-xs btn-default whiteButton" ng-click="charts.deleteFilter(item._id)" type="button">
 						<span class="glyphicon glyphicon-remove" uib-tooltip="remove filter"></span>

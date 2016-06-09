@@ -15,19 +15,10 @@
 			</div>
 		</div> 
 		<div class="col-sm-5">
-			<div class="input-group">
-				<span class="input-group-btn">
-					<button class="btn btn-default whiteButton" type="button" ng-click="shared.perMinus()"><span class="glyphicon glyphicon-chevron-left"></span></button>
-					<button class="btn btn-default whiteButton" type="button" ng-click="shared.perPlus()"><span class="glyphicon glyphicon-chevron-right"></span></button>
-				</span>
-				<input type="text" class="form-control whiteButton text-center" ng-value="shared.periodLabel">
-				<span class="input-group-btn">
-					<button class="btn btn-default whiteButton" type="button" ng-click="shared.perToggle()"><span class="glyphicon glyphicon glyphicon-sort"></span></button>
-				</span>
-			</div>
+			<periodselect callback="shared.redrawOnPC(dte, per)" ></periodselect>
 		</div>	
 		<div class="col-sm-2 text-right">
-	</div>
+		</div>
 	</div>
 	<hr>
 	<div class="row">
@@ -52,12 +43,12 @@
 				<td width="50"></td>
 			</tr>
 			<tr>
-					<th></th>
-					<th></th>
-					<th class="text-right"> {{shared.friendTotal}}</th>
-					<th class="text-right"> {{shared.userTotal}}</th>
-					<th></th>
-				</tr>
+				<th></th>
+				<th></th>
+				<th class="text-right"> {{shared.friendTotal}}</th>
+				<th class="text-right"> {{shared.userTotal}}</th>
+				<th></th>
+			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="entry in shared.expenses | onlyaccepted | periodfor:shared.period:shared.date | onlyshared:shared.me.email:shared.sharedwith | sortbdate | pgnte:shared.currentPage">

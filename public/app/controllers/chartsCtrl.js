@@ -2,7 +2,8 @@ angular.module('chartsCtrl', [])
 
 .controller('chartsController', function($route, $scope, $uibModal, Budget, Auth, $filter, $timeout, User, Filter) {
 
-var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
 
   var vm = this;
   vm.loggedin = false
@@ -14,20 +15,10 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
   vm.date = new Date();
   vm.period = "m";
 
-  vm.periodLabel = "";
+  vm.redrawOnPC = function(dte, per){
+    vm.date = new Date(dte);
+    vm.period = per;
 
-  pad = function(num, size) {
-    var s = num+"";
-    while (s.length < size) s = "0" + s;
-    return s;
-  }
-
-  redrawPeriod = function(){
-    if(vm.period === "y"){
-      vm.periodLabel = vm.date.getFullYear();
-    } else {
-      vm.periodLabel = monthNames[vm.date.getMonth()]+" "+vm.date.getFullYear();
-    }
     if(typeof vm.me !== 'undefined'){
       vm.items.filter(function(item){
 
@@ -45,9 +36,14 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
           item.periodLabel = monthNames[idate.getMonth()]+" "+idate.getFullYear();
         }
       });
-
       vm.piechart();
     }
+  }
+
+  pad = function(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
   }
 
   redraw = function () {
@@ -66,41 +62,11 @@ var monthNames = ["January", "February", "March", "April", "May", "June", "July"
         });
         vm.tabs = uniqueNames;
         vm.activeTab = vm.tabs[0];
-        redrawPeriod();
+        vm.redrawOnPC(vm.date, vm.period);
       });
     });
   }
 
-  vm.redrawPeriod = function(){
-    redrawPeriod();
-  };
-
-  vm.perToggle = function () {
-    if(vm.period === "y"){
-      vm.period = "m";
-    } else {
-      vm.period = "y";
-    }
-    redrawPeriod();
-  };
-
-vm.perPlus = function () {
-    if(vm.period === "y"){
-      vm.date.setYear(vm.date.getFullYear() + 1);
-    }else{
-      vm.date.setMonth(vm.date.getMonth() + 1);     
-    }
-    redrawPeriod();
-};
-
-vm.perMinus = function () {
-  if(vm.period === "y"){
-      vm.date.setYear(vm.date.getFullYear() - 1);
-    }else{
-      vm.date.setMonth(vm.date.getMonth() - 1);     
-    }
-  redrawPeriod();
-};
 
 vm.deleteFilter = function (eId) {
   Filter.deleteFilter(eId).success(function (data) {
@@ -110,7 +76,7 @@ vm.deleteFilter = function (eId) {
 
 vm.setTab = function (tab) {
   vm.activeTab = tab;
-  redrawPeriod();
+  vm.redrawOnPC(vm.date, vm.period);
 };
 
 Auth.getUser().then(function (data) {

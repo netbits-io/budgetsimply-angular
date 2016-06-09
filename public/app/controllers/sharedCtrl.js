@@ -1,9 +1,7 @@
 angular.module('sharedCtrl', [])
 
 .controller('sharedController', function($route, $scope, $uibModal, Budget, Auth, $filter) {
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-    
+
     var vm = this;
     vm.loggedin = false
     vm.usermail = '';
@@ -21,13 +19,6 @@ angular.module('sharedCtrl', [])
       }
     };
 
-    // $scope.$watch('shared.sharedwith', function(nw, ol) {
-    //     repage();
-    // });
-    // $scope.$watch('shared.periodLabel', function(nw, ol) {
-    //     repage();
-    // });
-
     vm.sharedwithlist = [];
     vm.sharedwith = "";
 
@@ -38,7 +29,31 @@ angular.module('sharedCtrl', [])
 
     vm.date = new Date();
     vm.period = "m";
-    vm.periodLabel = "";
+
+    vm.redrawOnPC = function(dte, per){
+      vm.date = new Date(dte);
+      vm.period = per;
+
+      if(typeof vm.me !== 'undefined'){
+        input = $filter("onlyaccepted")(vm.expenses);
+        input = $filter("periodfor")(input, vm.period, vm.date);
+        input = $filter("onlyshared")(input, vm.me.email, vm.sharedwith);
+        vm.friendTotal = $filter("calctotalforshared")(input, vm.me.email, vm.sharedwith);
+
+        input = $filter("onlyaccepted")(vm.expenses);
+        input = $filter("periodfor")(input, vm.period, vm.date);
+        input = $filter("onlyshared")(input, vm.sharedwith, vm.me.email);
+        vm.userTotal = $filter("calctotalforshared")(input, vm.sharedwith, vm.me.email);
+       
+        vm.totalDiffFne = vm.friendTotal - vm.userTotal;
+        vm.totalDiffUsr = vm.userTotal - vm.friendTotal;
+
+        vm.totalDiffFne = vm.totalDiffFne.toFixed(2);
+        vm.totalDiffUsr = vm.totalDiffUsr.toFixed(2);
+
+        repage();
+      }
+    }
 
     pad = function(num, size) {
         var s = num+"";
@@ -51,88 +66,34 @@ angular.module('sharedCtrl', [])
       //console.log(entry);
       entry.shares.filter(function(share){
       if(share.user === vm.me.email){
-        console.log(share.tags);
         result = share.tags;
       }
       });
       return result;
     }
 
- vm.perToggle = function () {
-    if(vm.period === "y"){
-      vm.period = "m";
-    } else {
-      vm.period = "y";
-    }
-    redrawPeriod();
-  };
+    redraw = function () {
+      Budget.all().success(function (data) {
+          vm.expenses = data;
 
-vm.perPlus = function () {
-    if(vm.period === "y"){
-      vm.date.setYear(vm.date.getFullYear() + 1);
-    }else{
-      vm.date.setMonth(vm.date.getMonth() + 1);     
-    }
-    redrawPeriod();
-};
-
-vm.perMinus = function () {
-  if(vm.period === "y"){
-      vm.date.setYear(vm.date.getFullYear() - 1);
-    }else{
-      vm.date.setMonth(vm.date.getMonth() - 1);     
-    }
-  redrawPeriod();
-};
-
-redrawPeriod = function(){
-    if(vm.period === "y"){
-      vm.periodLabel = vm.date.getFullYear();
-    } else {
-      vm.periodLabel = monthNames[vm.date.getMonth()]+" "+vm.date.getFullYear();
-    }
-
-  input = $filter("onlyaccepted")(vm.expenses);
-  input = $filter("periodfor")(input, vm.period, vm.date);
-  input = $filter("onlyshared")(input, vm.me.email, vm.sharedwith);
-  vm.friendTotal = $filter("calctotalforshared")(input, vm.me.email, vm.sharedwith);
-
-  input = $filter("onlyaccepted")(vm.expenses);
-  input = $filter("periodfor")(input, vm.period, vm.date);
-  input = $filter("onlyshared")(input, vm.sharedwith, vm.me.email);
-  vm.userTotal = $filter("calctotalforshared")(input, vm.sharedwith, vm.me.email);
- 
-  vm.totalDiffFne = vm.friendTotal - vm.userTotal;
-  vm.totalDiffUsr = vm.userTotal - vm.friendTotal;
-
-  vm.totalDiffFne = vm.totalDiffFne.toFixed(2);
-  vm.totalDiffUsr = vm.totalDiffUsr.toFixed(2);
-
-  repage();
-}
-
-redraw = function () {
-    Budget.all().success(function (data) {
-        vm.expenses = data;
-
-        sharedlst = new Set();
-        vm.expenses.filter(function (expense) {
-            if(expense.owner === vm.me.email){
-                expense.shares.filter(function (el) {
-                    sharedlst.add(el.user);
-                });
-            } else {
-                sharedlst.add(expense.owner);
-            }
-        });
-        sharedlst.delete(vm.me.email);
-        if(sharedlst.size > 0){
-            vm.sharedwithlist = Array.from(sharedlst);
-            vm.sharedwith = vm.sharedwithlist[0];
-        }
-        redrawPeriod();
-    });
-}
+          sharedlst = new Set();
+          vm.expenses.filter(function (expense) {
+              if(expense.owner === vm.me.email){
+                  expense.shares.filter(function (el) {
+                      sharedlst.add(el.user);
+                  });
+              } else {
+                  sharedlst.add(expense.owner);
+              }
+          });
+          sharedlst.delete(vm.me.email);
+          if(sharedlst.size > 0){
+              vm.sharedwithlist = Array.from(sharedlst);
+              vm.sharedwith = vm.sharedwithlist[0];
+          }
+          vm.redrawOnPC(vm.data, vm.period);
+      });
+  }
 
 Auth.getUser().then(function (data) {
     vm.me = data.data;

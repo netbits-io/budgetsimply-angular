@@ -59,27 +59,20 @@ angular.module('homeCtrl', [])
   $scope.$watch('home.filterText', function(nw, ol) {
     repage();
   });
-  $scope.$watch('home.periodString', function(nw, ol) {
-    repage();
-  });
 
   vm.date = new Date();
   vm.period = "m";
 
-  $scope.$watch("home.date", function handleFooChange( newValue, oldValue ) {
-    console.log( "vm.date: ", newValue );
-  });
+  vm.redrawOnPC = function(dte, per){
+    vm.date = new Date(dte);
+    vm.period = per;
+    repage();
+  }
 
   pad = function(num, size) {
     var s = num+"";
     while (s.length < size) s = "0" + s;
     return s;
-  }
-
-  vm.redrawC = function(dte, per){
-    vm.date = new Date(dte);
-    vm.period = per;
-    repage();
   }
 
   redraw = function () {
